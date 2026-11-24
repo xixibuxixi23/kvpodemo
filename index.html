@@ -98,16 +98,29 @@
     .topnav .brand {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
       font-size: 16px;
       font-weight: 750;
       letter-spacing: -0.03em;
     }
-    .topnav .brand img {
+    .topnav .brand-mark {
       width: 26px;
       height: 26px;
-      border-radius: 6px;
-      object-fit: contain;
+      flex: 0 0 auto;
+      border-radius: 7px;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.28);
+    }
+    .topnav .brand .grad {
+      background: linear-gradient(125deg, #60a5fa, #818cf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .topnav.is-light .brand .grad {
+      background: linear-gradient(125deg, #2563eb, #4f46e5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
     .topnav .links {
       display: flex;
@@ -144,12 +157,13 @@
     /* ============ Hero ============ */
     .hero {
       position: relative;
-      min-height: 94svh;
+      min-height: 92svh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 112px 24px 84px;
-      background: var(--dark);
+      padding: 108px 24px 76px;
+      background: #04070f;
       color: #fff;
       overflow: hidden;
       isolation: isolate;
@@ -157,51 +171,64 @@
     .mosaic {
       position: absolute;
       inset: 0;
-      z-index: -2;
+      z-index: -3;
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
       grid-template-rows: repeat(5, minmax(0, 1fr));
-      gap: 6px;
-      padding: 6px;
-      background: #04070f;
+      gap: 8px;
+      padding: 8px;
+      background: #03060d;
       pointer-events: none;
     }
     .mosaic-tile {
       position: relative;
-      border-radius: 10px;
+      border-radius: 12px;
       overflow: hidden;
-      background: #0d1629;
+      background: #0b1324;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     }
     .mosaic-tile img,
     .mosaic-tile video {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.84) saturate(1.05);
+      filter: brightness(0.9) saturate(1.12) contrast(1.03);
     }
     .mosaic-tile img {
       transform: scale(1.04);
-      animation: tileDrift 18s ease-in-out infinite alternate;
+      animation: tileDrift 20s ease-in-out infinite alternate;
     }
-    .mosaic-tile:nth-child(2n) img { animation-duration: 22s; animation-direction: alternate-reverse; }
+    .mosaic-tile:nth-child(2n) img { animation-duration: 24s; animation-direction: alternate-reverse; }
     @keyframes tileDrift {
-      from { transform: scale(1.03) translate3d(-1%, -0.8%, 0); }
-      to { transform: scale(1.09) translate3d(1%, 0.8%, 0); }
+      from { transform: scale(1.03) translate3d(-0.8%, -0.6%, 0); }
+      to { transform: scale(1.08) translate3d(0.8%, 0.6%, 0); }
     }
 
+    /* Perimeter stays sharp & vivid; center melts smoothly behind text */
     .hero::before {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      content: "";
+      background:
+        radial-gradient(ellipse 58% 52% at 50% 48%, rgba(4, 7, 15, 0.92) 0%, rgba(4, 7, 15, 0.80) 48%, rgba(4, 7, 15, 0.30) 100%),
+        linear-gradient(180deg, rgba(4, 7, 15, 0.68) 0%, rgba(4, 7, 15, 0.14) 24%, rgba(4, 7, 15, 0.24) 76%, var(--dark) 100%);
+      pointer-events: none;
+    }
+    .hero::after {
       position: absolute;
       inset: 0;
       z-index: -1;
       content: "";
-      background:
-        radial-gradient(circle 460px at 50% 44%, rgba(59, 130, 246, 0.2), transparent 72%),
-        radial-gradient(ellipse 64% 56% at 50% 48%, rgba(6, 10, 20, 0.92) 0%, rgba(6, 10, 20, 0.78) 54%, rgba(6, 10, 20, 0.42) 100%),
-        linear-gradient(180deg, rgba(6, 10, 20, 0.62) 0%, rgba(6, 10, 20, 0.2) 26%, rgba(6, 10, 20, 0.36) 74%, var(--dark) 100%);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      mask-image: radial-gradient(ellipse 46% 40% at 50% 47%, #000 20%, transparent 74%);
+      -webkit-mask-image: radial-gradient(ellipse 46% 40% at 50% 47%, #000 20%, transparent 74%);
+      pointer-events: none;
     }
 
     .hero-inner {
-      width: min(100%, 840px);
+      width: min(100%, 820px);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -211,98 +238,184 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 15px;
+      padding: 5px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(147, 197, 253, 0.24);
-      background: rgba(12, 19, 36, 0.68);
-      color: #dbeafe;
-      font-size: 12.5px;
-      font-weight: 500;
-      letter-spacing: 0.02em;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(8, 13, 26, 0.62);
+      color: rgba(226, 232, 240, 0.92);
+      font-family: var(--mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       backdrop-filter: blur(12px);
-      margin-bottom: 22px;
+      -webkit-backdrop-filter: blur(12px);
+      margin-bottom: 20px;
     }
     .hero-kicker .dot {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--sky);
       box-shadow: 0 0 10px var(--sky);
     }
 
-    .hero-wordmark {
+    .hero-lockup {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
       margin: 0;
-      font-size: clamp(64px, 8.2vw, 106px);
+      font-size: clamp(44px, 5.2vw, 66px);
       font-weight: 800;
-      line-height: 0.96;
-      letter-spacing: -0.05em;
-      background: linear-gradient(112deg, #ffffff 10%, #93c5fd 55%, #a5b4fc 96%);
+      line-height: 1;
+      letter-spacing: -0.045em;
+      color: #ffffff;
+    }
+    .hero-mark {
+      width: clamp(42px, 4.4vw, 54px);
+      height: clamp(42px, 4.4vw, 54px);
+      flex: 0 0 auto;
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    }
+    .hero-lockup .grad {
+      background: linear-gradient(125deg, #7dd3fc 0%, #60a5fa 52%, #818cf8 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      filter: drop-shadow(0 10px 32px rgba(37, 99, 235, 0.3));
     }
+
     .hero-title {
       margin: 16px 0 0;
-      max-width: 760px;
-      font-size: clamp(22px, 2.65vw, 34px);
-      font-weight: 600;
-      line-height: 1.24;
-      letter-spacing: -0.03em;
-      color: #f8fafc;
+      max-width: 720px;
+      font-size: clamp(18px, 1.95vw, 24px);
+      font-weight: 450;
+      line-height: 1.42;
+      letter-spacing: -0.02em;
+      color: rgba(241, 245, 249, 0.92);
       text-wrap: balance;
     }
-    .hero-lead {
-      margin: 18px 0 0;
-      max-width: 650px;
-      font-size: clamp(15.5px, 1.25vw, 17.5px);
-      line-height: 1.7;
-      color: rgba(203, 213, 225, 0.82);
-      text-wrap: pretty;
+    .hero-byline {
+      margin: 12px 0 0;
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: rgba(148, 163, 184, 0.82);
     }
-    .hero-lead strong {
-      color: #f1f5f9;
-      font-weight: 600;
-    }
+    .hero-byline .sep { opacity: 0.45; }
 
     .hero-buttons {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 30px;
+      margin-top: 26px;
     }
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      height: 44px;
-      padding: 0 20px;
+      height: 42px;
+      padding: 0 18px;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(15, 23, 42, 0.58);
-      color: #fff;
-      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(11, 18, 34, 0.64);
+      color: #f8fafc;
+      font-size: 13.5px;
       font-weight: 600;
+      letter-spacing: -0.01em;
       backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
     }
-    .btn svg { width: 16px; height: 16px; flex: 0 0 auto; }
+    .btn svg { width: 15px; height: 15px; flex: 0 0 auto; opacity: 0.92; }
     .btn:hover {
-      transform: translateY(-2px);
-      border-color: rgba(255, 255, 255, 0.38);
-      background: rgba(30, 41, 59, 0.78);
+      transform: translateY(-1.5px);
+      border-color: rgba(255, 255, 255, 0.34);
+      background: rgba(23, 35, 62, 0.82);
     }
     .btn.primary {
-      background: #ffffff;
-      border-color: #ffffff;
-      color: #060a14;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.32);
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.94), rgba(79, 70, 229, 0.92));
+      border-color: rgba(147, 197, 253, 0.44);
+      color: #ffffff;
+      box-shadow: 0 10px 28px rgba(37, 99, 235, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.24);
     }
     .btn.primary:hover {
-      background: #f1f5f9;
-      border-color: #f1f5f9;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      border-color: rgba(191, 219, 254, 0.65);
+      box-shadow: 0 14px 34px rgba(37, 99, 235, 0.46), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-tldr {
+      margin: 26px 0 0;
+      padding-top: 16px;
+      max-width: 640px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 13.5px;
+      line-height: 1.62;
+      color: rgba(148, 163, 184, 0.86);
+      text-wrap: pretty;
+    }
+    .hero-tldr b {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #93c5fd;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(96, 165, 250, 0.26);
+      border-radius: 5px;
+      padding: 2px 6px;
+      margin-right: 6px;
+      vertical-align: 1px;
+    }
+    .hero-tldr strong {
+      color: rgba(241, 245, 249, 0.94);
+      font-weight: 600;
+    }
+
+    .scrollcue {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(148, 163, 184, 0.76);
+      transition: color 160ms ease;
+    }
+    .scrollcue:hover { color: #fff; }
+    .scrollcue .mouse {
+      width: 15px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(148, 163, 184, 0.55);
+      position: relative;
+    }
+    .scrollcue .mouse::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      width: 3px;
+      height: 5px;
+      margin-left: -1.5px;
+      border-radius: 999px;
+      background: #93c5fd;
+      animation: cueDot 1.8s ease-in-out infinite;
+    }
+    @keyframes cueDot {
+      0%, 100% { transform: translateY(0); opacity: 0.95; }
+      60% { transform: translateY(6px); opacity: 0.35; }
     }
 
     /* ============ Editorial Section Rhythm ============ */
@@ -1354,8 +1467,24 @@
   <!-- ============ Navigation ============ -->
   <nav class="topnav" id="topnav" aria-label="Primary navigation">
     <a class="brand" href="#top">
-      <img src="framework/kvpo_loge.png" width="26" height="26" alt="">
-      <span>KVPO</span>
+      <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <rect width="48" height="48" rx="12" fill="url(#navMarkBg)"/>
+        <rect x="0.75" y="0.75" width="46.5" height="46.5" rx="11.25" stroke="rgba(191,219,254,0.34)" stroke-width="1.5"/>
+        <rect x="9" y="11" width="8" height="8" rx="2.2" fill="#93c5fd" fill-opacity="0.9"/>
+        <rect x="9" y="21.5" width="8" height="8" rx="2.2" fill="#ffffff"/>
+        <path d="M17 15C23 15 24 25.5 30 25.5M17 25.5C23 25.5 24 15 30 15" stroke="#7dd3fc" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="34.5" cy="20.2" r="5.8" fill="rgba(255,255,255,0.16)" stroke="#ffffff" stroke-width="2"/>
+        <path d="M33.2 17.8L37.2 20.2L33.2 22.6Z" fill="#ffffff"/>
+        <path d="M9 36C15 36 18 32.5 24 32.5C30 32.5 33 36 39 36" stroke="#93c5fd" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="2.5 3.5"/>
+        <defs>
+          <linearGradient id="navMarkBg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#1e3a8a"/>
+            <stop offset="0.55" stop-color="#2563eb"/>
+            <stop offset="1" stop-color="#4338ca"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span>KV<span class="grad">PO</span></span>
     </a>
     <div class="links">
       <a href="#overview">Overview</a>
@@ -1372,14 +1501,36 @@
     <div class="hero-inner">
       <div class="hero-kicker">
         <span class="dot" aria-hidden="true"></span>
-        <span>ODE-Native GRPO · Causal KV Exploration</span>
+        <span>ODE-Native GRPO · Autoregressive Video Alignment</span>
       </div>
 
-      <div class="hero-wordmark" aria-hidden="true">KVPO</div>
-      <h1 class="hero-title">Autoregressive Video Alignment via KV Semantic Exploration</h1>
+      <div class="hero-lockup" aria-hidden="true">
+        <svg class="hero-mark" viewBox="0 0 48 48" fill="none">
+          <rect width="48" height="48" rx="13" fill="url(#heroMarkBg)"/>
+          <rect x="0.75" y="0.75" width="46.5" height="46.5" rx="12.25" stroke="rgba(191,219,254,0.38)" stroke-width="1.5"/>
+          <rect x="8.5" y="10.5" width="8.5" height="8.5" rx="2.4" fill="#93c5fd" fill-opacity="0.92"/>
+          <rect x="8.5" y="21.5" width="8.5" height="8.5" rx="2.4" fill="#ffffff"/>
+          <path d="M17 14.8C23.2 14.8 24 25.8 30.2 25.8M17 25.8C23.2 25.8 24 14.8 30.2 14.8" stroke="#7dd3fc" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="35" cy="20.3" r="6" fill="rgba(255,255,255,0.16)" stroke="#ffffff" stroke-width="2.1"/>
+          <path d="M33.6 17.8L37.8 20.3L33.6 22.8Z" fill="#ffffff"/>
+          <path d="M9 36.2C15 36.2 18.2 32.6 24 32.6C29.8 32.6 33 36.2 39 36.2" stroke="#93c5fd" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="2.6 3.6"/>
+          <defs>
+            <linearGradient id="heroMarkBg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#172554"/>
+              <stop offset="0.52" stop-color="#2563eb"/>
+              <stop offset="1" stop-color="#4338ca"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span>KV<span class="grad">PO</span></span>
+      </div>
 
-      <p class="hero-lead">
-        Relocating RL exploration from stochastic noise into the <strong>historical KV cache</strong>, paired with <strong>Trajectory Velocity Energy</strong> to align distilled video generators strictly within their native ODE dynamics.
+      <h1 class="hero-title">ODE-Native GRPO for Autoregressive Video Alignment via KV Semantic Exploration</h1>
+
+      <p class="hero-byline">
+        <span>Anonymous Authors</span>
+        <span class="sep" aria-hidden="true">·</span>
+        <span>Supplementary Project Page</span>
       </p>
 
       <div class="hero-buttons">
@@ -1389,14 +1540,27 @@
         </a>
         <a class="btn" href="#method">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2.8"/><circle cx="18" cy="6" r="2.8"/><circle cx="12" cy="18" r="2.8"/><path d="M8.2 8L11 15.2M15.8 8L13 15.2"/></svg>
-          Animated Architecture
+          Method &amp; Architecture
         </a>
         <a class="btn" href="#results">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 3 5-6"/></svg>
           Benchmarks
         </a>
+        <a class="btn" href="#overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+          Overview &amp; Abstract
+        </a>
       </div>
+
+      <p class="hero-tldr">
+        <b>TL;DR</b> Branching inside <strong>historical KV memory</strong> with <strong>Trajectory Velocity Energy</strong> aligns distilled autoregressive video generators strictly within their native ODE dynamics.
+      </p>
     </div>
+
+    <a class="scrollcue" href="#overview">
+      <span class="mouse" aria-hidden="true"></span>
+      <span>Scroll to explore</span>
+    </a>
   </header>
 
   <main>
