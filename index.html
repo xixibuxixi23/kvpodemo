@@ -189,11 +189,18 @@
     }
     .mosaic-tile img,
     .mosaic-tile video {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       filter: brightness(0.9) saturate(1.12) contrast(1.03);
     }
+    .mosaic-tile video {
+      opacity: 0;
+      transition: opacity 450ms ease;
+    }
+    .mosaic-tile.is-playing video { opacity: 1; }
     .mosaic-tile img {
       transform: scale(1.04);
       animation: tileDrift 20s ease-in-out infinite alternate;
@@ -211,8 +218,8 @@
       z-index: -2;
       content: "";
       background:
-        radial-gradient(ellipse 58% 52% at 50% 48%, rgba(4, 7, 15, 0.92) 0%, rgba(4, 7, 15, 0.80) 48%, rgba(4, 7, 15, 0.30) 100%),
-        linear-gradient(180deg, rgba(4, 7, 15, 0.68) 0%, rgba(4, 7, 15, 0.14) 24%, rgba(4, 7, 15, 0.24) 76%, var(--dark) 100%);
+        radial-gradient(ellipse 58% 52% at 50% 48%, rgba(4, 7, 15, 0.84) 0%, rgba(4, 7, 15, 0.64) 48%, rgba(4, 7, 15, 0.16) 100%),
+        linear-gradient(180deg, rgba(4, 7, 15, 0.52) 0%, rgba(4, 7, 15, 0.08) 24%, rgba(4, 7, 15, 0.18) 76%, var(--dark) 100%);
       pointer-events: none;
     }
     .hero::after {
@@ -378,6 +385,12 @@
     .hero-tldr strong {
       color: rgba(241, 245, 249, 0.94);
       font-weight: 600;
+    }
+    .hero-sample-note {
+      margin: 12px 0 0;
+      color: rgba(203, 213, 225, 0.68);
+      font-size: 11px;
+      letter-spacing: 0.02em;
     }
 
     .scrollcue {
@@ -1555,6 +1568,7 @@
       <p class="hero-tldr">
         <b>TL;DR</b> Branching inside <strong>historical KV memory</strong> with <strong>Trajectory Velocity Energy</strong> aligns distilled autoregressive video generators strictly within their native ODE dynamics.
       </p>
+      <p class="hero-sample-note">Background samples: LongLive released base generations · not KVPO outputs</p>
     </div>
 
     <a class="scrollcue" href="#overview">
@@ -1966,44 +1980,68 @@
     }, { threshold: 0.06 });
     document.querySelectorAll(".reveal").forEach((el) => revObserver.observe(el));
 
-    /* ============ Hybrid Hero Mosaic ============ */
+    /* ============ Rotating LongLive Base Hero Mosaic ============ */
     const mosaic = document.getElementById("mosaic");
-    const liveTileSet = new Set([1, 6, 7, 12, 19, 24, 25, 30]);
     mosaic.innerHTML = Array.from({ length: 30 }, (_, i) => {
-      const idx = i + 1;
-      const id = String(idx).padStart(2, "0");
-      if (liveTileSet.has(idx) && !reducedMotion.matches) {
-        return `<div class="mosaic-tile"><video data-hero-src="framework/hero/videos/wall-${id}.m4v" poster="framework/hero/wall-${id}.jpg" muted loop playsinline preload="none" tabindex="-1"></video></div>`;
-      }
-      return `<div class="mosaic-tile"><img src="framework/hero/wall-${id}.jpg" alt="" loading="eager" decoding="async"></div>`;
+      const id = String(i + 1).padStart(2, "0");
+      return `<div class="mosaic-tile"><img src="framework/hero/custom/poster-${id}.jpg" alt="" loading="eager" decoding="async"><video data-hero-src="framework/hero/custom/clip-${id}.m4v" muted loop playsinline preload="none" tabindex="-1"></video></div>`;
     }).join("");
 
     const heroEl = document.getElementById("top");
-    function mountHeroVideos(active) {
-      mosaic.querySelectorAll("video[data-hero-src]").forEach((v) => {
-        if (active && !reducedMotion.matches) {
-          if (!v.dataset.mounted) {
-            v.dataset.mounted = "1";
-            v.muted = true;
-            v.defaultMuted = true;
-            v.loop = true;
-            v.playsInline = true;
-            v.src = v.dataset.heroSrc;
-            v.load();
-          }
-          v.play().catch(() => {});
-        } else if (v.dataset.mounted) {
-          delete v.dataset.mounted;
-          v.pause();
-          v.removeAttribute("src");
-          v.load();
+    const heroVideos = [...mosaic.querySelectorAll("video[data-hero-src]")];
+    heroVideos.forEach((video) => {
+      video.addEventListener("playing", () => {
+        if (video.dataset.mounted) video.parentElement.classList.add("is-playing");
+      });
+      video.addEventListener("error", () => video.parentElement.classList.remove("is-playing"));
+    });
+    let heroVisible = false;
+    let heroRound = 0;
+    let heroTimer;
+    function stopHeroVideo(video) {
+      if (!video.dataset.mounted) return;
+      delete video.dataset.mounted;
+      video.parentElement.classList.remove("is-playing");
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+    }
+    function rotateHeroVideos() {
+      const visibleCount = window.matchMedia("(max-width: 680px)").matches ? 18 : 30;
+      const activeCount = visibleCount === 18 ? 9 : 15;
+      const active = new Set(Array.from({ length: activeCount }, (_, i) =>
+        ((heroRound * activeCount + i) * 7) % visibleCount
+      ));
+      heroVideos.forEach((video, i) => {
+        if (!active.has(i)) {
+          stopHeroVideo(video);
+        } else if (!video.dataset.mounted) {
+          video.dataset.mounted = "1";
+          video.src = video.dataset.heroSrc;
+          video.load();
+          video.play().catch(() => {});
         }
       });
+      heroRound += 1;
+    }
+    function syncHeroVideos() {
+      clearInterval(heroTimer);
+      heroTimer = undefined;
+      if (!heroVisible || document.hidden || reducedMotion.matches) {
+        heroVideos.forEach(stopHeroVideo);
+        return;
+      }
+      rotateHeroVideos();
+      heroTimer = setInterval(rotateHeroVideos, 5500);
     }
     const heroObs = new IntersectionObserver((entries) => {
-      entries.forEach((e) => mountHeroVideos(e.isIntersecting));
+      heroVisible = entries[0].isIntersecting;
+      syncHeroVideos();
     }, { threshold: 0.05 });
     heroObs.observe(heroEl);
+    document.addEventListener("visibilitychange", syncHeroVideos);
+    reducedMotion.addEventListener("change", syncHeroVideos);
+    window.addEventListener("resize", syncHeroVideos);
 
     /* ============ Original Figure Interaction Controller ============ */
     const modRects = {
