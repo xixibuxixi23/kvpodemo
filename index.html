@@ -1453,7 +1453,7 @@
       .abstract-split { grid-template-columns: 1fr; gap: 10px; padding: 22px 24px; }
     }
     @media (max-width: 680px) {
-      .topnav .links a:not([href="#compare"]):not([href="#results"]):not([href="#gallery"]) { display: none; }
+      .topnav .links a:not([href="#method"]):not([href="#results"]):not([href="#gallery"]) { display: none; }
       .mosaic { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(6, minmax(0, 1fr)); }
       .mosaic-tile:nth-child(n + 19) { display: none; }
       .block { padding: 64px 16px; }
@@ -1479,7 +1479,6 @@
       <span>KVPO</span>
     </a>
     <div class="links">
-      <a href="#compare">Compare</a>
       <a href="#overview">Overview</a>
       <a href="#method">Method</a>
       <a href="#results">Benchmarks</a>
@@ -1505,80 +1504,23 @@
       </p>
 
       <div class="hero-buttons">
-        <a class="btn primary" href="#compare">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v18"/><path d="M8 8l-4 4 4 4"/><path d="M16 8l4 4-4 4"/></svg>
-          Interactive Compare
-        </a>
-        <a class="btn" href="#results">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 3 5-6"/></svg>
-          Benchmarks
+        <a class="btn primary" href="#gallery">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
+          Video Gallery (39)
         </a>
         <a class="btn" href="#method">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2.8"/><circle cx="18" cy="6" r="2.8"/><circle cx="12" cy="18" r="2.8"/><path d="M8.2 8L11 15.2M15.8 8L13 15.2"/></svg>
           Animated Architecture
         </a>
-        <a class="btn" href="#gallery">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
-          Video Gallery (39)
+        <a class="btn" href="#results">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 3 5-6"/></svg>
+          Benchmarks
         </a>
       </div>
     </div>
   </header>
 
   <main>
-    <!-- ============ Interactive Drag-to-Compare Showcase ============ -->
-    <section class="block tint" id="compare" data-nav="light">
-      <div class="wrap">
-        <div class="sec-head">
-          <div class="eyebrow">Interactive Comparison</div>
-          <h2 class="title">Drag across the frame to compare baseline vs. KVPO</h2>
-          <p class="lead">
-            Frame-locked playback across LongLive, MemFlow, and Short baselines. Drag the divider to inspect visual detail, motion stability, and storyline progression.
-          </p>
-        </div>
-
-        <div class="card panel reveal">
-          <div class="panel-bar">
-            <div class="chiprow">
-              <span class="lbl">Scene</span>
-              <div class="chips" id="cmpSceneChips"></div>
-            </div>
-            <div class="chips" id="cmpModeChips" role="group" aria-label="Comparison view mode">
-              <button class="chip on" type="button" data-cmp-mode="slider">Drag Slider</button>
-              <button class="chip" type="button" data-cmp-mode="sbs">Side-by-Side</button>
-            </div>
-          </div>
-
-          <div class="cmp" id="mainCmp" data-cmp>
-            <video id="cmpLeft" muted autoplay loop playsinline preload="auto"></video>
-            <div class="top"><video id="cmpRight" muted autoplay loop playsinline preload="auto"></video></div>
-            <span class="lab l" id="cmpLabL">Baseline</span>
-            <span class="lab r">KVPO (Ours)</span>
-            <div class="bar"></div>
-            <div class="knob" aria-hidden="true">⇆</div>
-            <div class="hint">drag to compare</div>
-          </div>
-
-          <div class="row2">
-            <div class="chips">
-              <button class="mini-btn" id="cmpPlayBtn" type="button">❚❚ Pause</button>
-              <button class="mini-btn" id="cmpRestartBtn" type="button">↺ Restart</button>
-            </div>
-            <div class="scrub-wrap">
-              <input class="range" id="cmpScrub" type="range" min="0" max="1000" value="0" aria-label="Synchronized video timeline">
-              <span class="time-txt" id="cmpTime">0:00 / 0:00</span>
-            </div>
-            <div class="chips" id="cmpSpeedChips" role="group" aria-label="Playback speed">
-              <button class="chip on" type="button" data-cmp-speed="1">1×</button>
-              <button class="chip" type="button" data-cmp-speed="2">2×</button>
-              <button class="chip" type="button" data-cmp-speed="4">4×</button>
-            </div>
-          </div>
-
-          <div class="seg-grid" id="cmpSegments"></div>
-        </div>
-      </div>
-    </section>
 
     <!-- ============ Overview & Abstract ============ -->
     <section class="block" id="overview" data-nav="light">
@@ -2238,14 +2180,14 @@
         </div>
         <div style="display:flex;align-items:center;gap:8px">
           <div class="chips" id="modModeChips">
-            <button class="chip on" type="button" data-mod-mode="slider">Drag Slider</button>
-            <button class="chip" type="button" data-mod-mode="sbs">Side-by-Side</button>
+            <button class="chip on" type="button" data-mod-mode="sbs">Side-by-Side</button>
+            <button class="chip" type="button" data-mod-mode="slider">Drag Slider</button>
           </div>
           <button class="modal-x" type="button" data-close="vidModal" aria-label="Close">×</button>
         </div>
       </div>
 
-      <div class="cmp" id="modCmp" data-cmp>
+      <div class="cmp is-sbs" id="modCmp" data-cmp>
         <video id="modLeft" muted autoplay loop playsinline preload="auto"></video>
         <div class="top"><video id="modRight" muted autoplay loop playsinline preload="auto"></video></div>
         <span class="lab l" id="modLabL">Baseline</span>
@@ -2303,7 +2245,7 @@
     /* ============ Topnav Theme & ScrollSpy ============ */
     const topnav = document.getElementById("topnav");
     const navAnchors = Array.from(document.querySelectorAll(".topnav .links a"));
-    const navSections = ["compare", "overview", "method", "results", "gallery"]
+    const navSections = ["overview", "method", "results", "gallery"]
       .map((id) => document.getElementById(id))
       .filter(Boolean);
 
@@ -2985,59 +2927,7 @@
       };
     }
 
-    /* ============ Main Interactive Compare Section ============ */
-    const mainCmp = document.getElementById("mainCmp");
-    wireDragCmp(mainCmp);
-    const mainPlayer = bindSyncPlayer({
-      left: document.getElementById("cmpLeft"),
-      right: document.getElementById("cmpRight"),
-      playBtn: document.getElementById("cmpPlayBtn"),
-      restartBtn: document.getElementById("cmpRestartBtn"),
-      scrub: document.getElementById("cmpScrub"),
-      timeEl: document.getElementById("cmpTime"),
-      segEl: document.getElementById("cmpSegments")
-    });
 
-    const featured = [
-      { key: "longlive:012345", label: "LongLive · Planet" },
-      { key: "longlive:153153", label: "LongLive · Alien Forest" },
-      { key: "memflow:008476", label: "MemFlow · Peony" },
-      { key: "memflow:117787", label: "MemFlow · Tokyo Night" },
-      { key: "short:000003", label: "Short · Crimson Titan" },
-      { key: "short:000042", label: "Short · Steam Train" }
-    ].filter((f) => demoMap[f.key]);
-
-    const cmpSceneChips = document.getElementById("cmpSceneChips");
-    const cmpLabL = document.getElementById("cmpLabL");
-
-    function loadFeatured(idx) {
-      const f = featured[idx];
-      const item = demoMap[f.key];
-      cmpSceneChips.innerHTML = featured.map((x, i) =>
-        `<button class="chip ${i === idx ? "on" : ""}" type="button" data-fi="${i}">${esc(x.label)}</button>`
-      ).join("");
-      cmpSceneChips.querySelectorAll("[data-fi]").forEach((b) =>
-        b.addEventListener("click", () => loadFeatured(Number(b.dataset.fi)))
-      );
-      cmpLabL.textContent = `Baseline · ${item.baseline}`;
-      mainCmp.style.setProperty("--split", "50%");
-      mainPlayer.load(item);
-    }
-    loadFeatured(0);
-
-    document.querySelectorAll("#cmpModeChips [data-cmp-mode]").forEach((b) => {
-      b.addEventListener("click", () => {
-        document.querySelectorAll("#cmpModeChips [data-cmp-mode]").forEach((x) => x.classList.toggle("on", x === b));
-        mainCmp.classList.toggle("is-sbs", b.dataset.cmpMode === "sbs");
-      });
-    });
-
-    document.querySelectorAll("#cmpSpeedChips [data-cmp-speed]").forEach((b) => {
-      b.addEventListener("click", () => {
-        document.querySelectorAll("#cmpSpeedChips [data-cmp-speed]").forEach((x) => x.classList.toggle("on", x === b));
-        mainPlayer.setSpeed(Number(b.dataset.cmpSpeed));
-      });
-    });
 
     /* ============ Streamlined Dark Gallery (Clean Cards + Shimmer + Active Pool) ============ */
     const galGrid = document.getElementById("galGrid");
