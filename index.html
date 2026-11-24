@@ -781,16 +781,29 @@
     .pipeline-scrim { fill: white; opacity: 0; pointer-events: none; transition: opacity 200ms; }
     .paper-board.is-focused .pipeline-scrim { opacity: 0.55; }
     .mod-focus-ring { fill: none; stroke-width: 1.2; pointer-events: none; }
-    .flow-pulse { fill: none; stroke-width: 2.1; stroke-linecap: round; pointer-events: none; opacity: 0.75; transition: opacity 180ms; }
+    .flow-pulse { fill: none; stroke-linecap: round; pointer-events: none; opacity: 1; transition: opacity 180ms; }
     .flow-pulse.is-dim { opacity: 0.08; }
-    .flow-ink { stroke-dasharray: 0.045 0.955; animation: paperFlow 5s linear infinite; animation-delay: inherit; }
-    .flow-a { stroke: #527bb6; }
-    .flow-a2 { stroke: #e4a076; }
-    .flow-a3 { stroke: #7ba564; }
-    .flow-b { stroke: #9574b6; }
-    .flow-c { stroke: #6f9c91; }
-    .pipeline-explorer.is-paused .flow-ink { animation-play-state: paused; }
-    @keyframes paperFlow { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+    .flow-halo, .flow-ink, .flow-head {
+      stroke-dasharray: 0.16 0.84;
+      animation: paperFlow var(--flow-duration, 2.8s) linear infinite;
+      animation-delay: var(--flow-delay, 0s);
+    }
+    .flow-halo { stroke-width: 9; opacity: 0.2; }
+    .flow-ink { stroke-width: 4; }
+    .flow-head {
+      stroke: #fff; stroke-width: 3; stroke-dasharray: 0.008 0.992;
+      --flow-start: 0.848; --flow-end: -0.152;
+    }
+    .flow-a { stroke: #3976db; }
+    .flow-a2 { stroke: #e39845; }
+    .flow-a3 { stroke: #5d9c47; }
+    .flow-b { stroke: #9660cc; }
+    .flow-c { stroke: #168b72; }
+    .pipeline-explorer.is-paused :is(.flow-halo, .flow-ink, .flow-head) { animation-play-state: paused; }
+    @keyframes paperFlow {
+      from { stroke-dashoffset: var(--flow-start, 1); }
+      to { stroke-dashoffset: var(--flow-end, 0); }
+    }
     .figure-hint { display: none; margin: 8px 2px 0; font-size: 12px; color: var(--ink-muted); }
     .module-choices { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 22px 18px; }
     .mchoice {
@@ -818,7 +831,10 @@
       .pipeline-stage-bar, .arch-inspector { padding: 14px 16px; }
       .module-choices { padding: 10px 16px 16px; }
     }
-    @media (prefers-reduced-motion: reduce) { .flow-ink { animation: none !important; } }
+    @media (prefers-reduced-motion: reduce) {
+      .flow-halo, .flow-ink, .flow-head { animation: none !important; }
+      .flow-head { display: none; }
+    }
 
     /* ============ Quantitative Charts & Interactive Benchmarks (StreamVSR + Robin-World style) ============ */
     .quant-grid {
@@ -1369,7 +1385,7 @@
       <div class="hero-buttons">
         <a class="btn primary" href="#gallery">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
-          Video Gallery (39)
+          Video Gallery
         </a>
         <a class="btn" href="#method">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2.8"/><circle cx="18" cy="6" r="2.8"/><circle cx="12" cy="18" r="2.8"/><path d="M8.2 8L11 15.2M15.8 8L13 15.2"/></svg>
@@ -1625,9 +1641,9 @@
       <div class="wrap">
         <div class="sec-head">
           <div class="eyebrow">Video Gallery</div>
-          <h2 class="title">All 39 paired comparisons across three AR settings</h2>
+          <h2 class="title">Paired comparisons across three AR settings</h2>
           <p class="lead">
-            Clean side-by-side rollouts under identical prompts. Click any card to inspect it large with the interactive drag-to-compare slider.
+            Clean side-by-side rollouts under identical prompts. Click any card to inspect full-size synchronized playback and prompts.
           </p>
         </div>
 
@@ -1635,10 +1651,10 @@
           <div class="chiprow">
             <span class="lbl">Model</span>
             <div class="chips" id="galFilter">
-              <button class="chip on" type="button" data-filter="all">All <span class="cnt">39</span></button>
-              <button class="chip" type="button" data-filter="longlive">LongLive <span class="cnt">15</span></button>
-              <button class="chip" type="button" data-filter="memflow">MemFlow <span class="cnt">20</span></button>
-              <button class="chip" type="button" data-filter="short">Short <span class="cnt">4</span></button>
+              <button class="chip on" type="button" data-filter="all">All</button>
+              <button class="chip" type="button" data-filter="longlive">LongLive</button>
+              <button class="chip" type="button" data-filter="memflow">MemFlow</button>
+              <button class="chip" type="button" data-filter="short">Short</button>
             </div>
           </div>
           <div class="chips">
@@ -1883,6 +1899,32 @@
     const inspFormula = document.getElementById("inspFormula");
     const pulseToggleBtn = document.getElementById("pulseToggleBtn");
     let activeRoute = "all";
+
+    // Normalize each continuous connector separately. A long gap on a combined
+    // path otherwise hides the pulse on its shorter, disconnected segments.
+    document.querySelectorAll("#archFlows .flow-pulse").forEach((group, routeIndex) => {
+      const source = group.querySelector(".flow-ink");
+      const segments = source.getAttribute("d").match(/M[^M]*/g) || [];
+      source.remove();
+      segments.forEach((d, segmentIndex) => {
+        const connector = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        group.append(connector);
+        const ink = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        ink.setAttribute("d", d.trim());
+        ink.setAttribute("pathLength", "1");
+        ink.setAttribute("class", "flow-ink");
+        connector.append(ink);
+        const duration = Math.max(1.2, Math.min(3.4, ink.getTotalLength() / 110));
+        connector.style.setProperty("--flow-duration", `${duration.toFixed(2)}s`);
+        connector.style.setProperty("--flow-delay", `${(-routeIndex * 0.37 - segmentIndex * 0.23).toFixed(2)}s`);
+        const halo = ink.cloneNode();
+        halo.setAttribute("class", "flow-halo");
+        connector.prepend(halo);
+        const head = ink.cloneNode();
+        head.setAttribute("class", "flow-head");
+        connector.append(head);
+      });
+    });
 
     function renderSpotlight(modKeys, ringColor) {
       if (!modKeys || !modKeys.length) {
