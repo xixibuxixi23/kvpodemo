@@ -3,19 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="KVPO is an ODE-native GRPO framework for aligning autoregressive video generators through KV semantic exploration.">
+  <meta name="description" content="KVPO: Autoregressive Video Alignment via KV Semantic Exploration.">
   <link rel="icon" href="framework/kvpo_loge.png" type="image/png">
-  <link rel="preload" href="framework/fonts/fraunces-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="framework/fonts/inter-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
   <title>KVPO — Autoregressive Video Alignment via KV Semantic Exploration</title>
   <style>
-    @font-face {
-      font-family: "Fraunces";
-      src: url("framework/fonts/fraunces-latin-variable.woff2") format("woff2");
-      font-style: normal;
-      font-weight: 100 900;
-      font-display: swap;
-    }
     @font-face {
       font-family: "Inter";
       src: url("framework/fonts/inter-latin-variable.woff2") format("woff2");
@@ -26,29 +18,34 @@
 
     :root {
       --bg: #ffffff;
-      --tint: #f4f6fa;
-      --dark: #0a101d;
-      --dark-card: #111a2c;
-      --dark-line: rgba(255, 255, 255, 0.12);
-      --ink: #0f172a;
+      --tint: #f6f8fc;
+      --dark: #060a14;
+      --dark-2: #0c1324;
+      --dark-card: #10192e;
+      --dark-line: rgba(148, 163, 184, 0.16);
+      --dark-line-strong: rgba(148, 163, 184, 0.3);
+
+      --ink: #0b1220;
       --ink-2: #334155;
-      --ink-muted: #5b677a;
-      --ink-faint: #7c8798;
-      --line: #e2e7f0;
+      --ink-muted: #5b677d;
+      --ink-faint: #8492a6;
+      --line: #e4e9f2;
       --line-strong: #cbd5e1;
-      --accent: #16967b;
-      --accent-soft: rgba(22, 150, 123, 0.11);
-      --accent-bright: #2dd4bf;
-      --blue: #2563eb;
-      --blue-soft: rgba(37, 99, 235, 0.1);
-      --indigo: #6366f1;
-      --amber: #d97706;
+
+      --accent: #2563eb;
+      --accent-2: #4f46e5;
+      --accent-soft: rgba(37, 99, 235, 0.09);
+      --accent-bright: #60a5fa;
+      --sky: #38bdf8;
+
+      --radius-sm: 10px;
       --radius: 18px;
       --radius-lg: 24px;
-      --shadow: 0 10px 30px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-      --shadow-lg: 0 24px 60px rgba(2, 6, 23, 0.36);
-      --wrap: 1160px;
-      --serif: "Fraunces", Georgia, serif;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow: 0 14px 38px rgba(15, 23, 42, 0.07), 0 1px 3px rgba(15, 23, 42, 0.04);
+      --shadow-lg: 0 28px 70px rgba(2, 6, 23, 0.45);
+      --wrap: 1180px;
+
       --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
@@ -64,88 +61,44 @@
       font-family: var(--sans);
       font-size: 16px;
       line-height: 1.66;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.011em;
       font-optical-sizing: auto;
       -webkit-font-smoothing: antialiased;
     }
     a { color: inherit; text-decoration: none; }
     button { font: inherit; cursor: pointer; }
     img, video { display: block; max-width: 100%; }
-    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    :focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 2px; }
 
-    .file-protocol-warning {
-      position: fixed;
-      inset: 58px 0 auto;
-      z-index: 120;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 10px 20px;
-      background: #fff7d6;
-      border-bottom: 1px solid #f2cf63;
-      color: #5f4300;
-      font-size: 14px;
-      text-align: center;
-      box-shadow: 0 5px 18px rgba(95, 67, 0, 0.12);
-    }
-    .file-protocol-warning.show { display: flex; }
-    .file-protocol-warning code {
-      padding: 2px 6px;
-      border-radius: 5px;
-      background: rgba(95, 67, 0, 0.1);
-      font-family: var(--mono);
-      user-select: all;
-    }
-    @media (max-width: 760px) {
-      .file-protocol-warning { align-items: flex-start; flex-direction: column; }
-    }
-
-    .skip-link {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      z-index: 200;
-      padding: 8px 14px;
-      border-radius: 8px;
-      background: #fff;
-      color: var(--ink);
-      font-weight: 600;
-      transform: translateY(-180%);
-      box-shadow: var(--shadow);
-    }
-    .skip-link:focus { transform: translateY(0); }
-
-    /* ============ Top Navigation (StreamVSR / Robin-World style) ============ */
+    /* ============ Floating Glass Navigation ============ */
     .topnav {
       position: fixed;
       inset: 0 0 auto;
       z-index: 90;
-      height: 58px;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 max(20px, calc((100vw - var(--wrap)) / 2));
-      background: rgba(10, 16, 29, 0.72);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0 max(22px, calc((100vw - var(--wrap)) / 2));
+      background: rgba(6, 10, 20, 0.62);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       color: #fff;
-      backdrop-filter: blur(18px) saturate(150%);
-      -webkit-backdrop-filter: blur(18px) saturate(150%);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
       transition: background 220ms ease, color 220ms ease, border-color 220ms ease;
     }
     .topnav.is-light {
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.86);
       border-bottom-color: var(--line);
       color: var(--ink);
     }
     .topnav .brand {
       display: inline-flex;
       align-items: center;
-      gap: 9px;
-      font-family: var(--serif);
-      font-size: 18px;
-      font-weight: 650;
-      letter-spacing: -0.02em;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 750;
+      letter-spacing: -0.03em;
     }
     .topnav .brand img {
       width: 26px;
@@ -159,20 +112,21 @@
       gap: 4px;
     }
     .topnav .links a {
-      padding: 6px 12px;
+      padding: 6px 13px;
       border-radius: 999px;
       font-size: 13.5px;
       font-weight: 500;
-      color: rgba(255, 255, 255, 0.74);
+      color: rgba(241, 245, 249, 0.72);
       transition: color 150ms ease, background 150ms ease;
     }
     .topnav .links a:hover {
       color: #fff;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.09);
     }
     .topnav .links a.active {
-      color: #fff;
-      background: rgba(22, 150, 123, 0.34);
+      color: #060a14;
+      background: #fff;
+      font-weight: 600;
     }
     .topnav.is-light .links a { color: var(--ink-muted); }
     .topnav.is-light .links a:hover {
@@ -180,18 +134,18 @@
       background: rgba(15, 23, 42, 0.05);
     }
     .topnav.is-light .links a.active {
-      color: var(--accent);
-      background: var(--accent-soft);
-      font-weight: 600;
+      color: #fff;
+      background: var(--ink);
     }
 
-    /* ============ Hero (Mosaic + Logo H1 + Buttons + TL;DR + Scrollcue) ============ */
+    /* ============ Hero ============ */
     .hero {
       position: relative;
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      padding: 96px 22px 64px;
+      min-height: 94svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 112px 24px 84px;
       background: var(--dark);
       color: #fff;
       overflow: hidden;
@@ -204,219 +158,154 @@
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
       grid-template-rows: repeat(5, minmax(0, 1fr));
-      gap: 2px;
-      background: #060a12;
+      gap: 6px;
+      padding: 6px;
+      background: #04070f;
       pointer-events: none;
     }
     .mosaic-tile {
       position: relative;
+      border-radius: 10px;
       overflow: hidden;
-      background: #0f172a;
-      opacity: 0.72;
+      background: #0d1629;
     }
-    .mosaic-tile img {
+    .mosaic-tile img,
+    .mosaic-tile video {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.76) saturate(0.92);
+      filter: brightness(0.84) saturate(1.05);
+    }
+    .mosaic-tile img {
       transform: scale(1.04);
-      animation: tileDrift 14s ease-in-out infinite alternate;
+      animation: tileDrift 18s ease-in-out infinite alternate;
     }
-    .mosaic-tile:nth-child(2n) img { animation-duration: 18s; animation-direction: alternate-reverse; }
-    .mosaic-tile:nth-child(3n) img { animation-duration: 22s; }
+    .mosaic-tile:nth-child(2n) img { animation-duration: 22s; animation-direction: alternate-reverse; }
     @keyframes tileDrift {
-      from { transform: scale(1.02) translate3d(-1%, -1%, 0); }
-      to { transform: scale(1.09) translate3d(1%, 1%, 0); }
+      from { transform: scale(1.03) translate3d(-1%, -0.8%, 0); }
+      to { transform: scale(1.09) translate3d(1%, 0.8%, 0); }
     }
+
+    /* Rich Cinematic Vignette + Sapphire Center Glow */
     .hero::before {
       position: absolute;
       inset: 0;
       z-index: -1;
       content: "";
       background:
-        radial-gradient(ellipse 68% 60% at 50% 45%, rgba(10, 16, 29, 0.9) 0%, rgba(10, 16, 29, 0.74) 50%, rgba(10, 16, 29, 0.5) 100%),
-        linear-gradient(180deg, rgba(10, 16, 29, 0.48), rgba(10, 16, 29, 0.25) 30%, rgba(10, 16, 29, 0.78) 90%, var(--dark));
+        radial-gradient(circle 460px at 50% 44%, rgba(59, 130, 246, 0.2), transparent 72%),
+        radial-gradient(ellipse 64% 56% at 50% 48%, rgba(6, 10, 20, 0.92) 0%, rgba(6, 10, 20, 0.78) 54%, rgba(6, 10, 20, 0.42) 100%),
+        linear-gradient(180deg, rgba(6, 10, 20, 0.62) 0%, rgba(6, 10, 20, 0.2) 26%, rgba(6, 10, 20, 0.36) 74%, var(--dark) 100%);
     }
-    .hero .inner {
-      width: min(100%, 860px);
+
+    .hero-inner {
+      width: min(100%, 840px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
     }
-    .badge {
+    .hero-kicker {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 14px;
+      padding: 6px 15px;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      background: rgba(15, 23, 42, 0.65);
-      color: rgba(241, 245, 249, 0.9);
+      border: 1px solid rgba(147, 197, 253, 0.24);
+      background: rgba(12, 19, 36, 0.68);
+      color: #dbeafe;
       font-size: 12.5px;
       font-weight: 500;
       letter-spacing: 0.02em;
       backdrop-filter: blur(12px);
+      margin-bottom: 22px;
     }
-    .badge .dot {
+    .hero-kicker .dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: var(--accent-bright);
-      box-shadow: 0 0 10px var(--accent-bright);
+      background: var(--sky);
+      box-shadow: 0 0 10px var(--sky);
     }
-    .hero h1 {
-      margin: 20px 0 12px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      font-family: var(--serif);
-      font-size: clamp(50px, 6.8vw, 84px);
-      font-weight: 700;
-      line-height: 1.02;
-      letter-spacing: -0.03em;
-    }
-    .hero h1 img {
-      width: clamp(46px, 5.5vw, 68px);
-      height: clamp(46px, 5.5vw, 68px);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.94);
-      padding: 4px;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
-    }
-    .hero h1 .grad {
-      background: linear-gradient(108deg, #60a5fa 0%, #2dd4bf 100%);
+
+    .hero-wordmark {
+      margin: 0;
+      font-size: clamp(64px, 8.2vw, 106px);
+      font-weight: 800;
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+      background: linear-gradient(112deg, #ffffff 10%, #93c5fd 55%, #a5b4fc 96%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      filter: drop-shadow(0 10px 32px rgba(37, 99, 235, 0.3));
     }
-    .subtitle {
-      margin: 0 auto;
-      max-width: 740px;
-      font-size: clamp(19px, 2.1vw, 24px);
-      font-weight: 500;
-      line-height: 1.38;
-      letter-spacing: -0.02em;
-      color: rgba(248, 250, 252, 0.94);
+    .hero-title {
+      margin: 16px 0 0;
+      max-width: 760px;
+      font-size: clamp(22px, 2.65vw, 34px);
+      font-weight: 600;
+      line-height: 1.24;
+      letter-spacing: -0.03em;
+      color: #f8fafc;
       text-wrap: balance;
     }
-    .authors {
-      margin: 16px 0 2px;
-      font-size: 15px;
-      font-weight: 500;
-      color: rgba(226, 232, 240, 0.85);
+    .hero-lead {
+      margin: 18px 0 0;
+      max-width: 650px;
+      font-size: clamp(15.5px, 1.25vw, 17.5px);
+      line-height: 1.7;
+      color: rgba(203, 213, 225, 0.82);
+      text-wrap: pretty;
     }
-    .affil {
-      margin: 0;
-      font-size: 13.5px;
-      color: rgba(148, 163, 184, 0.85);
+    .hero-lead strong {
+      color: #f1f5f9;
+      font-weight: 600;
     }
 
-    /* Pillar / Action buttons */
-    .buttons {
+    .hero-buttons {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 24px;
+      gap: 12px;
+      margin-top: 30px;
     }
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      height: 42px;
-      padding: 0 18px;
+      height: 44px;
+      padding: 0 20px;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(15, 23, 42, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(15, 23, 42, 0.58);
       color: #fff;
       font-size: 14px;
       font-weight: 600;
-      backdrop-filter: blur(12px);
-      transition: transform 150ms ease, background 150ms ease, border-color 150ms ease;
+      backdrop-filter: blur(14px);
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
     }
     .btn svg { width: 16px; height: 16px; flex: 0 0 auto; }
     .btn:hover {
-      transform: translateY(-1px);
-      border-color: rgba(255, 255, 255, 0.42);
-      background: rgba(30, 41, 59, 0.8);
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.38);
+      background: rgba(30, 41, 59, 0.78);
     }
     .btn.primary {
-      background: var(--accent);
-      border-color: transparent;
-      color: #fff;
-      box-shadow: 0 8px 24px rgba(22, 150, 123, 0.36);
+      background: #ffffff;
+      border-color: #ffffff;
+      color: #060a14;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.32);
     }
-    .btn.primary:hover { background: #13826a; }
-    .btn.soon {
-      opacity: 0.56;
-      cursor: default;
-      pointer-events: none;
+    .btn.primary:hover {
+      background: #f1f5f9;
+      border-color: #f1f5f9;
     }
 
-    /* Signature TL;DR Box */
-    .tldr {
-      margin: 26px auto 0;
-      max-width: 760px;
-      padding: 16px 20px;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(15, 23, 42, 0.66);
-      backdrop-filter: blur(14px);
-      color: rgba(226, 232, 240, 0.86);
-      font-size: 14.5px;
-      line-height: 1.65;
-      text-align: left;
-    }
-    .tldr b { color: #fff; font-weight: 650; }
-    .tldr .tag-tldr {
-      display: inline-block;
-      margin-right: 6px;
-      padding: 2px 8px;
-      border-radius: 6px;
-      background: rgba(45, 212, 191, 0.18);
-      color: var(--accent-bright);
-      font-family: var(--mono);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .scrollcue {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 28px;
-      color: rgba(203, 213, 225, 0.72);
-      font-size: 13px;
-      font-weight: 500;
-      transition: color 150ms ease;
-    }
-    .scrollcue:hover { color: #fff; }
-    .scrollcue span {
-      width: 16px;
-      height: 24px;
-      border-radius: 999px;
-      border: 1.5px solid rgba(255, 255, 255, 0.4);
-      position: relative;
-    }
-    .scrollcue span::after {
-      content: "";
-      position: absolute;
-      top: 5px;
-      left: 50%;
-      width: 3px;
-      height: 6px;
-      margin-left: -1.5px;
-      border-radius: 99px;
-      background: var(--accent-bright);
-      animation: scrollDot 1.8s ease-in-out infinite;
-    }
-    @keyframes scrollDot {
-      0%, 100% { transform: translateY(0); opacity: 0.9; }
-      60% { transform: translateY(7px); opacity: 0.25; }
-    }
-
-    /* ============ Alternating Editorial Blocks (block / tint / dark) ============ */
+    /* ============ Editorial Section Rhythm ============ */
     .block {
-      padding: 84px 22px;
+      padding: 88px 24px;
       background: var(--bg);
       color: var(--ink);
     }
@@ -427,8 +316,8 @@
     }
     .block.dark {
       background:
-        radial-gradient(circle at 86% 6%, rgba(37, 99, 235, 0.15), transparent 32%),
-        radial-gradient(circle at 12% 14%, rgba(22, 150, 123, 0.12), transparent 28%),
+        radial-gradient(circle at 86% 6%, rgba(37, 99, 235, 0.14), transparent 30%),
+        radial-gradient(circle at 12% 16%, rgba(99, 102, 241, 0.1), transparent 28%),
         var(--dark);
       color: #f8fafc;
     }
@@ -436,11 +325,14 @@
       width: min(100%, var(--wrap));
       margin: 0 auto;
     }
+    .sec-head {
+      max-width: 800px;
+    }
     .eyebrow {
       font-family: var(--mono);
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.09em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 10px;
@@ -448,17 +340,14 @@
     .block.dark .eyebrow { color: var(--accent-bright); }
     .title {
       margin: 0;
-      font-family: var(--serif);
-      font-size: clamp(28px, 3.2vw, 40px);
-      font-weight: 600;
-      line-height: 1.16;
-      letter-spacing: -0.025em;
-      max-width: 820px;
+      font-size: clamp(28px, 3.1vw, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.035em;
       text-wrap: balance;
     }
     .lead {
       margin: 14px 0 0;
-      max-width: 780px;
       font-size: 16.5px;
       line-height: 1.7;
       color: var(--ink-muted);
@@ -471,181 +360,20 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
-    .card.pad { padding: 26px 28px; }
-    .block.dark .card {
-      background: var(--dark-card);
-      border-color: var(--dark-line);
-      box-shadow: var(--shadow-lg);
-    }
-    .muted { color: var(--ink-muted); }
-    .small { font-size: 13.5px; }
 
-    /* Scroll Reveal */
     .reveal {
       opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 520ms ease, transform 520ms ease;
+      transform: translateY(14px);
+      transition: opacity 480ms ease, transform 480ms ease;
     }
-    .reveal.in {
-      opacity: 1;
-      transform: none;
-    }
+    .reveal.in { opacity: 1; transform: none; }
 
-    /* ============ Overview: 3 Idea Cards + Stats + Abstract ============ */
-    .ideas {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-      margin-top: 30px;
-    }
-    .card.idea {
-      padding: 22px 24px;
-      transition: transform 180ms ease, border-color 180ms ease;
-    }
-    .card.idea:hover {
-      transform: translateY(-2px);
-      border-color: #b6d8d0;
-    }
-    .card.idea .k {
-      font-family: var(--mono);
-      font-size: 11.5px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      margin-bottom: 10px;
-    }
-    .card.idea h3 {
-      margin: 0 0 8px;
-      font-size: 18px;
-      font-weight: 650;
-      letter-spacing: -0.02em;
-    }
-    .card.idea p {
-      margin: 0;
-      font-size: 14.5px;
-      line-height: 1.62;
-      color: var(--ink-muted);
-    }
-    .card.idea.is-interactive { cursor: pointer; }
-    .card.idea.is-active {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow);
-    }
-
-    .abstract {
-      margin: 12px 0 0;
-      color: var(--ink-2);
-      font-size: 15.5px;
-      line-height: 1.82;
-      text-align: justify;
-    }
-    .abstract .hl {
-      color: var(--ink);
-      font-weight: 600;
-      background: linear-gradient(180deg, transparent 62%, rgba(22, 150, 123, 0.16) 62%);
-      padding: 0 2px;
-    }
-
-    /* ============ Interactive Architecture Explorer (Robin-World style) ============ */
-    .pipeline-explorer {
-      margin-top: 28px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--line);
-      background: #fff;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-    .pipeline-stage-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--line);
-      background: #f8fafc;
-    }
-    .stage-label {
-      font-family: var(--mono);
-      font-size: 11.5px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-    }
-    .pipeline-figure {
-      margin: 0;
-      padding: 18px 20px;
-      background: #fff;
-    }
-    .pipeline-board {
-      position: relative;
-      border-radius: 14px;
-      overflow: hidden;
-      background: #fff;
-      cursor: zoom-in;
-    }
-    .pipeline-original {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    .pipeline-overlay {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-    .pipeline-scrim {
-      fill: rgba(15, 23, 42, 0.56);
-      opacity: 0;
-      transition: opacity 240ms ease;
-    }
-    .pipeline-board.is-focused .pipeline-scrim {
-      opacity: 1;
-    }
-    .stage-box-stroke {
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 7;
-      rx: 24;
-      opacity: 0;
-      transition: opacity 240ms ease;
-    }
-    .pipeline-board.is-focused .stage-box-stroke { opacity: 1; }
-
-    .arch-inspector {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-      padding: 16px 22px;
-      border-top: 1px solid var(--line);
-      background: #f8fafc;
-    }
-    .arch-inspector h4 {
-      margin: 0 0 4px;
-      font-size: 15.5px;
-      font-weight: 650;
-      color: var(--ink);
-    }
-    .arch-inspector p {
-      margin: 0;
-      max-width: 820px;
-      font-size: 14px;
-      line-height: 1.62;
-      color: var(--ink-muted);
-    }
-
-    /* ============ Shared Chips & Mini Buttons ============ */
+    /* ============ Shared Segmented Controls & Chips ============ */
     .chiprow {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 16px;
     }
     .chiprow .lbl {
       font-family: var(--mono);
@@ -660,10 +388,10 @@
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 7px;
+      gap: 6px;
     }
     .chip {
-      height: 33px;
+      height: 34px;
       padding: 0 13px;
       border-radius: 999px;
       border: 1px solid var(--line-strong);
@@ -677,7 +405,7 @@
       transition: all 140ms ease;
     }
     .chip:hover {
-      border-color: var(--ink);
+      border-color: #94a3b8;
       color: var(--ink);
     }
     .chip.on {
@@ -688,27 +416,27 @@
     .chip .cnt {
       font-family: var(--mono);
       font-size: 11px;
-      opacity: 0.7;
+      opacity: 0.68;
     }
-    .block.dark .chip {
+    .block.dark .chip, .modal .chip {
       background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.14);
+      border-color: var(--dark-line);
       color: rgba(226, 232, 240, 0.8);
     }
-    .block.dark .chip:hover {
-      border-color: rgba(255, 255, 255, 0.34);
+    .block.dark .chip:hover, .modal .chip:hover {
+      border-color: var(--dark-line-strong);
       color: #fff;
     }
-    .block.dark .chip.on {
+    .block.dark .chip.on, .modal .chip.on {
       background: #fff;
       border-color: #fff;
       color: var(--dark);
     }
 
     .mini-btn {
-      height: 33px;
-      padding: 0 12px;
-      border-radius: 9px;
+      height: 34px;
+      padding: 0 13px;
+      border-radius: 10px;
       border: 1px solid var(--line-strong);
       background: #fff;
       color: var(--ink);
@@ -720,21 +448,20 @@
       transition: all 140ms ease;
     }
     .mini-btn:hover { background: #f1f5f9; border-color: #94a3b8; }
-    .block.dark .mini-btn, .modal .mini-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.16);
+    .modal .mini-btn {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: var(--dark-line);
       color: #fff;
     }
-    .block.dark .mini-btn:hover, .modal .mini-btn:hover {
-      background: rgba(255, 255, 255, 0.14);
-    }
+    .modal .mini-btn:hover { background: rgba(255, 255, 255, 0.14); }
 
-    /* ============ Interactive Drag-to-Compare Panel (StreamVSR / Robin-World .cmp) ============ */
+    /* ============ Interactive Drag-to-Compare Showcase ============ */
     .card.panel {
-      margin-top: 26px;
+      margin-top: 28px;
       padding: 22px 24px 24px;
+      border-radius: var(--radius-lg);
     }
-    .panel-controls-top {
+    .panel-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -746,14 +473,15 @@
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      max-height: 540px;
-      border-radius: 14px;
+      max-height: 560px;
+      border-radius: 16px;
       overflow: hidden;
-      background: #040811;
+      background: #040812;
       user-select: none;
       touch-action: none;
       cursor: ew-resize;
       --split: 50%;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
     }
     .cmp video {
       position: absolute;
@@ -761,7 +489,7 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      background: #040811;
+      background: #040812;
       pointer-events: none;
     }
     .cmp .top {
@@ -778,7 +506,7 @@
       width: 2px;
       margin-left: -1px;
       background: rgba(255, 255, 255, 0.92);
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 14px rgba(0, 0, 0, 0.65);
       pointer-events: none;
       z-index: 4;
     }
@@ -787,16 +515,16 @@
       top: 50%;
       left: var(--split);
       transform: translate(-50%, -50%);
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 999px;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.96);
       color: var(--ink);
       font-size: 16px;
       font-weight: 700;
       display: grid;
       place-items: center;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.38);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.42);
       pointer-events: none;
       z-index: 5;
     }
@@ -806,19 +534,19 @@
       z-index: 5;
       padding: 5px 12px;
       border-radius: 999px;
-      background: rgba(10, 16, 29, 0.74);
+      background: rgba(6, 10, 20, 0.74);
       border: 1px solid rgba(255, 255, 255, 0.16);
       color: #f8fafc;
       font-size: 12.5px;
       font-weight: 600;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       pointer-events: none;
     }
     .cmp .lab.l { left: 14px; }
     .cmp .lab.r {
       right: 14px;
-      background: rgba(22, 150, 123, 0.85);
-      border-color: rgba(153, 246, 228, 0.45);
+      background: rgba(37, 99, 235, 0.88);
+      border-color: rgba(147, 197, 253, 0.5);
       color: #fff;
     }
     .cmp .hint {
@@ -827,9 +555,10 @@
       bottom: 14px;
       transform: translateX(-50%);
       z-index: 5;
-      padding: 4px 11px;
+      padding: 5px 12px;
       border-radius: 999px;
-      background: rgba(10, 16, 29, 0.68);
+      background: rgba(6, 10, 20, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       color: rgba(248, 250, 252, 0.88);
       font-family: var(--mono);
       font-size: 11px;
@@ -839,7 +568,6 @@
     }
     .cmp.is-dragged .hint { opacity: 0; }
 
-    /* Side-by-Side alternate mode inside the same panel */
     .cmp.is-sbs {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -847,7 +575,6 @@
       aspect-ratio: auto;
       max-height: none;
       cursor: default;
-      background: #040811;
     }
     .cmp.is-sbs > video,
     .cmp.is-sbs > .top {
@@ -867,7 +594,6 @@
     .cmp.is-sbs .knob,
     .cmp.is-sbs .hint { display: none; }
 
-    /* Sync Scrubber Row */
     .row2 {
       display: flex;
       align-items: center;
@@ -892,7 +618,7 @@
       background: #cbd5e1;
       cursor: pointer;
     }
-    .modal .range { background: rgba(255, 255, 255, 0.2); }
+    .modal .range { background: rgba(255, 255, 255, 0.18); }
     .range::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
@@ -900,8 +626,9 @@
       height: 14px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 0 3px rgba(22, 150, 123, 0.22);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
     }
+    .modal .range::-webkit-slider-thumb { background: var(--accent-bright); }
     .time-txt {
       font-family: var(--mono);
       font-size: 12px;
@@ -911,7 +638,6 @@
     }
     .modal .time-txt { color: rgba(203, 213, 225, 0.8); }
 
-    /* Live Multi-Segment Prompt Strip */
     .seg-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -922,18 +648,18 @@
     }
     .modal .seg-grid { border-top-color: var(--dark-line); }
     .seg-card {
-      padding: 10px 12px;
+      padding: 11px 13px;
       border-radius: 12px;
       border: 1px solid var(--line);
-      background: #f8fafc;
+      background: var(--tint);
       color: var(--ink-muted);
       font-size: 12.8px;
-      line-height: 1.54;
+      line-height: 1.55;
       transition: all 160ms ease;
     }
     .seg-card.on {
-      border-color: var(--accent);
-      background: rgba(22, 150, 123, 0.08);
+      border-color: #93c5fd;
+      background: #eff6ff;
       color: var(--ink);
     }
     .seg-card b {
@@ -944,29 +670,186 @@
     }
     .modal .seg-card {
       background: rgba(255, 255, 255, 0.04);
-      border-color: rgba(255, 255, 255, 0.1);
-      color: rgba(203, 213, 225, 0.78);
+      border-color: rgba(255, 255, 255, 0.09);
+      color: rgba(203, 213, 225, 0.76);
     }
     .modal .seg-card.on {
       border-color: var(--accent-bright);
-      background: rgba(22, 150, 123, 0.18);
+      background: rgba(37, 99, 235, 0.18);
       color: #fff;
     }
     .modal .seg-card b { color: var(--accent-bright); }
 
-    /* ============ Dark Video Gallery (StreamVSR #gallery style) ============ */
+    /* ============ Overview & Abstract ============ */
+    .ideas {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 30px;
+    }
+    .card.idea {
+      padding: 24px 26px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+    .card.idea:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      border-color: #bfdbfe;
+    }
+    .card.idea .k {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .card.idea h3 {
+      margin: 0 0 8px;
+      font-size: 18.5px;
+      font-weight: 650;
+      letter-spacing: -0.025em;
+    }
+    .card.idea p {
+      margin: 0;
+      font-size: 14.5px;
+      line-height: 1.64;
+      color: var(--ink-muted);
+    }
+    .card.idea.is-interactive { cursor: pointer; }
+    .card.idea.is-active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow);
+    }
+
+    .abstract-split {
+      margin-top: 22px;
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 28px;
+      align-items: start;
+      box-shadow: var(--shadow-sm);
+    }
+    .abstract-meta strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .abstract-meta span {
+      display: block;
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--ink-faint);
+    }
+    .abstract-text {
+      margin: 0;
+      color: var(--ink-2);
+      font-size: 15px;
+      line-height: 1.8;
+      text-align: justify;
+    }
+    .abstract-text b { color: var(--ink); font-weight: 650; }
+
+    /* ============ Interactive Architecture Explorer ============ */
+    .pipeline-explorer {
+      margin-top: 28px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .pipeline-stage-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--line);
+      background: var(--tint);
+    }
+    .stage-label {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+    .pipeline-figure {
+      margin: 0;
+      padding: 20px 22px;
+      background: #fff;
+    }
+    .pipeline-board {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+      cursor: zoom-in;
+    }
+    .pipeline-original { width: 100%; height: auto; }
+    .pipeline-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .pipeline-scrim {
+      fill: rgba(11, 18, 32, 0.54);
+      opacity: 0;
+      transition: opacity 240ms ease;
+    }
+    .pipeline-board.is-focused .pipeline-scrim { opacity: 1; }
+    .stage-box-stroke {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 7;
+      rx: 24;
+      opacity: 0;
+      transition: opacity 240ms ease;
+    }
+    .pipeline-board.is-focused .stage-box-stroke { opacity: 1; }
+
+    .arch-inspector {
+      padding: 16px 24px 18px;
+      border-top: 1px solid var(--line);
+      background: var(--tint);
+    }
+    .arch-inspector h4 {
+      margin: 0 0 4px;
+      font-size: 15px;
+      font-weight: 650;
+      color: var(--ink);
+    }
+    .arch-inspector p {
+      margin: 0;
+      max-width: 880px;
+      font-size: 14px;
+      line-height: 1.62;
+      color: var(--ink-muted);
+    }
+
+    /* ============ Dark Cinema Gallery ============ */
     .gal-toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 14px;
       flex-wrap: wrap;
-      margin-top: 26px;
-      padding: 12px 14px;
+      margin-top: 28px;
+      padding: 11px 14px;
       border-radius: 16px;
       border: 1px solid var(--dark-line);
-      background: rgba(17, 26, 44, 0.78);
-      backdrop-filter: blur(14px);
+      background: rgba(12, 19, 36, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       position: sticky;
       top: 68px;
       z-index: 40;
@@ -987,9 +870,12 @@
       border: 1px solid var(--dark-line);
       background: var(--dark-card);
       overflow: hidden;
-      transition: border-color 160ms ease, transform 160ms ease;
+      transition: border-color 160ms ease, box-shadow 160ms ease;
     }
-    .gcard:hover { border-color: rgba(255, 255, 255, 0.26); }
+    .gcard:hover {
+      border-color: var(--dark-line-strong);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+    }
     .ghead {
       display: flex;
       align-items: center;
@@ -1010,62 +896,62 @@
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
-      background: rgba(37, 99, 235, 0.22);
+      background: rgba(59, 130, 246, 0.2);
       color: #93c5fd;
     }
-    .gtag.memflow { background: rgba(99, 102, 241, 0.24); color: #c7d2fe; }
-    .gtag.short { background: rgba(22, 150, 123, 0.24); color: #5eead4; }
+    .gtag.memflow { background: rgba(99, 102, 241, 0.22); color: #c7d2fe; }
+    .gtag.short { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
     .gid {
       font-family: var(--mono);
       font-size: 12px;
-      color: rgba(148, 163, 184, 0.8);
+      color: rgba(148, 163, 184, 0.78);
     }
     .gacts { display: flex; gap: 6px; }
     .gbtn {
       height: 28px;
-      padding: 0 9px;
-      border-radius: 7px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(255, 255, 255, 0.05);
+      padding: 0 10px;
+      border-radius: 8px;
+      border: 1px solid var(--dark-line);
+      background: rgba(255, 255, 255, 0.04);
       color: rgba(226, 232, 240, 0.84);
       font-size: 12px;
       font-weight: 600;
       transition: all 140ms ease;
     }
-    .gbtn:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+    .gbtn:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
     .gbtn.accent {
-      border-color: rgba(45, 212, 191, 0.45);
-      color: #99f6e4;
-      background: rgba(22, 150, 123, 0.2);
+      border-color: rgba(96, 165, 250, 0.42);
+      color: #bfdbfe;
+      background: rgba(37, 99, 235, 0.22);
     }
-    .gbtn.accent:hover { background: rgba(22, 150, 123, 0.36); color: #fff; }
+    .gbtn.accent:hover { background: rgba(37, 99, 235, 0.38); color: #fff; }
 
     .gpair {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2px;
-      background: #030711;
+      background: #03060d;
     }
     .gcell {
       position: relative;
       aspect-ratio: 16 / 9.4;
-      background: #070e1c;
+      background: #070d1a;
       overflow: hidden;
     }
     .gcell video {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      background: #030711;
+      background: #03060d;
     }
     .gpill {
       position: absolute;
-      top: 8px;
-      left: 8px;
+      top: 9px;
+      left: 9px;
       z-index: 3;
-      padding: 3px 8px;
+      padding: 3px 9px;
       border-radius: 999px;
-      background: rgba(10, 16, 29, 0.74);
+      background: rgba(6, 10, 20, 0.74);
       border: 1px solid rgba(255, 255, 255, 0.14);
       color: rgba(248, 250, 252, 0.88);
       font-size: 11px;
@@ -1073,21 +959,21 @@
       pointer-events: none;
     }
     .gpill.ours {
-      background: rgba(22, 150, 123, 0.84);
-      border-color: rgba(153, 246, 228, 0.4);
+      background: rgba(37, 99, 235, 0.86);
+      border-color: rgba(147, 197, 253, 0.45);
       color: #fff;
     }
 
     .gprompt {
       padding: 12px 14px 14px;
       border-top: 1px solid var(--dark-line);
-      background: rgba(6, 10, 18, 0.38);
+      background: rgba(6, 10, 20, 0.36);
     }
     .gprev {
       margin: 0;
       font-size: 12.8px;
       line-height: 1.54;
-      color: rgba(203, 213, 225, 0.76);
+      color: rgba(203, 213, 225, 0.74);
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -1104,7 +990,7 @@
       overflow: auto;
       font-size: 12.6px;
       line-height: 1.56;
-      color: rgba(226, 232, 240, 0.82);
+      color: rgba(226, 232, 240, 0.84);
     }
     .gfull p { margin: 0 0 7px; }
     .gfull p:last-child { margin-bottom: 0; }
@@ -1129,8 +1015,8 @@
       display: none;
       place-items: center;
       padding: 20px;
-      background: rgba(4, 8, 17, 0.86);
-      backdrop-filter: blur(12px);
+      background: rgba(3, 7, 16, 0.86);
+      backdrop-filter: blur(14px);
     }
     .modal.open { display: grid; }
     .modal .box {
@@ -1138,7 +1024,7 @@
       max-height: 92vh;
       overflow: auto;
       border-radius: var(--radius-lg);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      border: 1px solid var(--dark-line-strong);
       background: var(--dark-card);
       color: #fff;
       padding: 18px 20px 22px;
@@ -1160,7 +1046,7 @@
       width: 34px;
       height: 34px;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid var(--dark-line-strong);
       background: rgba(255, 255, 255, 0.08);
       color: #fff;
       font-size: 18px;
@@ -1169,15 +1055,15 @@
     }
     .modal .box.light .modal-x {
       border-color: var(--line-strong);
-      background: #f8fafc;
+      background: var(--tint);
       color: var(--ink);
     }
 
     footer {
-      padding: 34px 22px;
-      background: #060a12;
+      padding: 32px 24px;
+      background: #04070f;
       border-top: 1px solid var(--dark-line);
-      color: rgba(148, 163, 184, 0.8);
+      color: rgba(148, 163, 184, 0.76);
       font-size: 13.5px;
     }
     .foot-inner {
@@ -1193,15 +1079,16 @@
     @media (max-width: 960px) {
       .mosaic { grid-template-columns: repeat(5, minmax(0, 1fr)); grid-template-rows: repeat(6, minmax(0, 1fr)); }
       .ideas, .gal { grid-template-columns: 1fr; }
+      .abstract-split { grid-template-columns: 1fr; gap: 10px; padding: 22px 24px; }
     }
     @media (max-width: 680px) {
       .topnav .links a:not([href="#compare"]):not([href="#gallery"]) { display: none; }
       .mosaic { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(6, minmax(0, 1fr)); }
       .mosaic-tile:nth-child(n + 19) { display: none; }
-      .block { padding: 62px 16px; }
-      .card.pad, .card.panel { padding: 18px 16px; }
+      .block { padding: 64px 16px; }
+      .card.panel { padding: 16px; }
       .gpair, .cmp.is-sbs { grid-template-columns: 1fr; }
-      .gal-toolbar { top: 62px; }
+      .gal-toolbar { top: 64px; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -1212,11 +1099,6 @@
   <script src="prompts.js"></script>
 </head>
 <body>
-  <div class="file-protocol-warning" id="fileProtocolWarning" role="alert">
-    <strong>视频需要通过本地 HTTP 服务打开。</strong>
-    <span>请双击同目录的 <code>启动网页.command</code>；直接使用 <code>file://</code> 会导致浏览器拒绝或中断视频加载。</span>
-  </div>
-  <a class="skip-link" href="#overview">Skip to content</a>
 
   <!-- ============ Navigation ============ -->
   <nav class="topnav" id="topnav" aria-label="Primary navigation">
@@ -1225,10 +1107,9 @@
       <span>KVPO</span>
     </a>
     <div class="links">
-      <a href="#overview">Overview</a>
-      <a href="#abstract">Abstract</a>
-      <a href="#method">Method</a>
       <a href="#compare">Compare</a>
+      <a href="#overview">Overview</a>
+      <a href="#method">Method</a>
       <a href="#gallery">Gallery</a>
     </div>
   </nav>
@@ -1236,93 +1117,145 @@
   <!-- ============ Hero ============ -->
   <header class="hero" id="top" data-nav="dark">
     <div class="mosaic" id="mosaic" aria-hidden="true"></div>
-    <div class="inner">
-      <span class="badge"><span class="dot"></span>ODE-Native GRPO · Causal KV Exploration · Autoregressive Video</span>
-      <h1><img src="framework/kvpo_loge.png" alt=""><span>KV<span class="grad">PO</span></span></h1>
-      <p class="subtitle">Autoregressive Video Alignment via KV Semantic Exploration</p>
-      <p class="authors">Anonymous Authors</p>
-      <p class="affil">Supplementary Project Page · Paper under review</p>
 
-      <div class="buttons">
+    <div class="hero-inner">
+      <div class="hero-kicker">
+        <span class="dot" aria-hidden="true"></span>
+        <span>ODE-Native GRPO · Causal KV Exploration</span>
+      </div>
+
+      <div class="hero-wordmark" aria-hidden="true">KVPO</div>
+      <h1 class="hero-title">Autoregressive Video Alignment via KV Semantic Exploration</h1>
+
+      <p class="hero-lead">
+        Relocating RL exploration from stochastic noise into the <strong>historical KV cache</strong>, paired with <strong>Trajectory Velocity Energy</strong> to align distilled video generators strictly within their native ODE dynamics.
+      </p>
+
+      <div class="hero-buttons">
         <a class="btn primary" href="#compare">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M8 8l-4 4 4 4"/><path d="M16 8l4 4-4 4"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v18"/><path d="M8 8l-4 4 4 4"/><path d="M16 8l4 4-4 4"/></svg>
           Interactive Compare
         </a>
         <a class="btn" href="#gallery">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
           Video Gallery (39)
         </a>
         <a class="btn" href="#method">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="12" cy="18" r="3"/><path d="M8.5 7.5L11 15M15.5 7.5L13 15"/></svg>
-          Method Explorer
-        </a>
-        <a class="btn soon" href="#" aria-disabled="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
-          Paper (soon)
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2.8"/><circle cx="18" cy="6" r="2.8"/><circle cx="12" cy="18" r="2.8"/><path d="M8.2 8L11 15.2M15.8 8L13 15.2"/></svg>
+          Method Overview
         </a>
       </div>
-
-      <p class="tldr">
-        <span class="tag-tldr">TL;DR</span>
-        <b>KVPO</b> relocates reinforcement learning exploration from stochastic noise into the <b>historical KV cache</b>, producing semantically diverse storyline branches strictly on the data manifold, and scores them via <b>Trajectory Velocity Energy</b> for fully ODE-native GRPO alignment.
-      </p>
-
-      <a class="scrollcue" href="#overview"><span></span>See it in action</a>
     </div>
   </header>
 
   <main>
-    <!-- ============ Overview ============ -->
+    <!-- ============ Interactive Drag-to-Compare Showcase ============ -->
+    <section class="block tint" id="compare" data-nav="light">
+      <div class="wrap">
+        <div class="sec-head">
+          <div class="eyebrow">Interactive Comparison</div>
+          <h2 class="title">Drag across the frame to compare baseline vs. KVPO</h2>
+          <p class="lead">
+            Frame-locked playback across LongLive, MemFlow, and Short baselines. Drag the divider to inspect visual detail, motion stability, and storyline progression.
+          </p>
+        </div>
+
+        <div class="card panel reveal">
+          <div class="panel-bar">
+            <div class="chiprow">
+              <span class="lbl">Scene</span>
+              <div class="chips" id="cmpSceneChips"></div>
+            </div>
+            <div class="chips" id="cmpModeChips" role="group" aria-label="Comparison view mode">
+              <button class="chip on" type="button" data-cmp-mode="slider">Drag Slider</button>
+              <button class="chip" type="button" data-cmp-mode="sbs">Side-by-Side</button>
+            </div>
+          </div>
+
+          <div class="cmp" id="mainCmp" data-cmp>
+            <video id="cmpLeft" muted autoplay loop playsinline preload="auto"></video>
+            <div class="top"><video id="cmpRight" muted autoplay loop playsinline preload="auto"></video></div>
+            <span class="lab l" id="cmpLabL">Baseline</span>
+            <span class="lab r">KVPO (Ours)</span>
+            <div class="bar"></div>
+            <div class="knob" aria-hidden="true">⇆</div>
+            <div class="hint">drag to compare</div>
+          </div>
+
+          <div class="row2">
+            <div class="chips">
+              <button class="mini-btn" id="cmpPlayBtn" type="button">❚❚ Pause</button>
+              <button class="mini-btn" id="cmpRestartBtn" type="button">↺ Restart</button>
+            </div>
+            <div class="scrub-wrap">
+              <input class="range" id="cmpScrub" type="range" min="0" max="1000" value="0" aria-label="Synchronized video timeline">
+              <span class="time-txt" id="cmpTime">0:00 / 0:00</span>
+            </div>
+            <div class="chips" id="cmpSpeedChips" role="group" aria-label="Playback speed">
+              <button class="chip on" type="button" data-cmp-speed="1">1×</button>
+              <button class="chip" type="button" data-cmp-speed="2">2×</button>
+              <button class="chip" type="button" data-cmp-speed="4">4×</button>
+            </div>
+          </div>
+
+          <div class="seg-grid" id="cmpSegments"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Overview & Abstract ============ -->
     <section class="block" id="overview" data-nav="light">
       <div class="wrap">
-        <div class="eyebrow">Core Insight</div>
-        <h2 class="title">Explore where semantics live: the historical KV cache</h2>
-        <p class="lead">
-          Existing RL alignment methods for video rely on noise perturbation and SDE surrogates that conflict with the deterministic ODE dynamics of distilled autoregressive generators. KVPO moves exploration into causal memory and keeps optimization strictly ODE-native.
-        </p>
+        <div class="sec-head">
+          <div class="eyebrow">Core Insight</div>
+          <h2 class="title">Explore where semantics live: the historical KV cache</h2>
+          <p class="lead">
+            Noise-based RL exploration perturbs low-level pixels and introduces SDE surrogate mismatch on distilled ODE video models. KVPO branches directly inside causal memory while keeping optimization strictly ODE-native.
+          </p>
+        </div>
 
         <div class="ideas">
           <div class="card idea reveal">
             <div class="k">01 · CAUSAL MEMORY</div>
             <h3>Semantic branching on manifold</h3>
-            <p>Stochastically routing historical KV entries inside a perturbed window creates diverse storyline futures without injecting off-manifold noise.</p>
+            <p>Stochastic routing over historical KV entries inside a perturbed window creates diverse storyline futures without off-manifold noise.</p>
           </div>
           <div class="card idea reveal">
             <div class="k">02 · NATIVE POLICY</div>
             <h3>Trajectory Velocity Energy</h3>
-            <p>Replaying candidate branches under the clean deployment context converts flow-matching velocity discrepancies into a Gibbs-form surrogate policy.</p>
+            <p>Replaying candidate branches under the clean deployment context maps flow-matching velocities into a Gibbs-form surrogate policy.</p>
           </div>
           <div class="card idea reveal">
             <div class="k">03 · CONTRASTIVE ODE</div>
             <h3>Reward-weighted alignment</h3>
-            <p>Group-relative advantage weighting improves visual quality, motion quality, and text-video alignment with zero SDE mismatch.</p>
+            <p>Group-relative advantage weighting improves visual quality, motion dynamics, and text-video alignment with zero SDE gap.</p>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ============ Abstract ============ -->
-    <section class="block tint" id="abstract" data-nav="light">
-      <div class="wrap">
-        <div class="card pad reveal">
-          <div class="eyebrow">Abstract</div>
-          <p class="abstract">
-            Aligning streaming autoregressive (AR) video generators with human preferences is challenging. Existing reinforcement learning methods predominantly rely on noise-based exploration and SDE-based surrogate policies that are mismatched to the deterministic ODE dynamics of distilled AR models, and tend to perturb low-level appearance rather than the high-level semantic storyline progression critical for long-horizon coherence. To address these limitations, we present <span class="hl">KVPO</span>, an ODE-native online Group Relative Policy Optimization (GRPO) framework for aligning streaming video generators. For diversity exploration, KVPO introduces a <span class="hl">causal-semantic exploration paradigm</span> that relocates the source of variation from stochastic noise to the historical KV cache. By stochastically routing historical KV entries, it constructs semantically diverse generation branches that remain strictly on the data manifold. For policy modeling, KVPO introduces a velocity-field surrogate policy based on <span class="hl">Trajectory Velocity Energy (TVE)</span>, which quantifies branch likelihood in flow-matching velocity space and yields a reward-weighted contrastive objective fully consistent with the native ODE formulation. Experiments on multiple distilled AR video generators demonstrate consistent gains in visual quality, motion quality, and text-video alignment across both single-prompt short-video and multi-prompt long-video settings.
+        <div class="card abstract-split reveal">
+          <div class="abstract-meta">
+            <strong>Abstract</strong>
+            <span>Paper summary</span>
+          </div>
+          <p class="abstract-text">
+            Aligning streaming autoregressive (AR) video generators with human preferences is challenging. Existing reinforcement learning methods predominantly rely on noise-based exploration and SDE-based surrogate policies that are mismatched to the deterministic ODE dynamics of distilled AR models, and tend to perturb low-level appearance rather than the high-level semantic storyline progression critical for long-horizon coherence. To address these limitations, we present <b>KVPO</b>, an ODE-native online Group Relative Policy Optimization (GRPO) framework for aligning streaming video generators. For diversity exploration, KVPO introduces a <b>causal-semantic exploration paradigm</b> that relocates the source of variation from stochastic noise to the historical KV cache. By stochastically routing historical KV entries, it constructs semantically diverse generation branches that remain strictly on the data manifold. For policy modeling, KVPO introduces a velocity-field surrogate policy based on <b>Trajectory Velocity Energy (TVE)</b>, which quantifies branch likelihood in flow-matching velocity space and yields a reward-weighted contrastive objective fully consistent with the native ODE formulation. Experiments on multiple distilled AR video generators demonstrate consistent gains in visual quality, motion quality, and text-video alignment across both single-prompt short-video and multi-prompt long-video settings.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- ============ Interactive Method Explorer (Robin-World style) ============ -->
-    <section class="block" id="method" data-nav="light">
+    <!-- ============ Interactive Architecture ============ -->
+    <section class="block tint" id="method" data-nav="light">
       <div class="wrap">
-        <div class="eyebrow">Interactive Architecture</div>
-        <h2 class="title">One native loop from KV exploration to policy alignment</h2>
-        <p class="lead">Select a stage below to spotlight its exact region in the KVPO training pipeline, or click the figure to inspect it at full resolution.</p>
+        <div class="sec-head">
+          <div class="eyebrow">Method</div>
+          <h2 class="title">One native loop from KV exploration to policy alignment</h2>
+          <p class="lead">Select any stage to spotlight its path inside the KVPO training pipeline, or click the diagram to inspect at full resolution.</p>
+        </div>
 
         <div class="pipeline-explorer reveal">
           <div class="pipeline-stage-bar">
-            <span class="stage-label">Pipeline Spotlight</span>
+            <span class="stage-label">Interactive Pipeline</span>
             <div class="chips" id="stageChips">
               <button class="chip on" type="button" data-stage="all">All Stages</button>
               <button class="chip" type="button" data-stage="a">(a) KV Exploration</button>
@@ -1349,10 +1282,8 @@
           </figure>
 
           <div class="arch-inspector">
-            <div>
-              <h4 id="inspTitle">Full KVPO Training Pipeline — (a) Rollout → (b) Replay → (c) Policy Optimization</h4>
-              <p id="inspDesc">Starting from shared initial noise, KVPO branches via stochastic KV routing inside a perturbed window (a), replays each branch under the unperturbed deployment context to compute Trajectory Velocity Energy and Gibbs surrogate probabilities (b), and updates the AR generator with reward-weighted contrastive flow matching (c).</p>
-            </div>
+            <h4 id="inspTitle">Full KVPO Training Pipeline — (a) Rollout → (b) Replay → (c) Policy Optimization</h4>
+            <p id="inspDesc">Starting from shared initial noise, KVPO branches via stochastic KV routing inside a perturbed window (a), replays each branch under the unperturbed deployment context to compute Trajectory Velocity Energy and Gibbs surrogate probabilities (b), and updates the AR generator with reward-weighted contrastive flow matching (c).</p>
           </div>
         </div>
 
@@ -1376,69 +1307,19 @@
       </div>
     </section>
 
-    <!-- ============ Interactive Drag-to-Compare Showcase (StreamVSR / Robin-World .cmp) ============ -->
-    <section class="block tint" id="compare" data-nav="light">
-      <div class="wrap">
-        <div class="eyebrow">Interactive Comparison</div>
-        <h2 class="title">Drag to compare baseline vs. KVPO, frame by frame</h2>
-        <p class="lead">
-          Both videos run in tight frame lock. Drag the divider across the frame to inspect visual fidelity, motion coherence, and prompt adherence directly — or switch to Side-by-Side mode.
-        </p>
-
-        <div class="card panel reveal">
-          <div class="panel-controls-top">
-            <div class="chiprow" style="margin:0">
-              <span class="lbl">Scene</span>
-              <div class="chips" id="cmpSceneChips"></div>
-            </div>
-            <div class="chips" id="cmpModeChips" role="group" aria-label="Comparison view mode">
-              <button class="chip on" type="button" data-cmp-mode="slider">Drag Slider</button>
-              <button class="chip" type="button" data-cmp-mode="sbs">Side-by-Side</button>
-            </div>
-          </div>
-
-          <div class="cmp" id="mainCmp" data-cmp>
-            <video id="cmpLeft" muted autoplay loop playsinline preload="auto"></video>
-            <div class="top"><video id="cmpRight" muted autoplay loop playsinline preload="auto"></video></div>
-            <span class="lab l" id="cmpLabL">Baseline</span>
-            <span class="lab r">KVPO (Ours)</span>
-            <div class="bar"></div>
-            <div class="knob" aria-hidden="true">⇆</div>
-            <div class="hint">drag to compare</div>
-          </div>
-
-          <div class="row2">
-            <div class="chips" style="gap:8px">
-              <button class="mini-btn" id="cmpPlayBtn" type="button">❚❚ Pause</button>
-              <button class="mini-btn" id="cmpRestartBtn" type="button">↺ Restart</button>
-            </div>
-            <div class="scrub-wrap">
-              <input class="range" id="cmpScrub" type="range" min="0" max="1000" value="0" aria-label="Synchronized video timeline">
-              <span class="time-txt" id="cmpTime">0:00 / 0:00</span>
-            </div>
-            <div class="chips" id="cmpSpeedChips" role="group" aria-label="Playback speed">
-              <button class="chip on" type="button" data-cmp-speed="1">1×</button>
-              <button class="chip" type="button" data-cmp-speed="2">2×</button>
-              <button class="chip" type="button" data-cmp-speed="4">4×</button>
-            </div>
-          </div>
-
-          <div class="seg-grid" id="cmpSegments"></div>
-        </div>
-      </div>
-    </section>
-
     <!-- ============ Dark Full Video Gallery ============ -->
     <section class="block dark" id="gallery" data-nav="dark">
       <div class="wrap">
-        <div class="eyebrow">Video Gallery</div>
-        <h2 class="title">All 39 paired comparisons across three AR settings</h2>
-        <p class="lead">
-          Each card compares the original baseline against KVPO under the identical prompt. Click <b>Slider</b> on any card to open it in the interactive drag-to-compare modal.
-        </p>
+        <div class="sec-head">
+          <div class="eyebrow">Video Gallery</div>
+          <h2 class="title">All 39 paired comparisons across three AR settings</h2>
+          <p class="lead">
+            Every card compares the original baseline against KVPO under the identical prompt. Click <b>Compare ⇆</b> on any card to inspect it in the drag-slider modal.
+          </p>
+        </div>
 
         <div class="gal-toolbar">
-          <div class="chiprow" style="margin:0">
+          <div class="chiprow">
             <span class="lbl">Model</span>
             <div class="chips" id="galFilter">
               <button class="chip on" type="button" data-filter="all">All <span class="cnt">39</span></button>
@@ -1463,7 +1344,7 @@
 
   <footer>
     <div class="foot-inner">
-      <span>KVPO · Anonymous Supplementary Project Page</span>
+      <span>KVPO · Supplementary Project Page</span>
       <a href="#top" style="color:#e2e8f0;font-weight:500">Back to top ↑</a>
     </div>
   </footer>
@@ -1507,7 +1388,7 @@
       </div>
 
       <div class="row2">
-        <div class="chips" style="gap:8px">
+        <div class="chips">
           <button class="mini-btn" id="modPlayBtn" type="button">❚❚ Pause</button>
           <button class="mini-btn" id="modRestartBtn" type="button">↺ Restart</button>
         </div>
@@ -1522,11 +1403,6 @@
   </div>
 
   <script>
-    if (location.protocol === "file:") {
-      document.getElementById("fileProtocolWarning").classList.add("show");
-      console.warn("KVPO: open this page through a local HTTP server to enable reliable video playback.");
-    }
-
     /* ============ Utilities ============ */
     function esc(s) {
       return String(s)
@@ -1559,7 +1435,7 @@
     /* ============ Topnav Theme & ScrollSpy ============ */
     const topnav = document.getElementById("topnav");
     const navAnchors = Array.from(document.querySelectorAll(".topnav .links a"));
-    const navSections = ["overview", "abstract", "method", "compare", "gallery"]
+    const navSections = ["compare", "overview", "method", "gallery"]
       .map((id) => document.getElementById(id))
       .filter(Boolean);
 
@@ -1567,7 +1443,7 @@
       let light = false;
       document.querySelectorAll("[data-nav]").forEach((el) => {
         const r = el.getBoundingClientRect();
-        if (r.top <= 40 && r.bottom > 40) light = el.dataset.nav === "light";
+        if (r.top <= 42 && r.bottom > 42) light = el.dataset.nav === "light";
       });
       topnav.classList.toggle("is-light", light);
 
@@ -1590,15 +1466,47 @@
           revObserver.unobserve(e.target);
         }
       });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.06 });
     document.querySelectorAll(".reveal").forEach((el) => revObserver.observe(el));
 
-    /* ============ Hero Mosaic (Zero-Decoder Image Wall) ============ */
+    /* ============ Hybrid Hero Mosaic (6 perimeter video tiles + 24 posters, unloaded off-screen) ============ */
     const mosaic = document.getElementById("mosaic");
+    const liveTileSet = new Set([1, 6, 7, 12, 19, 24, 25, 30]); // Outer-edge tiles for live motion, max 8 decoders
     mosaic.innerHTML = Array.from({ length: 30 }, (_, i) => {
-      const id = String(i + 1).padStart(2, "0");
+      const idx = i + 1;
+      const id = String(idx).padStart(2, "0");
+      if (liveTileSet.has(idx) && !reducedMotion.matches) {
+        return `<div class="mosaic-tile"><video data-hero-src="framework/hero/videos/wall-${id}.m4v" poster="framework/hero/wall-${id}.jpg" muted loop playsinline preload="none" tabindex="-1"></video></div>`;
+      }
       return `<div class="mosaic-tile"><img src="framework/hero/wall-${id}.jpg" alt="" loading="eager" decoding="async"></div>`;
     }).join("");
+
+    const heroEl = document.getElementById("top");
+    function mountHeroVideos(active) {
+      mosaic.querySelectorAll("video[data-hero-src]").forEach((v) => {
+        if (active && !reducedMotion.matches) {
+          if (!v.dataset.mounted) {
+            v.dataset.mounted = "1";
+            v.muted = true;
+            v.defaultMuted = true;
+            v.loop = true;
+            v.playsInline = true;
+            v.src = v.dataset.heroSrc;
+            v.load();
+          }
+          v.play().catch(() => {});
+        } else if (v.dataset.mounted) {
+          delete v.dataset.mounted;
+          v.pause();
+          v.removeAttribute("src");
+          v.load();
+        }
+      });
+    }
+    const heroObs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => mountHeroVideos(e.isIntersecting));
+    }, { threshold: 0.05 });
+    heroObs.observe(heroEl);
 
     /* ============ Interactive Architecture Spotlight ============ */
     const stageMeta = {
@@ -1661,8 +1569,7 @@
     document.querySelectorAll("#stageCards [data-stage-card]").forEach((c) =>
       c.addEventListener("click", () => {
         const s = c.dataset.stageCard;
-        const already = c.classList.contains("is-active");
-        setArchStage(already ? "all" : s);
+        setArchStage(c.classList.contains("is-active") ? "all" : s);
       })
     );
 
@@ -1765,10 +1672,8 @@
         right.muted = true;
         left.playbackRate = rate;
         right.playbackRate = rate;
-        const p1 = left.play();
-        const p2 = right.play();
-        if (p1) p1.catch(() => {});
-        if (p2) p2.catch(() => {});
+        left.play()?.catch(() => {});
+        right.play()?.catch(() => {});
         playBtn.textContent = "❚❚ Pause";
       }
       function pause() {
@@ -1915,7 +1820,7 @@
     let galSpeed = 1;
     let galObs;
     const activeCards = new Set();
-    const MAX_ACTIVE_CARDS = 6; // Max 12 decoders active at once (safe for Safari & Chrome)
+    const MAX_ACTIVE_CARDS = 5; // Max 10 gallery decoders active at once
 
     function unloadCardVids(card) {
       if (!activeCards.has(card)) return;
@@ -1983,7 +1888,7 @@
               <div class="gacts">
                 <button class="gbtn" type="button" data-gplay>Pause</button>
                 <button class="gbtn" type="button" data-grestart>↺</button>
-                <button class="gbtn accent" type="button" data-gmodal>Slider ⇆</button>
+                <button class="gbtn accent" type="button" data-gmodal>Compare ⇆</button>
               </div>
             </div>
             <div class="gpair">
@@ -2021,7 +1926,7 @@
             unloadCardVids(card);
           }
         });
-      }, { rootMargin: "240px 0px", threshold: 0.01 });
+      }, { rootMargin: "220px 0px", threshold: 0.01 });
 
       galGrid.querySelectorAll(".gcard").forEach((card, idx) => {
         const [vl, vr] = card.querySelectorAll("video");
