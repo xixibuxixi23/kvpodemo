@@ -754,208 +754,71 @@
     }
     .abstract-text b { color: var(--ink); font-weight: 650; }
 
-    /* ============ Remotion-Engineered Vector Architecture Explorer (Robin-World style) ============ */
+    /* ============ Paper Figure with Interactive Overlays ============ */
+    #method .wrap { width: min(100%, 1560px); }
     .pipeline-explorer {
       margin-top: 28px;
-      border-radius: var(--radius-lg);
+      border-radius: 18px;
       border: 1px solid var(--line);
       background: #fff;
-      box-shadow: var(--shadow);
+      box-shadow: 0 12px 38px rgba(30, 41, 59, 0.05);
       overflow: hidden;
     }
     .pipeline-stage-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-      padding: 13px 22px;
-      border-bottom: 1px solid var(--line);
-      background: var(--tint);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 14px; flex-wrap: wrap; padding: 14px 22px;
+      border-bottom: 1px solid var(--line); background: #fff;
     }
-    .stage-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--mono);
-      font-size: 11.5px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-    }
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.55);
-      animation: dotPing 2s infinite;
-    }
-    .pipeline-explorer.is-paused .pulse-dot { animation: none; opacity: 0.4; }
-    @keyframes dotPing {
-      70% { box-shadow: 0 0 0 7px rgba(37, 99, 235, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
-    }
-    .pipeline-figure {
-      margin: 0;
-      padding: 14px 16px 10px;
-      background: #fff;
-    }
-    .remotion-board {
-      position: relative;
-      width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      background: #ffffff;
-      border: 1px solid #edf1f7;
-    }
-    .remotion-svg {
-      display: block;
-      width: 100%;
-      height: auto;
-      font-family: var(--sans);
-      user-select: none;
-    }
-    .remotion-svg .mono { font-family: var(--mono); }
-    .remotion-svg .mod-node {
-      cursor: pointer;
-      transition: filter 160ms ease;
-    }
-    .remotion-svg .mod-node:hover {
-      filter: drop-shadow(0 6px 14px rgba(37, 99, 235, 0.14));
-    }
-    .pipeline-scrim {
-      fill: rgba(15, 23, 42, 0.46);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 240ms ease;
-    }
-    .remotion-board.is-focused .pipeline-scrim { opacity: 1; }
-    .mod-focus-ring {
-      fill: none;
-      stroke-width: 3.5;
-      pointer-events: none;
-    }
-
-    /* Exact Orthogonal Remotion Wire Tracks & Flowing Pulses */
-    .wire-base {
-      fill: none;
-      stroke: #cbd5e1;
-      stroke-width: 2.6;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .flow-pulse {
-      pointer-events: none;
-      transition: opacity 220ms ease;
-    }
-    .flow-pulse.is-dim { opacity: 0.06; }
-    .flow-halo {
-      fill: none;
-      stroke-width: 11;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      opacity: 0.24;
-      stroke-dasharray: 0.14 0.86;
-      animation: remotionPulse 2.8s linear infinite;
-    }
-    .flow-ink {
-      fill: none;
-      stroke-width: 4;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-dasharray: 0.14 0.86;
-      animation: remotionPulse 2.8s linear infinite;
-    }
-    .flow-a .flow-halo, .flow-a .flow-ink { stroke: #2563eb; }
-    .flow-a2 .flow-halo, .flow-a2 .flow-ink { stroke: #d97706; }
-    .flow-a3 .flow-halo, .flow-a3 .flow-ink { stroke: #059669; }
-    .flow-b .flow-halo, .flow-b .flow-ink { stroke: #7c3aed; }
-    .flow-c .flow-halo, .flow-c .flow-ink { stroke: #0d9488; }
-
-    .pipeline-explorer.is-paused .flow-halo,
-    .pipeline-explorer.is-paused .flow-ink {
-      animation-play-state: paused;
-    }
-    @keyframes remotionPulse {
-      from { stroke-dashoffset: 1; }
-      to { stroke-dashoffset: 0; }
-    }
-
-    .module-choices {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      padding: 8px 16px 14px;
-      background: #fff;
-    }
+    .stage-label { font-size: 12px; font-weight: 650; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); }
+    .pipeline-figure { margin: 0; padding: 24px 20px 12px; background: #fff; }
+    .figure-scroll { overflow-x: auto; overscroll-behavior-x: contain; }
+    .paper-board { position: relative; width: 100%; min-width: 960px; }
+    .paper-artwork { width: 100%; height: auto; aspect-ratio: 1600 / 660; user-select: none; }
+    .paper-overlay { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .mod-node { fill: transparent; stroke: transparent; stroke-width: 1.2; cursor: pointer; transition: fill 160ms, stroke 160ms; }
+    .mod-node:hover { fill: rgba(99, 102, 241, 0.035); stroke: #a5b4cf; }
+    .mod-node:focus-visible { outline: none; stroke: #4f6eb0; stroke-width: 2; }
+    .pipeline-scrim { fill: white; opacity: 0; pointer-events: none; transition: opacity 200ms; }
+    .paper-board.is-focused .pipeline-scrim { opacity: 0.55; }
+    .mod-focus-ring { fill: none; stroke-width: 1.2; pointer-events: none; }
+    .flow-pulse { fill: none; stroke-width: 2.1; stroke-linecap: round; pointer-events: none; opacity: 0.75; transition: opacity 180ms; }
+    .flow-pulse.is-dim { opacity: 0.08; }
+    .flow-ink { stroke-dasharray: 0.045 0.955; animation: paperFlow 5s linear infinite; animation-delay: inherit; }
+    .flow-a { stroke: #527bb6; }
+    .flow-a2 { stroke: #e4a076; }
+    .flow-a3 { stroke: #7ba564; }
+    .flow-b { stroke: #9574b6; }
+    .flow-c { stroke: #6f9c91; }
+    .pipeline-explorer.is-paused .flow-ink { animation-play-state: paused; }
+    @keyframes paperFlow { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+    .figure-hint { display: none; margin: 8px 2px 0; font-size: 12px; color: var(--ink-muted); }
+    .module-choices { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 22px 18px; }
     .mchoice {
-      padding: 10px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      background: #f8fafc;
-      color: var(--ink-2);
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      transition: all 150ms ease;
+      display: inline-flex; align-items: center; gap: 9px; padding: 7px 13px;
+      border-radius: 999px; border: 1px solid var(--line); background: white;
+      color: var(--ink-2); font-size: 12px; font-weight: 550;
     }
-    .mchoice:hover {
-      border-color: #93c5fd;
-      background: #eff6ff;
-      color: var(--ink);
+    .mchoice:hover, .mchoice.on { background: #f2f5fb; border-color: #aebfda; color: #294e86; }
+    .mchoice .dot-k { width: 6px; height: 6px; border-radius: 50%; }
+    .arch-inspector { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding: 18px 22px; border-top: 1px solid var(--line); background: #f8fafc; }
+    .arch-inspector > div:first-child { flex: 1 1 540px; }
+    .arch-inspector h4 { margin: 0 0 5px; font-size: 14px; font-weight: 650; }
+    .arch-inspector p { margin: 0; max-width: 920px; font-size: 13px; line-height: 1.7; color: var(--ink-muted); }
+    .insp-formula { max-width: 100%; overflow-wrap: anywhere; font-family: var(--mono); font-size: 12px; color: #526581; }
+    #figModal .box { width: min(100%, 1800px); }
+    .figure-modal-actions { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+    .figure-modal-actions a { color: #42649e; font-size: 13px; }
+    #figModal .figure-scroll { max-height: 75vh; }
+    #figModal .figure-scroll.is-zoomed .paper-artwork { width: 1800px; min-width: 1800px; max-width: none; }
+    #figModal .mini-btn { background: #f5f7fb; border-color: var(--line); color: var(--ink); }
+    #figModal .modal-top { flex-wrap: wrap; }
+    @media (max-width: 1040px) {
+      .figure-hint { display: block; }
+      .pipeline-figure { padding: 16px 12px 8px; }
+      .pipeline-stage-bar, .arch-inspector { padding: 14px 16px; }
+      .module-choices { padding: 10px 16px 16px; }
     }
-    .mchoice.on {
-      border-color: var(--accent);
-      background: #eff6ff;
-      color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
-    }
-    .mchoice .dot-k {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex: 0 0 auto;
-    }
-
-    .arch-inspector {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-      padding: 15px 22px 17px;
-      border-top: 1px solid var(--line);
-      background: var(--tint);
-    }
-    .arch-inspector h4 {
-      margin: 0 0 4px;
-      font-size: 15px;
-      font-weight: 650;
-      color: var(--ink);
-    }
-    .arch-inspector p {
-      margin: 0;
-      max-width: 800px;
-      font-size: 13.8px;
-      line-height: 1.6;
-      color: var(--ink-muted);
-    }
-    .insp-formula {
-      padding: 7px 12px;
-      border-radius: 10px;
-      border: 1px solid var(--line-strong);
-      background: #fff;
-      font-family: var(--mono);
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--ink);
-      white-space: nowrap;
-    }
+    @media (prefers-reduced-motion: reduce) { .flow-ink { animation: none !important; } }
 
     /* ============ Quantitative Charts & Interactive Benchmarks (StreamVSR + Robin-World style) ============ */
     .quant-grid {
@@ -1563,447 +1426,87 @@
       </div>
     </section>
 
-    <!-- ============ Remotion-Engineered Animated Architecture ============ -->
+    <!-- ============ Interactive Paper Architecture ============ -->
     <section class="block tint" id="method" data-nav="light">
       <div class="wrap">
         <div class="sec-head">
-          <div class="eyebrow">Animated Model Architecture</div>
+          <div class="eyebrow">Model Architecture</div>
           <h2 class="title">One native loop from KV exploration to policy alignment</h2>
-          <p class="lead">Click any module or capability route to trace its exact orthogonal signal path and mathematical formulation.</p>
+          <p class="lead">Follow the three stages of KVPO. Select a stage or a module to explore how causal memory connects exploration, replay, and optimization.</p>
         </div>
 
         <div class="pipeline-explorer reveal" id="pipeExplorer">
           <div class="pipeline-stage-bar">
-            <span class="stage-label"><span class="pulse-dot" aria-hidden="true"></span>Interactive Architecture</span>
+            <span class="stage-label">KVPO Training Pipeline</span>
             <div class="chips">
-              <button class="chip on" type="button" id="archAllBtn" data-route="all">All Signal Flows</button>
-              <button class="mini-btn" type="button" id="pulseToggleBtn">Pause Pulse</button>
-              <button class="mini-btn" type="button" id="openFigZoom">Paper Figure</button>
+              <button class="chip on" type="button" id="archAllBtn" data-route="all" aria-pressed="true">Full pipeline</button>
+              <button class="mini-btn" type="button" id="pulseToggleBtn" aria-pressed="true">Pause flow</button>
+              <button class="mini-btn" type="button" id="openFigZoom">Expand figure</button>
             </div>
           </div>
 
           <figure class="pipeline-figure">
-            <div class="remotion-board" id="archBoard">
-              <svg class="remotion-svg" viewBox="0 0 2048 920" role="img" aria-label="KVPO interactive training pipeline diagram">
-                <defs>
-                  <pattern id="noisePat" width="8" height="8" patternUnits="userSpaceOnUse">
-                    <rect width="8" height="8" fill="#e2e8f0"/>
-                    <rect x="0" y="0" width="3" height="3" fill="#64748b"/>
-                    <rect x="4" y="2" width="2" height="2" fill="#94a3b8"/>
-                    <rect x="2" y="5" width="3" height="2" fill="#475569"/>
-                    <rect x="6" y="6" width="2" height="2" fill="#334155"/>
-                  </pattern>
-                  <linearGradient id="kvSlotGrad" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#eff6ff"/>
-                    <stop offset="100%" stop-color="#e0e7ff"/>
-                  </linearGradient>
-                  <linearGradient id="arGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#f5f3ff"/>
-                    <stop offset="100%" stop-color="#ede9fe"/>
-                  </linearGradient>
-                  <linearGradient id="gibbsLeft" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.65"/>
-                    <stop offset="100%" stop-color="#60a5fa" stop-opacity="0.08"/>
-                  </linearGradient>
-                  <linearGradient id="gibbsRight" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.55"/>
-                    <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.08"/>
-                  </linearGradient>
-                  <clipPath id="clipPre1"><rect x="48" y="414" width="142" height="104" rx="8"/></clipPath>
-                  <clipPath id="clipPre2"><rect x="48" y="538" width="142" height="104" rx="8"/></clipPath>
-                  <clipPath id="clipB11"><rect x="290" y="462" width="152" height="106" rx="8"/></clipPath>
-                  <clipPath id="clipB12"><rect x="472" y="462" width="152" height="106" rx="8"/></clipPath>
-                  <clipPath id="clipB13"><rect x="678" y="462" width="152" height="106" rx="8"/></clipPath>
-                  <clipPath id="clipB21"><rect x="290" y="606" width="152" height="106" rx="8"/></clipPath>
-                  <clipPath id="clipB22"><rect x="472" y="606" width="152" height="106" rx="8"/></clipPath>
-                  <clipPath id="clipB23"><rect x="678" y="606" width="152" height="106" rx="8"/></clipPath>
-                  <clipPath id="clipB31"><rect x="290" y="750" width="152" height="106" rx="8"/></clipPath>
-                  <clipPath id="clipB32"><rect x="472" y="750" width="152" height="106" rx="8"/></clipPath>
-                  <clipPath id="clipB33"><rect x="678" y="750" width="152" height="106" rx="8"/></clipPath>
-                  <marker id="arrBlue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748b"/></marker>
-                  <mask id="archSpotlightMask">
-                    <rect x="0" y="0" width="2048" height="920" fill="white"/>
-                    <g id="archCutouts"></g>
-                  </mask>
-                </defs>
-
-                <!-- ========= Zone Containers ========= -->
-                <!-- Zone (a) -->
-                <rect x="16" y="16" width="996" height="888" rx="22" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
-                <rect x="36" y="34" width="38" height="28" rx="8" fill="#dbeafe"/>
-                <text x="55" y="53" text-anchor="middle" font-size="14" font-weight="800" fill="#1d4ed8">(a)</text>
-                <text x="86" y="54" font-size="18" font-weight="750" fill="#0f172a" letter-spacing="-0.02em">Causal-Semantic Exploration</text>
-                <rect x="904" y="35" width="88" height="26" rx="99" fill="#eff6ff" stroke="#bfdbfe"/>
-                <text x="948" y="52" text-anchor="middle" class="mono" font-size="11" font-weight="700" fill="#2563eb">ROLLOUT</text>
-
-                <!-- Zone (b) -->
-                <rect x="1036" y="16" width="996" height="424" rx="22" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
-                <rect x="1056" y="34" width="38" height="28" rx="8" fill="#ede9fe"/>
-                <text x="1075" y="53" text-anchor="middle" font-size="14" font-weight="800" fill="#6d28d9">(b)</text>
-                <text x="1106" y="54" font-size="18" font-weight="750" fill="#0f172a" letter-spacing="-0.02em">Velocity-Field Surrogate Policy Modeling</text>
-                <rect x="1924" y="35" width="86" height="26" rx="99" fill="#f5f3ff" stroke="#ddd6fe"/>
-                <text x="1967" y="52" text-anchor="middle" class="mono" font-size="11" font-weight="700" fill="#7c3aed">REPLAY</text>
-
-                <!-- Zone (c) -->
-                <rect x="1036" y="460" width="996" height="444" rx="22" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
-                <rect x="1056" y="478" width="38" height="28" rx="8" fill="#d1fae5"/>
-                <text x="1075" y="497" text-anchor="middle" font-size="14" font-weight="800" fill="#047857">(c)</text>
-                <text x="1106" y="498" font-size="18" font-weight="750" fill="#0f172a" letter-spacing="-0.02em">Policy Optimization</text>
-                <rect x="1878" y="479" width="132" height="26" rx="99" fill="#ecfdf5" stroke="#a7f3d0"/>
-                <text x="1944" y="496" text-anchor="middle" class="mono" font-size="11" font-weight="700" fill="#059669">CONTRASTIVE ODE</text>
-
-                <!-- ========= Base Orthogonal Connector Tracks (Zero Box Crossings) ========= -->
-                <g id="wireTracks">
-                  <path class="wire-base" d="M 119 202 V 238" marker-end="url(#arrBlue)"/>
-                  <path class="wire-base" d="M 119 360 V 396" marker-end="url(#arrBlue)"/>
-                  <path class="wire-base" d="M 200 282 H 218 V 150 H 244" marker-end="url(#arrBlue)"/>
-                  <path class="wire-base" d="M 244 180 H 230 V 318 H 200" marker-end="url(#arrBlue)"/>
-
-                  <!-- KV Pool -> 3 Routers + Anchor -->
-                  <path class="wire-base" d="M 490 224 V 248 H 352 V 276" marker-end="url(#arrBlue)"/>
-                  <path class="wire-base" d="M 595 224 V 254 H 528 V 276" marker-end="url(#arrBlue)"/>
-                  <path class="wire-base" d="M 700 224 V 254 H 728 V 276" marker-end="url(#arrBlue)"/>
-                  <path class="wire-base" d="M 912 224 V 276" marker-end="url(#arrBlue)"/>
-
-                  <!-- Prefix + Routers -> 3 Perturbed Branch Rows via Dedicated Left Gutter -->
-                  <path class="wire-base" d="M 200 529 H 214 V 515 H 278 M 214 529 V 659 H 278 M 214 659 V 803 H 278"/>
-                  <path class="wire-base" stroke="#93c5fd" d="M 352 356 V 376 H 250 V 500 H 278"/>
-                  <path class="wire-base" stroke="#fcd34d" d="M 528 356 V 384 H 238 V 644 H 278"/>
-                  <path class="wire-base" stroke="#6ee7b7" d="M 728 356 V 392 H 226 V 788 H 278"/>
-
-                  <!-- Rollout Tuples + Anchor -> Zone B Replay -->
-                  <path class="wire-base" d="M 976 505 H 1020 V 210 H 1064 M 976 649 H 1020 M 976 793 H 1020" marker-end="url(#arrBlue)"/>
-                  <path class="wire-base" d="M 990 316 H 1064" marker-end="url(#arrBlue)"/>
-                  <path class="wire-base" d="M 1220 252 H 1256" marker-end="url(#arrBlue)"/>
-                  <path class="wire-base" d="M 1448 252 H 1484" marker-end="url(#arrBlue)"/>
-                  <path class="wire-base" d="M 1732 252 H 1768" marker-end="url(#arrBlue)"/>
-
-                  <!-- Branch Trajectories -> Zone C Reward -> Advantage -> PPO -> Update -->
-                  <path class="wire-base" d="M 976 535 H 1004 V 706 H 1064 M 976 679 H 1004 M 976 823 H 1004" marker-end="url(#arrBlue)"/>
-                  <path class="wire-base" d="M 1296 616 H 1332 M 1296 706 H 1332 M 1296 796 H 1332"/>
-                  <path class="wire-base" d="M 1888 408 V 536" marker-end="url(#arrBlue)"/>
-                  <path class="wire-base" d="M 1560 614 H 1596" marker-end="url(#arrBlue)"/>
-                  <path class="wire-base" d="M 1802 692 V 724" marker-end="url(#arrBlue)"/>
-                </g>
-
-                <!-- ========= Interactive Module Cards ========= -->
-                <!-- m-in: Shared Noise & Prompt -->
-                <g class="mod-node" data-mod="m-in" data-routes="a">
-                  <rect x="38" y="92" width="162" height="110" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
-                  <rect x="52" y="106" width="58" height="52" rx="8" fill="url(#noisePat)" stroke="#94a3b8"/>
-                  <rect x="124" y="106" width="62" height="52" rx="8" fill="#f1f5f9" stroke="#cbd5e1"/>
-                  <text x="155" y="136" text-anchor="middle" class="mono" font-size="13" font-weight="700" fill="#334155">Prompt</text>
-                  <text x="81" y="182" text-anchor="middle" font-size="11.5" font-weight="650" fill="#334155">Shared x_T</text>
-                  <text x="155" y="182" text-anchor="middle" font-size="11.5" font-weight="650" fill="#334155">Text C</text>
-                </g>
-
-                <!-- m-ar1: Rollout AR Generator -->
-                <g class="mod-node" data-mod="m-ar1" data-routes="a">
-                  <rect x="38" y="238" width="162" height="122" rx="14" fill="url(#arGrad)" stroke="#8b5cf6" stroke-width="1.8"/>
-                  <text x="119" y="264" text-anchor="middle" font-size="13.5" font-weight="750" fill="#4c1d95">AR Model θ</text>
-                  <rect x="58" y="278" width="22" height="58" rx="4" fill="#ddd6fe" stroke="#7c3aed"/>
-                  <rect x="89" y="278" width="22" height="58" rx="4" fill="#ddd6fe" stroke="#7c3aed"/>
-                  <rect x="120" y="278" width="22" height="58" rx="4" fill="#ddd6fe" stroke="#7c3aed"/>
-                  <rect x="151" y="278" width="22" height="58" rx="4" fill="#ddd6fe" stroke="#7c3aed"/>
-                  <line x1="52" y1="307" x2="184" y2="307" stroke="#6d28d9" stroke-width="1.8"/>
-                </g>
-
-                <!-- m-pre: Shared Prefix Blocks -->
-                <g class="mod-node" data-mod="m-pre" data-routes="a">
-                  <rect x="38" y="396" width="162" height="266" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
-                  <image href="framework/remotion/pre_1.jpg" x="48" y="414" width="142" height="104" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipPre1)"/>
-                  <image href="framework/remotion/pre_2.jpg" x="48" y="538" width="142" height="104" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipPre2)"/>
-                  <text x="119" y="656" text-anchor="middle" class="mono" font-size="10.5" font-weight="700" fill="#64748b">SHARED PREFIX</text>
-                </g>
-
-                <!-- Legend Card -->
-                <g>
-                  <rect x="38" y="684" width="162" height="198" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-dasharray="5 4"/>
-                  <text x="54" y="712" class="mono" font-size="11" font-weight="700" fill="#475569">WINDOW LEGEND</text>
-                  <circle cx="62" cy="742" r="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.6"/>
-                  <text x="78" y="746" font-size="12" font-weight="600" fill="#334155">Velocity Target û</text>
-                  <rect x="54" y="768" width="16" height="16" rx="4" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.6"/>
-                  <text x="78" y="781" font-size="12" font-weight="600" fill="#334155">Latent State z</text>
-                  <text x="54" y="818" class="mono" font-size="11" font-weight="600" fill="#64748b">Perturbed Window</text>
-                  <text x="54" y="838" class="mono" font-size="12.5" font-weight="700" fill="#0f172a">B = [b*, b* + W)</text>
-                  <text x="54" y="860" font-size="11.5" fill="#64748b">W = 5 blocks · S = 2 steps</text>
-                </g>
-
-                <!-- m-kv: Historical KV Cache Pool -->
-                <g class="mod-node" data-mod="m-kv" data-routes="a">
-                  <rect x="244" y="92" width="746" height="132" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6"/>
-                  <text x="264" y="122" font-size="14" font-weight="750" fill="#0f172a">Historical KV Cache Pool</text>
-                  <text x="970" y="122" text-anchor="end" class="mono" font-size="11.5" font-weight="700" fill="#2563eb">CAUSAL HISTORY ROUTING (CHR)</text>
-
-                  <!-- Sink KV -->
-                  <rect x="260" y="140" width="122" height="68" rx="10" fill="#f1f5f9" stroke="#94a3b8"/>
-                  <text x="321" y="160" text-anchor="middle" class="mono" font-size="10.5" font-weight="700" fill="#475569">SINK KV (LOCKED)</text>
-                  <rect x="272" y="170" width="28" height="26" rx="5" fill="#e2e8f0"/><text x="286" y="188" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#334155">1</text>
-                  <rect x="307" y="170" width="28" height="26" rx="5" fill="#e2e8f0"/><text x="321" y="188" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#334155">2</text>
-                  <rect x="342" y="170" width="28" height="26" rx="5" fill="#e2e8f0"/><text x="356" y="188" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#334155">3</text>
-
-                  <!-- Routable History Pool -->
-                  <rect x="394" y="140" width="440" height="68" rx="10" fill="url(#kvSlotGrad)" stroke="#60a5fa" stroke-width="1.5"/>
-                  <text x="614" y="160" text-anchor="middle" class="mono" font-size="10.5" font-weight="700" fill="#1d4ed8">ROUTABLE HISTORY Ω_L = {4, …, L−3}</text>
-                  <rect x="410" y="170" width="46" height="26" rx="6" fill="#fff" stroke="#93c5fd"/><text x="433" y="188" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#1e3a8a">4</text>
-                  <rect x="466" y="170" width="46" height="26" rx="6" fill="#fff" stroke="#93c5fd"/><text x="489" y="188" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#1e3a8a">5</text>
-                  <rect x="522" y="170" width="46" height="26" rx="6" fill="#fff" stroke="#93c5fd"/><text x="545" y="188" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#1e3a8a">6</text>
-                  <text x="598" y="188" text-anchor="middle" class="mono" font-size="15" font-weight="800" fill="#3b82f6">···</text>
-                  <rect x="626" y="170" width="56" height="26" rx="6" fill="#fff" stroke="#93c5fd"/><text x="654" y="188" text-anchor="middle" class="mono" font-size="11.5" font-weight="700" fill="#1e3a8a">L−5</text>
-                  <rect x="692" y="170" width="56" height="26" rx="6" fill="#fff" stroke="#93c5fd"/><text x="720" y="188" text-anchor="middle" class="mono" font-size="11.5" font-weight="700" fill="#1e3a8a">L−4</text>
-                  <rect x="758" y="170" width="56" height="26" rx="6" fill="#fff" stroke="#93c5fd"/><text x="786" y="188" text-anchor="middle" class="mono" font-size="11.5" font-weight="700" fill="#1e3a8a">L−3</text>
-
-                  <!-- Recent Anchor Slots -->
-                  <rect x="846" y="140" width="128" height="68" rx="10" fill="#fefce8" stroke="#eab308"/>
-                  <text x="910" y="160" text-anchor="middle" class="mono" font-size="10.5" font-weight="700" fill="#a16207">NEAR 3 (LOCKED)</text>
-                  <rect x="856" y="170" width="34" height="26" rx="5" fill="#fef08a"/><text x="873" y="187" text-anchor="middle" class="mono" font-size="10.5" font-weight="700" fill="#854d0e">L−2</text>
-                  <rect x="894" y="170" width="34" height="26" rx="5" fill="#fef08a"/><text x="911" y="187" text-anchor="middle" class="mono" font-size="10.5" font-weight="700" fill="#854d0e">L−1</text>
-                  <rect x="932" y="170" width="32" height="26" rx="5" fill="#fef08a"/><text x="948" y="187" text-anchor="middle" class="mono" font-size="11" font-weight="700" fill="#854d0e">L</text>
-                </g>
-
-                <!-- m-routers: Parallel KV Routers & Clean Anchor -->
-                <g class="mod-node" data-mod="m-routers" data-routes="a,b">
-                  <rect x="276" y="276" width="152" height="80" rx="12" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.8"/>
-                  <text x="352" y="310" text-anchor="middle" font-size="14" font-weight="750" fill="#1d4ed8">KV Router 1</text>
-                  <text x="352" y="334" text-anchor="middle" class="mono" font-size="11" fill="#3b82f6">6/9 Routed Slots</text>
-
-                  <rect x="452" y="276" width="152" height="80" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
-                  <text x="528" y="310" text-anchor="middle" font-size="14" font-weight="750" fill="#b45309">KV Router 2</text>
-                  <text x="528" y="334" text-anchor="middle" class="mono" font-size="11" fill="#d97706">6/9 Routed Slots</text>
-
-                  <text x="628" y="322" text-anchor="middle" class="mono" font-size="18" font-weight="800" fill="#64748b">···</text>
-
-                  <rect x="652" y="276" width="152" height="80" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
-                  <text x="728" y="310" text-anchor="middle" font-size="14" font-weight="750" fill="#047857">KV Router g</text>
-                  <text x="728" y="334" text-anchor="middle" class="mono" font-size="11" fill="#059669">6/9 Routed Slots</text>
-
-                  <rect x="834" y="276" width="156" height="80" rx="12" fill="#f8fafc" stroke="#475569" stroke-width="1.8"/>
-                  <text x="912" y="310" text-anchor="middle" font-size="14" font-weight="750" fill="#1e293b">Clean Anchor</text>
-                  <text x="912" y="334" text-anchor="middle" class="mono" font-size="11" fill="#475569">Default K_&lt;b</text>
-                </g>
-
-                <!-- m-rollout: Perturbed Rollout Window (3 Storyline Branches) -->
-                <g class="mod-node" data-mod="m-rollout" data-routes="a,c">
-                  <rect x="264" y="406" width="726" height="476" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6"/>
-                  <text x="366" y="438" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#334155">Block b*</text>
-                  <text x="548" y="438" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#334155">Block b* + 1</text>
-                  <text x="754" y="438" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#334155">Block b* + W</text>
-                  <text x="908" y="438" text-anchor="middle" class="mono" font-size="11.5" font-weight="700" fill="#64748b">REPLAY CACHE</text>
-
-                  <!-- Row 1 -->
-                  <rect x="278" y="450" width="698" height="130" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-dasharray="6 4"/>
-                  <image href="framework/remotion/branch_1_1.jpg" x="290" y="462" width="152" height="106" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipB11)"/>
-                  <image href="framework/remotion/branch_1_2.jpg" x="472" y="462" width="152" height="106" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipB12)"/>
-                  <text x="651" y="520" text-anchor="middle" class="mono" font-size="16" font-weight="800" fill="#3b82f6">···</text>
-                  <image href="framework/remotion/branch_1_3.jpg" x="678" y="462" width="152" height="106" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipB13)"/>
-                  <rect x="846" y="474" width="116" height="82" rx="10" fill="#ffffff" stroke="#93c5fd"/>
-                  <text x="904" y="508" text-anchor="middle" class="mono" font-size="13" font-weight="700" fill="#1d4ed8">Branch X¹</text>
-                  <text x="904" y="534" text-anchor="middle" class="mono" font-size="11.5" fill="#475569">(z¹_b,s, û¹_b,s)</text>
-
-                  <!-- Row 2 -->
-                  <rect x="278" y="594" width="698" height="130" rx="12" fill="#fffbeb" stroke="#fcd34d" stroke-dasharray="6 4"/>
-                  <image href="framework/remotion/branch_2_1.jpg" x="290" y="606" width="152" height="106" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipB21)"/>
-                  <image href="framework/remotion/branch_2_2.jpg" x="472" y="606" width="152" height="106" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipB22)"/>
-                  <text x="651" y="664" text-anchor="middle" class="mono" font-size="16" font-weight="800" fill="#d97706">···</text>
-                  <image href="framework/remotion/branch_2_3.jpg" x="678" y="606" width="152" height="106" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipB23)"/>
-                  <rect x="846" y="618" width="116" height="82" rx="10" fill="#ffffff" stroke="#fcd34d"/>
-                  <text x="904" y="652" text-anchor="middle" class="mono" font-size="13" font-weight="700" fill="#b45309">Branch X²</text>
-                  <text x="904" y="678" text-anchor="middle" class="mono" font-size="11.5" fill="#475569">(z²_b,s, û²_b,s)</text>
-
-                  <!-- Row g -->
-                  <rect x="278" y="738" width="698" height="130" rx="12" fill="#ecfdf5" stroke="#6ee7b7" stroke-dasharray="6 4"/>
-                  <image href="framework/remotion/branch_3_1.jpg" x="290" y="750" width="152" height="106" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipB31)"/>
-                  <image href="framework/remotion/branch_3_2.jpg" x="472" y="750" width="152" height="106" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipB32)"/>
-                  <text x="651" y="808" text-anchor="middle" class="mono" font-size="16" font-weight="800" fill="#059669">···</text>
-                  <image href="framework/remotion/branch_3_3.jpg" x="678" y="750" width="152" height="106" preserveAspectRatio="xMidYMid slice" clip-path="url(#clipB33)"/>
-                  <rect x="846" y="762" width="116" height="82" rx="10" fill="#ffffff" stroke="#6ee7b7"/>
-                  <text x="904" y="796" text-anchor="middle" class="mono" font-size="13" font-weight="700" fill="#047857">Branch X^g</text>
-                  <text x="904" y="822" text-anchor="middle" class="mono" font-size="11.5" fill="#475569">(z^g_b,s, û^g_b,s)</text>
-                </g>
-
-                <!-- m-cache: Cached Rollout Latents -->
-                <g class="mod-node" data-mod="m-cache" data-routes="b">
-                  <rect x="1064" y="96" width="156" height="312" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6"/>
-                  <text x="1142" y="128" text-anchor="middle" class="mono" font-size="11.5" font-weight="700" fill="#475569">REPLAY INPUTS</text>
-                  <rect x="1086" y="148" width="112" height="38" rx="8" fill="#eff6ff" stroke="#93c5fd"/><text x="1142" y="172" text-anchor="middle" class="mono" font-size="13" font-weight="700" fill="#1d4ed8">z¹_b,s</text>
-                  <rect x="1086" y="198" width="112" height="38" rx="8" fill="#fffbeb" stroke="#fcd34d"/><text x="1142" y="222" text-anchor="middle" class="mono" font-size="13" font-weight="700" fill="#b45309">z²_b,s</text>
-                  <text x="1142" y="256" text-anchor="middle" class="mono" font-size="15" font-weight="800" fill="#64748b">⋮</text>
-                  <rect x="1086" y="268" width="112" height="38" rx="8" fill="#ecfdf5" stroke="#6ee7b7"/><text x="1142" y="292" text-anchor="middle" class="mono" font-size="13" font-weight="700" fill="#047857">z^g_b,s</text>
-                  <rect x="1080" y="326" width="124" height="62" rx="10" fill="#f8fafc" stroke="#64748b"/>
-                  <text x="1142" y="352" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Clean Context</text>
-                  <text x="1142" y="374" text-anchor="middle" class="mono" font-size="11.5" fill="#475569">Anchor K_&lt;b</text>
-                </g>
-
-                <!-- m-ar2: Replay AR Model -->
-                <g class="mod-node" data-mod="m-ar2" data-routes="b">
-                  <rect x="1256" y="126" width="192" height="252" rx="16" fill="url(#arGrad)" stroke="#7c3aed" stroke-width="2"/>
-                  <text x="1352" y="160" text-anchor="middle" font-size="15.5" font-weight="750" fill="#4c1d95">AR Model θ</text>
-                  <text x="1352" y="182" text-anchor="middle" class="mono" font-size="11" fill="#6d28d9">1-Pass ODE Replay</text>
-                  <rect x="1280" y="204" width="26" height="112" rx="5" fill="#ddd6fe" stroke="#7c3aed"/>
-                  <rect x="1318" y="204" width="26" height="112" rx="5" fill="#ddd6fe" stroke="#7c3aed"/>
-                  <rect x="1356" y="204" width="26" height="112" rx="5" fill="#ddd6fe" stroke="#7c3aed"/>
-                  <rect x="1394" y="204" width="26" height="112" rx="5" fill="#ddd6fe" stroke="#7c3aed"/>
-                  <line x1="1270" y1="260" x2="1434" y2="260" stroke="#6d28d9" stroke-width="2"/>
-                  <text x="1352" y="352" text-anchor="middle" class="mono" font-size="11.5" font-weight="700" fill="#5b21b6">v_θ(z^g_b,s, t_s, K_&lt;b)</text>
-                </g>
-
-                <!-- m-tve: Trajectory Velocity Energy -->
-                <g class="mod-node" data-mod="m-tve" data-routes="b">
-                  <rect x="1484" y="96" width="248" height="312" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6"/>
-                  <text x="1608" y="128" text-anchor="middle" font-size="14" font-weight="750" fill="#0f172a">Trajectory Velocity Energy</text>
-                  <rect x="1504" y="148" width="208" height="44" rx="9" fill="#eff6ff" stroke="#bfdbfe"/>
-                  <text x="1608" y="175" text-anchor="middle" class="mono" font-size="13" font-weight="700" fill="#1e3a8a">v¹_b,s  ↔  û¹_b,s</text>
-                  <rect x="1504" y="204" width="208" height="44" rx="9" fill="#fffbeb" stroke="#fde68a"/>
-                  <text x="1608" y="231" text-anchor="middle" class="mono" font-size="13" font-weight="700" fill="#92400e">v²_b,s  ↔  û²_b,s</text>
-                  <text x="1608" y="268" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#64748b">MSE Residual</text>
-                  <rect x="1504" y="280" width="208" height="44" rx="9" fill="#ecfdf5" stroke="#a7f3d0"/>
-                  <text x="1608" y="307" text-anchor="middle" class="mono" font-size="13" font-weight="700" fill="#065f46">v^g_b,s  ↔  û^g_b,s</text>
-                  <rect x="1504" y="340" width="208" height="50" rx="9" fill="#f8fafc" stroke="#e2e8f0"/>
-                  <text x="1608" y="370" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#334155">E_θ(X^g) = Σ ||v_θ − û^g||²</text>
-                </g>
-
-                <!-- m-gibbs: Gibbs Surrogate Policy -->
-                <g class="mod-node" data-mod="m-gibbs" data-routes="b,c">
-                  <rect x="1768" y="96" width="240" height="312" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6"/>
-                  <text x="1888" y="128" text-anchor="middle" font-size="14" font-weight="750" fill="#0f172a">Gibbs Surrogate Policy</text>
-                  <text x="1888" y="166" text-anchor="middle" class="mono" font-size="13" font-weight="700" fill="#4c1d95">ℓ^g_θ = −E_θ(X^g) / τ</text>
-                  <rect x="1786" y="184" width="204" height="74" rx="10" fill="#f5f3ff" stroke="#ddd6fe"/>
-                  <text x="1888" y="214" text-anchor="middle" class="mono" font-size="13" font-weight="700" fill="#1e1b4b">π_θ(g) = exp(ℓ^g_θ)</text>
-                  <line x1="1828" y1="224" x2="1958" y2="224" stroke="#4c1d95" stroke-width="1.5"/>
-                  <text x="1888" y="245" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#4c1d95">Σ_h exp(ℓ^h_θ)</text>
-                  <!-- Smooth bimodal Gibbs distribution -->
-                  <path d="M 1788 380 C 1815 380, 1825 292, 1852 292 C 1878 292, 1888 362, 1912 362 L 1912 380 Z" fill="url(#gibbsLeft)"/>
-                  <path d="M 1868 380 C 1898 380, 1912 318, 1938 318 C 1962 318, 1974 380, 1990 380 Z" fill="url(#gibbsRight)"/>
-                  <path d="M 1788 380 C 1815 380, 1825 292, 1852 292 C 1878 292, 1892 356, 1906 346 C 1918 336, 1926 318, 1938 318 C 1962 318, 1974 380, 1990 380" fill="none" stroke="#6366f1" stroke-width="2.4"/>
-                  <line x1="1784" y1="380" x2="1994" y2="380" stroke="#94a3b8" stroke-width="1.5"/>
-                </g>
-
-                <!-- m-rew: Multi-Dimensional Reward Model -->
-                <g class="mod-node" data-mod="m-rew" data-routes="c">
-                  <rect x="1064" y="536" width="232" height="340" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6"/>
-                  <text x="1180" y="568" text-anchor="middle" font-size="14.5" font-weight="750" fill="#0f172a">Reward Model R(X^g, C)</text>
-                  <rect x="1084" y="588" width="192" height="76" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
-                  <text x="1180" y="618" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0f172a">Visual Quality (VQ)</text>
-                  <text x="1180" y="642" text-anchor="middle" class="mono" font-size="11" fill="#64748b">HPSv3 Aesthetic Score</text>
-
-                  <rect x="1084" y="678" width="192" height="76" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
-                  <text x="1180" y="708" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0f172a">Motion Quality (MQ)</text>
-                  <text x="1180" y="732" text-anchor="middle" class="mono" font-size="11" fill="#64748b">VideoAlign Dynamics</text>
-
-                  <rect x="1084" y="768" width="192" height="76" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
-                  <text x="1180" y="798" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0f172a">Text Alignment (TA)</text>
-                  <text x="1180" y="822" text-anchor="middle" class="mono" font-size="11" fill="#64748b">VideoAlign Semantic</text>
-                </g>
-
-                <!-- m-adv: Group Advantage Computation -->
-                <g class="mod-node" data-mod="m-adv" data-routes="c">
-                  <rect x="1332" y="536" width="228" height="340" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6"/>
-                  <text x="1446" y="568" text-anchor="middle" font-size="14" font-weight="750" fill="#0f172a">Group Advantage</text>
-                  <rect x="1352" y="592" width="72" height="46" rx="9" fill="#eff6ff" stroke="#93c5fd"/><text x="1388" y="620" text-anchor="middle" class="mono" font-size="13.5" font-weight="700" fill="#1d4ed8">r¹</text>
-                  <text x="1446" y="620" text-anchor="middle" font-size="14" fill="#64748b">→</text>
-                  <rect x="1468" y="592" width="72" height="46" rx="9" fill="#eef2ff" stroke="#a5b4fc"/><text x="1504" y="620" text-anchor="middle" class="mono" font-size="13.5" font-weight="700" fill="#4338ca">A¹</text>
-
-                  <rect x="1352" y="682" width="72" height="46" rx="9" fill="#fffbeb" stroke="#fcd34d"/><text x="1388" y="710" text-anchor="middle" class="mono" font-size="13.5" font-weight="700" fill="#b45309">r²</text>
-                  <text x="1446" y="710" text-anchor="middle" font-size="14" fill="#64748b">→</text>
-                  <rect x="1468" y="682" width="72" height="46" rx="9" fill="#eef2ff" stroke="#a5b4fc"/><text x="1504" y="710" text-anchor="middle" class="mono" font-size="13.5" font-weight="700" fill="#4338ca">A²</text>
-
-                  <rect x="1352" y="772" width="72" height="46" rx="9" fill="#ecfdf5" stroke="#6ee7b7"/><text x="1388" y="800" text-anchor="middle" class="mono" font-size="13.5" font-weight="700" fill="#047857">r^g</text>
-                  <text x="1446" y="800" text-anchor="middle" font-size="14" fill="#64748b">→</text>
-                  <rect x="1468" y="772" width="72" height="46" rx="9" fill="#eef2ff" stroke="#a5b4fc"/><text x="1504" y="800" text-anchor="middle" class="mono" font-size="13.5" font-weight="700" fill="#4338ca">A^g</text>
-
-                  <text x="1446" y="854" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#475569">A^g = (r^g − r̄) / σ_r</text>
-                </g>
-
-                <!-- m-ppo: Clipped PPO + KL Objective -->
-                <g class="mod-node" data-mod="m-ppo" data-routes="c">
-                  <rect x="1596" y="536" width="412" height="156" rx="16" fill="#ffffff" stroke="#10b981" stroke-width="1.8"/>
-                  <text x="1802" y="568" text-anchor="middle" font-size="14.5" font-weight="750" fill="#065f46">Contrastive PPO + KL Objective</text>
-                  <rect x="1618" y="584" width="368" height="52" rx="10" fill="#ecfdf5" stroke="#a7f3d0"/>
-                  <text x="1802" y="615" text-anchor="middle" class="mono" font-size="13" font-weight="700" fill="#064e3b">L_PPO = −(1/G) Σ min(ρ^g A^g, clip(ρ^g) A^g)</text>
-                  <text x="1802" y="666" text-anchor="middle" class="mono" font-size="12" font-weight="650" fill="#475569">L_total = L_PPO + β D_KL(π_θ || π_ref)  ·  β = 5</text>
-                </g>
-
-                <!-- m-upd: Policy Landscape Shift -->
-                <g class="mod-node" data-mod="m-upd" data-routes="c">
-                  <rect x="1596" y="724" width="412" height="152" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6"/>
-                  <text x="1620" y="754" font-size="14" font-weight="750" fill="#0f172a">Update θ in Velocity Space</text>
-                  <text x="1620" y="778" font-size="12" fill="#64748b">Promotes A^g &gt; 0 branches</text>
-                  <text x="1620" y="798" font-size="12" fill="#64748b">Suppresses A^g &lt; 0 drift</text>
-                  <text x="1620" y="848" class="mono" font-size="12" font-weight="700" fill="#059669">π_old  ──▶  π_new (Higher Rewards)</text>
-                  <!-- Crisp Vector Policy Contours -->
-                  <ellipse cx="1858" cy="822" rx="46" ry="28" transform="rotate(-22 1858 822)" fill="#fff7ed" stroke="#fdba74" stroke-dasharray="4 3" stroke-width="1.6"/>
-                  <ellipse cx="1936" cy="782" rx="52" ry="32" transform="rotate(-22 1936 782)" fill="#ecfdf5" stroke="#34d399" stroke-width="2"/>
-                  <circle cx="1858" cy="822" r="5" fill="#ea580c"/>
-                  <circle cx="1836" cy="836" r="4.5" fill="#ef4444"/>
-                  <circle cx="1874" cy="844" r="4.5" fill="#ef4444"/>
-                  <line x1="1858" y1="822" x2="1936" y2="782" stroke="#059669" stroke-width="2.4"/>
-                  <circle cx="1936" cy="782" r="6" fill="#059669"/>
-                  <circle cx="1918" cy="766" r="4.5" fill="#10b981"/>
-                  <circle cx="1958" cy="770" r="4.5" fill="#10b981"/>
-                </g>
-
-                <!-- ========= Exact Remotion Animated Signal Pulses (Strictly On Wire Tracks) ========= -->
-                <g id="archFlows">
-                  <g class="flow-pulse flow-a" data-routes="a" style="animation-delay:0s">
-                    <path class="flow-halo" d="M 119 202 V 238 M 200 282 H 218 V 150 H 244 M 244 180 H 230 V 318 H 200 M 119 360 V 396" pathLength="1"/>
-                    <path class="flow-ink"  d="M 119 202 V 238 M 200 282 H 218 V 150 H 244 M 244 180 H 230 V 318 H 200 M 119 360 V 396" pathLength="1"/>
+            <div class="figure-scroll" tabindex="0" role="region" aria-label="Training pipeline. Scroll horizontally on small screens.">
+              <div class="paper-board" id="archBoard">
+                <img class="paper-artwork" src="framework/framework.svg" width="1600" height="660" alt="KVPO training pipeline: causal-semantic exploration, velocity-field surrogate replay, and policy optimization." decoding="async">
+                <svg class="paper-overlay" viewBox="0 0 1600 660" role="group" aria-label="Explore pipeline modules">
+                  <defs>
+                    <mask id="archSpotlightMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1600" height="660">
+                      <rect width="1600" height="660" fill="white"/>
+                      <g id="archCutouts"></g>
+                    </mask>
+                  </defs>
+                  <g id="archFlows" aria-hidden="true">
+                  <g class="flow-pulse flow-a" data-routes="a" style="animation-delay:0s"><path class="flow-ink" d="M128 220 H187 V159" pathLength="1"/></g>
+                  <g class="flow-pulse flow-a" data-routes="a" style="animation-delay:-1.4s"><path class="flow-ink" d="M271 158 L261 193 M239 260 V329" pathLength="1"/></g>
+                  <g class="flow-pulse flow-a2" data-routes="a" style="animation-delay:-2.8s"><path class="flow-ink" d="M345 158 L373 193 M353 260 V286 Q366 295 353 303 V419" pathLength="1"/></g>
+                  <g class="flow-pulse flow-a3" data-routes="a" style="animation-delay:-3.6s"><path class="flow-ink" d="M551 158 L545 193 M530 260 V287 Q542 295 530 303 V554" pathLength="1"/></g>
+                  <g class="flow-pulse flow-b" data-routes="b" style="animation-delay:-0.6s"><path class="flow-ink" d="M320 330 V295 H734 V168 H802" pathLength="1"/></g>
+                  <g class="flow-pulse flow-b" data-routes="b" style="animation-delay:-2s"><path class="flow-ink" d="M716 250 H918 M1101 192 H1130 M1316 192 H1340" pathLength="1"/></g>
+                  <g class="flow-pulse flow-c" data-routes="c" style="animation-delay:-1s"><path class="flow-ink" d="M750 382 H804 M878 382 H897 M1075 383 H1092 M1145 383 H1166 M1215 383 H1235 M1308 380 H1335" pathLength="1"/></g>
+                  <g class="flow-pulse flow-c" data-routes="c" style="animation-delay:-3.1s"><path class="flow-ink" d="M1470 266 V303 M1378 411 V432" pathLength="1"/></g>
                   </g>
-                  <g class="flow-pulse flow-a" data-routes="a" style="animation-delay:-0.5s">
-                    <path class="flow-halo" d="M 490 224 V 248 H 352 V 276 M 352 356 V 376 H 250 V 500 H 278" pathLength="1"/>
-                    <path class="flow-ink"  d="M 490 224 V 248 H 352 V 276 M 352 356 V 376 H 250 V 500 H 278" pathLength="1"/>
-                  </g>
-                  <g class="flow-pulse flow-a2" data-routes="a" style="animation-delay:-1.0s">
-                    <path class="flow-halo" d="M 595 224 V 254 H 528 V 276 M 528 356 V 384 H 238 V 644 H 278" pathLength="1"/>
-                    <path class="flow-ink"  d="M 595 224 V 254 H 528 V 276 M 528 356 V 384 H 238 V 644 H 278" pathLength="1"/>
-                  </g>
-                  <g class="flow-pulse flow-a3" data-routes="a" style="animation-delay:-1.5s">
-                    <path class="flow-halo" d="M 700 224 V 254 H 728 V 276 M 728 356 V 392 H 226 V 788 H 278" pathLength="1"/>
-                    <path class="flow-ink"  d="M 700 224 V 254 H 728 V 276 M 728 356 V 392 H 226 V 788 H 278" pathLength="1"/>
-                  </g>
-                  <g class="flow-pulse flow-b" data-routes="b" style="animation-delay:-0.7s">
-                    <path class="flow-halo" d="M 976 505 H 1020 V 210 H 1064 M 990 316 H 1064 M 1220 252 H 1256" pathLength="1"/>
-                    <path class="flow-ink"  d="M 976 505 H 1020 V 210 H 1064 M 990 316 H 1064 M 1220 252 H 1256" pathLength="1"/>
-                  </g>
-                  <g class="flow-pulse flow-b" data-routes="b" style="animation-delay:-1.4s">
-                    <path class="flow-halo" d="M 1448 252 H 1484 M 1732 252 H 1768" pathLength="1"/>
-                    <path class="flow-ink"  d="M 1448 252 H 1484 M 1732 252 H 1768" pathLength="1"/>
-                  </g>
-                  <g class="flow-pulse flow-c" data-routes="c" style="animation-delay:-1.1s">
-                    <path class="flow-halo" d="M 976 679 H 1004 V 706 H 1064 M 1296 706 H 1332 M 1560 614 H 1596" pathLength="1"/>
-                    <path class="flow-ink"  d="M 976 679 H 1004 V 706 H 1064 M 1296 706 H 1332 M 1560 614 H 1596" pathLength="1"/>
-                  </g>
-                  <g class="flow-pulse flow-c" data-routes="c" style="animation-delay:-1.9s">
-                    <path class="flow-halo" d="M 1888 408 V 536 M 1802 692 V 724" pathLength="1"/>
-                    <path class="flow-ink"  d="M 1888 408 V 536 M 1802 692 V 724" pathLength="1"/>
-                  </g>
-                </g>
-
-                <!-- Spotlight Scrim + Active Module Rings -->
-                <rect class="pipeline-scrim" x="0" y="0" width="2048" height="920" mask="url(#archSpotlightMask)"/>
-                <g id="archFocusRings"></g>
-              </svg>
+                  <rect class="pipeline-scrim" width="1600" height="660" mask="url(#archSpotlightMask)"/>
+                  <g id="archFocusRings" aria-hidden="true"></g>
+                  <rect class="mod-node" data-mod="m-in" data-routes="a" x="2" y="22" width="139" height="132" rx="4" role="button" tabindex="0" aria-label="Shared noise and text prompt" aria-pressed="false"/>
+                  <rect class="mod-node" data-mod="m-ar1" data-routes="a" x="13" y="155" width="117" height="100" rx="4" role="button" tabindex="0" aria-label="Autoregressive generator" aria-pressed="false"/>
+                  <rect class="mod-node" data-mod="m-pre" data-routes="a" x="7" y="284" width="127" height="192" rx="4" role="button" tabindex="0" aria-label="Shared prefix" aria-pressed="false"/>
+                  <rect class="mod-node" data-mod="m-kv" data-routes="a" x="169" y="52" width="585" height="106" rx="4" role="button" tabindex="0" aria-label="Historical KV cache" aria-pressed="false"/>
+                  <rect class="mod-node" data-mod="m-routers" data-routes="a" x="210" y="193" width="508" height="67" rx="4" role="button" tabindex="0" aria-label="Causal history routing" aria-pressed="false"/>
+                  <rect class="mod-node" data-mod="m-rollout" data-routes="a" x="175" y="328" width="573" height="316" rx="4" role="button" tabindex="0" aria-label="Branch rollouts" aria-pressed="false"/>
+                  <rect class="mod-node" data-mod="m-cache" data-routes="b" x="805" y="48" width="91" height="208" rx="4" role="button" tabindex="0" aria-label="Cached states" aria-pressed="false"/>
+                  <rect class="mod-node" data-mod="m-ar2" data-routes="b" x="918" y="104" width="182" height="158" rx="4" role="button" tabindex="0" aria-label="Velocity replay" aria-pressed="false"/>
+                  <rect class="mod-node" data-mod="m-tve" data-routes="b" x="1133" y="93" width="182" height="164" rx="4" role="button" tabindex="0" aria-label="Trajectory velocity energy" aria-pressed="false"/>
+                  <rect class="mod-node" data-mod="m-gibbs" data-routes="b" x="1324" y="88" width="272" height="175" rx="4" role="button" tabindex="0" aria-label="Gibbs policy" aria-pressed="false"/>
+                  <rect class="mod-node" data-mod="m-rew" data-routes="c" x="899" y="332" width="176" height="310" rx="4" role="button" tabindex="0" aria-label="Reward model" aria-pressed="false"/>
+                  <rect class="mod-node" data-mod="m-adv" data-routes="c" x="1093" y="333" width="211" height="311" rx="4" role="button" tabindex="0" aria-label="Group advantages" aria-pressed="false"/>
+                  <rect class="mod-node" data-mod="m-ppo" data-routes="c" x="1339" y="313" width="257" height="101" rx="4" role="button" tabindex="0" aria-label="Policy objective" aria-pressed="false"/>
+                  <rect class="mod-node" data-mod="m-upd" data-routes="c" x="1327" y="414" width="269" height="231" rx="4" role="button" tabindex="0" aria-label="Policy update" aria-pressed="false"/>
+                </svg>
+              </div>
             </div>
+            <figcaption class="figure-hint">Scroll sideways to explore the full diagram, or choose “Expand figure”.</figcaption>
           </figure>
 
           <!-- Capability / Stage Selector Buttons (Robin-World style) -->
           <div class="module-choices" id="archChoices">
-            <button type="button" class="mchoice" data-route="a">
-              <span>(a) Causal History Routing (Rollout)</span>
+            <button type="button" class="mchoice" aria-pressed="false" data-route="a">
+              <span>(a) Exploration</span>
               <span class="dot-k" style="background:#2563eb"></span>
             </button>
-            <button type="button" class="mchoice" data-route="b">
-              <span>(b) Velocity-Field Surrogate Replay (TVE)</span>
+            <button type="button" class="mchoice" aria-pressed="false" data-route="b">
+              <span>(b) Replay</span>
               <span class="dot-k" style="background:#7c3aed"></span>
             </button>
-            <button type="button" class="mchoice" data-route="c">
-              <span>(c) Contrastive PPO + KL Optimization</span>
+            <button type="button" class="mchoice" aria-pressed="false" data-route="c">
+              <span>(c) Optimization</span>
               <span class="dot-k" style="background:#059669"></span>
             </button>
           </div>
 
-          <div class="arch-inspector">
+          <div class="arch-inspector" aria-live="polite" aria-atomic="true">
             <div>
-              <h4 id="inspTitle">KVPO ODE-Native Training Pipeline — Click any module or stage to inspect</h4>
+              <h4 id="inspTitle">One ODE-native training loop</h4>
               <p id="inspDesc">Starting from shared noise x_T, Causal History Routing creates G=8 semantic branches in the KV cache (a), single-pass ODE replay measures Trajectory Velocity Energy under clean context (b), and reward-weighted PPO updates θ directly in velocity space (c).</p>
             </div>
             <div class="insp-formula" id="inspFormula">π_θ(g) ∝ exp(−E_θ(X^g) / τ)</div>
@@ -2164,9 +1667,13 @@
     <div class="box light">
       <div class="modal-top">
         <strong>KVPO Training Pipeline (Full Resolution)</strong>
-        <button class="modal-x" type="button" data-close="figModal" aria-label="Close">×</button>
+        <div class="figure-modal-actions">
+          <button class="mini-btn" type="button" id="figureZoomToggle" aria-pressed="false">Zoom in</button>
+          <a href="framework/framework.pdf" target="_blank" rel="noopener">Original PDF ↗</a>
+          <button class="modal-x" type="button" data-close="figModal" aria-label="Close figure">×</button>
+        </div>
       </div>
-      <img src="framework/framework.png" alt="Full resolution KVPO training pipeline">
+      <div class="figure-scroll" tabindex="0" role="region" aria-label="Full resolution diagram, scroll to explore"><img class="paper-artwork" src="framework/framework.svg" width="1600" height="660" alt="Full resolution KVPO training pipeline"></div>
     </div>
   </div>
 
@@ -2318,28 +1825,28 @@
     }, { threshold: 0.05 });
     heroObs.observe(heroEl);
 
-    /* ============ Remotion-Engineered Vector Architecture Controller ============ */
+    /* ============ Original Figure Interaction Controller ============ */
     const modRects = {
-      "m-in":      { x: 38,   y: 92,  w: 162, h: 110, rx: 14, color: "#2563eb", title: "Shared Initial Noise & Text Prompt", desc: "All G=8 candidate branches share the exact same Gaussian initial latent x_T ~ N(0, I) and prompt C, disentangling semantic policy variation from random noise magnitude.", eq: "x_T ~ N(0, I)  (Shared)" },
-      "m-ar1":     { x: 38,   y: 238, w: 162, h: 122, rx: 14, color: "#7c3aed", title: "Streaming AR Video Generator v_θ", desc: "Few-step distilled autoregressive DiT generator integrating the deterministic probability-flow ODE block-by-block in 4 solver steps.", eq: "dx_t/dt = v_θ(x_t, t, K_<b)" },
-      "m-pre":     { x: 38,   y: 396, w: 162, h: 266, rx: 14, color: "#2563eb", title: "Shared Prefix Rollout (Blocks < b*)", desc: "Blocks preceding the pivot block b* are generated once under the shared default KV cache before causal branching begins.", eq: "v_<b* = Φ(x_T; θ, K_<b*)" },
-      "m-kv":      { x: 244,  y: 92,  w: 746, h: 132, rx: 16, color: "#2563eb", title: "Historical KV Cache Pool & CHR Layout", desc: "Preserves 3 global Sink KV frames and 3 nearest frames K_near while exposing historical frames Ω_L = {4, …, L−3} for stochastic semantic routing.", eq: "K_local = [Routed_6 ; Near_3]" },
-      "m-routers": { x: 270,  y: 270, w: 726, h: 92,  rx: 14, color: "#2563eb", title: "Parallel KV Routers & Unperturbed Anchor", desc: "G=8 routers each sample 6 historical indices from Ω_L to construct distinct on-manifold contexts, alongside an unperturbed Anchor context K_<b.", eq: "r^g_1..6 ~ Uniform(Ω_L)" },
-      "m-rollout": { x: 264,  y: 406, w: 726, h: 476, rx: 16, color: "#2563eb", title: "Perturbed Rollout Window B = [b*, b*+W)", desc: "CHR is applied over W=5 blocks (first 2 ODE steps per block) to induce diverse storyline branches while caching intermediate states (z^g_b,s, û^g_b,s).", eq: "B = [b*, b* + 5)" },
-      "m-cache":   { x: 1064, y: 96,  w: 156, h: 312, rx: 14, color: "#7c3aed", title: "Cached Rollout States & Clean Context", desc: "Intermediate latents z^g_b,s cached during rollout are paired with the restored deployment-time unperturbed KV cache K_<b for single-pass replay.", eq: "Input: (z^g_b,s, K_<b)" },
-      "m-ar2":     { x: 1256, y: 126, w: 192, h: 252, rx: 16, color: "#7c3aed", title: "Single-Pass ODE Velocity Replay", desc: "Evaluates v_θ(z^g_b,s, t_s, K_<b) in one forward pass per cached step without specialized SDE kernels, matching standard SFT efficiency.", eq: "v_θ(z^g_b,s, t_s, K_<b)" },
-      "m-tve":     { x: 1484, y: 96,  w: 248, h: 312, rx: 16, color: "#7c3aed", title: "Trajectory Velocity Energy (TVE)", desc: "Quantifies branch compatibility in flow-matching velocity space via aggregated squared residual between replayed velocity v_θ and rollout target û^g.", eq: "E_θ(X^g) = Σ ||v_θ − û^g||²_F" },
-      "m-gibbs":   { x: 1768, y: 96,  w: 240, h: 312, rx: 16, color: "#7c3aed", title: "Gibbs-Form Surrogate Policy π_θ(g)", desc: "Converts negative TVE into a normalized, differentiable probability distribution over branches that depends purely on relative velocity energy.", eq: "π_θ(g) = softmax(−E_θ(X^g)/τ)" },
-      "m-rew":     { x: 1064, y: 536, w: 232, h: 340, rx: 16, color: "#059669", title: "Multi-Dimensional Reward Model", desc: "Combines HPSv3 Visual Quality (VQ) with VideoAlign Motion Quality (MQ) and Text-Video Alignment (TA) across segments to prevent reward hacking.", eq: "R = R_VQ + R_MQ + R_TA" },
-      "m-adv":     { x: 1332, y: 536, w: 228, h: 340, rx: 16, color: "#059669", title: "Group-Relative Advantage Computation", desc: "Normalizes branch rewards within each G=8 rollout group; iterations where no branch beats anchor reward r^0 are zeroed out for stability.", eq: "A^g = (r^g − r̄) / (σ_r + ε)" },
-      "m-ppo":     { x: 1596, y: 536, w: 412, h: 156, rx: 16, color: "#059669", title: "Asymmetric Clipped PPO + KL Objective", desc: "Optimizes policy ratio ρ^g = π_θ(g)/π_old(g) with asymmetric clips (0.1, 0.2) and discrete KL regularization (β=5) toward π_ref.", eq: "L_total = L_PPO + β D_KL" },
-      "m-upd":     { x: 1596, y: 724, w: 412, h: 152, rx: 16, color: "#059669", title: "ODE-Native Contrastive Velocity Update", desc: "Gradient reduces velocity replay residual on superior branches (A^g > μ_A) while pushing away from inferior branches strictly on the ODE manifold.", eq: "θ ← θ − η ∇_θ L_total" }
+      "m-in":      { x: 2, y: 22, w: 139, h: 132, rx: 4, color: "#2563eb", title: "Shared Initial Noise & Text Prompt", desc: "All G=8 candidate branches share the exact same Gaussian initial latent x_T ~ N(0, I) and prompt C, disentangling semantic policy variation from random noise magnitude.", eq: "x_T ~ N(0, I)  (Shared)" },
+      "m-ar1":     { x: 13, y: 155, w: 117, h: 100, rx: 4, color: "#7c3aed", title: "Streaming AR Video Generator v_θ", desc: "Few-step distilled autoregressive DiT generator integrating the deterministic probability-flow ODE block-by-block in 4 solver steps.", eq: "dx_t/dt = v_θ(x_t, t, K_<b)" },
+      "m-pre":     { x: 7, y: 284, w: 127, h: 192, rx: 4, color: "#2563eb", title: "Shared Prefix Rollout (Blocks < b*)", desc: "Blocks preceding the pivot block b* are generated once under the shared default KV cache before causal branching begins.", eq: "v_<b* = Φ(x_T; θ, K_<b*)" },
+      "m-kv":      { x: 169, y: 52, w: 585, h: 106, rx: 4, color: "#2563eb", title: "Historical KV Cache Pool & CHR Layout", desc: "Preserves 3 global Sink KV frames and 3 nearest frames K_near while exposing historical frames Ω_L = {4, …, L−3} for stochastic semantic routing.", eq: "K_local = [Routed_6 ; Near_3]" },
+      "m-routers": { x: 210, y: 193, w: 508, h: 67, rx: 4, color: "#2563eb", title: "Parallel KV Routers & Unperturbed Anchor", desc: "G=8 routers each sample 6 historical indices from Ω_L to construct distinct on-manifold contexts, alongside an unperturbed Anchor context K_<b.", eq: "r^g_1..6 ~ Uniform(Ω_L)" },
+      "m-rollout": { x: 175, y: 328, w: 573, h: 316, rx: 4, color: "#2563eb", title: "Perturbed Rollout Window B = [b*, b*+W)", desc: "CHR is applied over W=5 blocks (first 2 ODE steps per block) to induce diverse storyline branches while caching intermediate states (z^g_b,s, û^g_b,s).", eq: "B = [b*, b* + 5)" },
+      "m-cache":   { x: 805, y: 48, w: 91, h: 208, rx: 4, color: "#7c3aed", title: "Cached Rollout States & Clean Context", desc: "Intermediate latents z^g_b,s cached during rollout are paired with the restored deployment-time unperturbed KV cache K_<b for single-pass replay.", eq: "Input: (z^g_b,s, K_<b)" },
+      "m-ar2":     { x: 918, y: 104, w: 182, h: 158, rx: 4, color: "#7c3aed", title: "Single-Pass ODE Velocity Replay", desc: "Evaluates v_θ(z^g_b,s, t_s, K_<b) in one forward pass per cached step without specialized SDE kernels, matching standard SFT efficiency.", eq: "v_θ(z^g_b,s, t_s, K_<b)" },
+      "m-tve":     { x: 1133, y: 93, w: 182, h: 164, rx: 4, color: "#7c3aed", title: "Trajectory Velocity Energy (TVE)", desc: "Quantifies branch compatibility in flow-matching velocity space via aggregated squared residual between replayed velocity v_θ and rollout target û^g.", eq: "E_θ(X^g) = Σ ||v_θ − û^g||²_F" },
+      "m-gibbs":   { x: 1324, y: 88, w: 272, h: 175, rx: 4, color: "#7c3aed", title: "Gibbs-Form Surrogate Policy π_θ(g)", desc: "Converts negative TVE into a normalized, differentiable probability distribution over branches that depends purely on relative velocity energy.", eq: "π_θ(g) = softmax(−E_θ(X^g)/τ)" },
+      "m-rew":     { x: 899, y: 332, w: 176, h: 310, rx: 4, color: "#059669", title: "Multi-Dimensional Reward Model", desc: "Combines HPSv3 Visual Quality (VQ) with VideoAlign Motion Quality (MQ) and Text-Video Alignment (TA) across segments to prevent reward hacking.", eq: "R = R_VQ + R_MQ + R_TA" },
+      "m-adv":     { x: 1093, y: 333, w: 211, h: 311, rx: 4, color: "#059669", title: "Group-Relative Advantage Computation", desc: "Normalizes branch rewards within each G=8 rollout group; iterations where no branch beats anchor reward r^0 are zeroed out for stability.", eq: "A^g = (r^g − r̄) / (σ_r + ε)" },
+      "m-ppo":     { x: 1339, y: 313, w: 257, h: 101, rx: 4, color: "#059669", title: "Asymmetric Clipped PPO + KL Objective", desc: "Optimizes policy ratio ρ^g = π_θ(g)/π_old(g) with asymmetric clips (0.1, 0.2) and discrete KL regularization (β=5) toward π_ref.", eq: "L_total = L_PPO + β D_KL" },
+      "m-upd":     { x: 1327, y: 414, w: 269, h: 231, rx: 4, color: "#059669", title: "ODE-Native Contrastive Velocity Update", desc: "Gradient reduces velocity replay residual on superior branches (A^g > μ_A) while pushing away from inferior branches strictly on the ODE manifold.", eq: "θ ← θ − η ∇_θ L_total" }
     };
 
     const routeDefs = {
       all: {
         mods: [],
-        title: "KVPO ODE-Native Training Pipeline — Click any module or stage to inspect",
+        title: "One ODE-native training loop",
         desc: "Starting from shared noise x_T, Causal History Routing creates G=8 semantic branches in the KV cache (a), single-pass ODE replay measures Trajectory Velocity Energy under clean context (b), and reward-weighted PPO updates θ directly in velocity space (c).",
         eq: "π_θ(g) ∝ exp(−E_θ(X^g) / τ)"
       },
@@ -2384,25 +1891,31 @@
         archFocusRings.innerHTML = "";
         return;
       }
-      const pad = 4;
-      archCutouts.innerHTML = modKeys.map((k) => {
-        const b = modRects[k];
+      const panels = {
+        a: { x: 1, y: 1, w: 758, h: 646, rx: 5, color: '#7c9dcb' },
+        b: { x: 766, y: 1, w: 833, h: 270, rx: 5, color: '#a18bbd' },
+        c: { x: 766, y: 275, w: 833, h: 372, rx: 5, color: '#8aaf93' }
+      };
+      const boxes = panels[activeRoute] ? [panels[activeRoute]] : modKeys.map(k => modRects[k]);
+      const pad = 0;
+      archCutouts.innerHTML = boxes.map((b) => {
         return `<rect x="${b.x - pad}" y="${b.y - pad}" width="${b.w + pad * 2}" height="${b.h + pad * 2}" rx="${b.rx + 2}" fill="black"/>`;
       }).join("");
-      archFocusRings.innerHTML = modKeys.map((k) => {
-        const b = modRects[k];
-        const c = ringColor || b.color;
+      archFocusRings.innerHTML = boxes.map((b) => {
+        const c = b.color || ringColor;
         return `<rect class="mod-focus-ring" x="${b.x - pad}" y="${b.y - pad}" width="${b.w + pad * 2}" height="${b.h + pad * 2}" rx="${b.rx + 2}" stroke="${c}"/>`;
       }).join("");
       archBoard.classList.add("is-focused");
     }
 
     function setRoute(route) {
-      activeRoute = route;
+      activeRoute = routeDefs[route] ? route : "all";
       const info = routeDefs[route] || routeDefs.all;
       archAllBtn.classList.toggle("on", route === "all");
+      archAllBtn.setAttribute("aria-pressed", String(route === "all"));
+      document.querySelectorAll(".mod-node").forEach(n => n.setAttribute("aria-pressed", "false"));
       document.querySelectorAll("#archChoices .mchoice").forEach((b) =>
-        b.classList.toggle("on", b.dataset.route === route)
+        { b.classList.toggle("on", b.dataset.route === route); b.setAttribute("aria-pressed", String(b.dataset.route === route)); }
       );
       document.querySelectorAll("#archFlows .flow-pulse").forEach((w) => {
         const routes = (w.dataset.routes || "").split(",");
@@ -2412,6 +1925,10 @@
       inspDesc.textContent = info.desc;
       inspFormula.textContent = info.eq;
       renderSpotlight(info.mods, info.color);
+      const scroll = archBoard.parentElement;
+      if (scroll.scrollWidth > scroll.clientWidth) {
+        scroll.scrollTo({ left: (route === "b" || route === "c") ? archBoard.clientWidth * 0.475 : 0, behavior: reducedMotion.matches ? "instant" : "smooth" });
+      }
     }
 
     archAllBtn.addEventListener("click", () => setRoute("all"));
@@ -2422,7 +1939,10 @@
       });
     });
 
-    document.querySelectorAll(".remotion-svg .mod-node").forEach((node) => {
+    document.querySelectorAll(".paper-overlay .mod-node").forEach((node) => {
+      node.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); node.dispatchEvent(new MouseEvent("click", { bubbles: true })); }
+      });
       node.addEventListener("click", (e) => {
         e.stopPropagation();
         const key = node.dataset.mod;
@@ -2430,7 +1950,9 @@
         if (!m) return;
         activeRoute = key;
         archAllBtn.classList.remove("on");
-        document.querySelectorAll("#archChoices .mchoice").forEach((b) => b.classList.remove("on"));
+        archAllBtn.setAttribute("aria-pressed", "false");
+        document.querySelectorAll(".mod-node").forEach(n => n.setAttribute("aria-pressed", String(n === node)));
+        document.querySelectorAll("#archChoices .mchoice").forEach((b) => { b.classList.remove("on"); b.setAttribute("aria-pressed", "false"); });
         const nodeRoutes = (node.dataset.routes || "").split(",");
         document.querySelectorAll("#archFlows .flow-pulse").forEach((w) => {
           const wr = (w.dataset.routes || "").split(",");
@@ -2447,8 +1969,19 @@
 
     pulseToggleBtn.addEventListener("click", () => {
       const paused = pipeExplorer.classList.toggle("is-paused");
-      pulseToggleBtn.textContent = paused ? "Resume Pulse" : "Pause Pulse";
+      pulseToggleBtn.textContent = paused ? "Play flow" : "Pause flow";
+      pulseToggleBtn.setAttribute("aria-pressed", String(!paused));
     });
+
+    function syncMotionPreference() {
+      pipeExplorer.classList.toggle("is-paused", reducedMotion.matches);
+      pulseToggleBtn.textContent = reducedMotion.matches ? "Motion reduced" : "Pause flow";
+      pulseToggleBtn.disabled = reducedMotion.matches;
+      pulseToggleBtn.setAttribute("aria-pressed", String(!reducedMotion.matches));
+    }
+    syncMotionPreference();
+    reducedMotion.addEventListener("change", syncMotionPreference);
+    archBoard.addEventListener("keydown", (e) => { if (e.key === "Escape") setRoute("all"); });
 
     /* ============ Quantitative Charts & Benchmark Tables (Verified Paper Data) ============ */
     const longVideoChartData = {
@@ -3111,7 +2644,29 @@
       segEl: document.getElementById("modSegments")
     });
 
-    function openFigModal() { figModal.classList.add("open"); }
+    let figureReturnFocus;
+    const figureZoomToggle = document.getElementById("figureZoomToggle");
+    const figureScroll = figModal.querySelector(".figure-scroll");
+    figureZoomToggle.addEventListener("click", () => {
+      const zoomed = figureScroll.classList.toggle("is-zoomed");
+      figureZoomToggle.textContent = zoomed ? "Fit figure" : "Zoom in";
+      figureZoomToggle.setAttribute("aria-pressed", String(zoomed));
+    });
+    function openFigModal() {
+      figureReturnFocus = document.activeElement;
+      figureScroll.classList.remove("is-zoomed");
+      figureZoomToggle.textContent = "Zoom in";
+      figureZoomToggle.setAttribute("aria-pressed", "false");
+      figModal.classList.add("open");
+      figModal.querySelector("[data-close]").focus();
+    }
+    figModal.addEventListener("keydown", (e) => {
+      if (e.key !== "Tab") return;
+      const stops = [...figModal.querySelectorAll("a, button, [tabindex='0']")];
+      const first = stops[0], last = stops[stops.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
     document.getElementById("openFigZoom").addEventListener("click", openFigModal);
 
     function openVidModal(item) {
@@ -3136,7 +2691,9 @@
     function closeModal(id) {
       const m = document.getElementById(id);
       if (!m) return;
+      const wasOpen = m.classList.contains("open");
       m.classList.remove("open");
+      if (id === "figModal" && wasOpen) figureReturnFocus?.focus();
       if (id === "vidModal") modPlayer.unload();
     }
     document.querySelectorAll("[data-close]").forEach((b) =>
