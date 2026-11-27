@@ -972,7 +972,7 @@
     }
     .method-video-stage {
       position: relative;
-      background: #f6f8fc;
+      background: #f8f9fb;
       aspect-ratio: 16 / 9;
       overflow: hidden;
       cursor: pointer;
@@ -982,6 +982,66 @@
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+    .mv-cover-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 23, 42, 0.08);
+      transition: opacity 240ms ease, visibility 240ms ease;
+    }
+    .mv-cover-overlay.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .mv-cover-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(15, 23, 42, 0.88);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      box-shadow: 0 16px 42px rgba(15, 23, 42, 0.26);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+    }
+    .mv-cover-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      background: #2563eb;
+      box-shadow: 0 20px 48px rgba(37, 99, 235, 0.34);
+    }
+    .mv-cover-play-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.16);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      padding-left: 2px;
+    }
+    .mv-cover-meta {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(226, 232, 240, 0.82);
+      padding-left: 10px;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    #mvMuteBtn.is-sound-on {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #1d4ed8;
     }
     .method-video-controls {
       display: flex;
@@ -1702,48 +1762,56 @@
         <!-- Animated Method Walkthrough Video -->
         <div class="method-video-card reveal" id="methodVideoCard">
           <div class="pipeline-stage-bar">
-            <span class="stage-label">KVPO Method Walkthrough · 1080p Animated Overview</span>
+            <span class="stage-label">KVPO Method Walkthrough · Narrated 1080p Overview</span>
             <div class="chips">
-              <button class="mini-btn" type="button" id="mvPlayBtn" aria-pressed="true">Pause</button>
+              <button class="mini-btn" type="button" id="mvPlayBtn" aria-pressed="false">Play</button>
+              <button class="mini-btn is-sound-on" type="button" id="mvMuteBtn" aria-pressed="true" title="Toggle voiceover audio">Sound On</button>
               <button class="mini-btn" type="button" id="mvSpeedBtn" title="Toggle playback speed">1.0×</button>
               <button class="mini-btn" type="button" id="mvFullBtn">Fullscreen</button>
             </div>
           </div>
 
           <div class="method-video-stage" id="mvStage" title="Click to play or pause">
-            <video id="methodExplainerVideo" src="framework/kvpo_method.mp4" poster="framework/kvpo_method_poster.jpg" muted loop playsinline preload="metadata"></video>
+            <video id="methodExplainerVideo" src="framework/kvpo_method.mp4" poster="framework/kvpo_method_poster.jpg" playsinline preload="metadata"></video>
+            <div class="mv-cover-overlay" id="mvCoverOverlay">
+              <button type="button" class="mv-cover-btn" id="mvCoverPlayBtn" aria-label="Play narrated method walkthrough">
+                <span class="mv-cover-play-icon" aria-hidden="true">▶</span>
+                <span>Watch Narrated Walkthrough</span>
+                <span class="mv-cover-meta">1:30 · Audio</span>
+              </button>
+            </div>
           </div>
 
           <div class="method-video-controls">
-            <input class="range" id="mvScrub" type="range" min="0" max="48" step="0.05" value="0" aria-label="Seek method walkthrough video">
-            <span class="time-txt" id="mvTime">0:00 / 0:48</span>
+            <input class="range" id="mvScrub" type="range" min="0" max="90.5" step="0.05" value="0" aria-label="Seek method walkthrough video">
+            <span class="time-txt" id="mvTime">0:00 / 1:30</span>
           </div>
 
           <div class="method-video-chapters" id="mvChapters" role="tablist" aria-label="Method walkthrough chapters">
-            <button type="button" class="mv-chap on" data-start="0" data-end="9.5" aria-selected="true">
-              <span class="dot-k" style="background:#4f46e5"></span>
-              <span>01 Motivation</span>
+            <button type="button" class="mv-chap on" data-start="0" data-end="23.0" aria-selected="true">
+              <span class="dot-k" style="background:#0f172a"></span>
+              <span>01 Cover &amp; Motivation</span>
               <span class="chap-t">0:00</span>
             </button>
-            <button type="button" class="mv-chap" data-start="9.5" data-end="21.5" aria-selected="false">
+            <button type="button" class="mv-chap" data-start="23.0" data-end="43.6" aria-selected="false">
               <span class="dot-k" style="background:#2563eb"></span>
               <span>02 (a) Causal History Routing</span>
-              <span class="chap-t">0:10</span>
+              <span class="chap-t">0:23</span>
             </button>
-            <button type="button" class="mv-chap" data-start="21.5" data-end="32.5" aria-selected="false">
-              <span class="dot-k" style="background:#7c3aed"></span>
+            <button type="button" class="mv-chap" data-start="43.6" data-end="60.6" aria-selected="false">
+              <span class="dot-k" style="background:#475569"></span>
               <span>03 (b) TVE Surrogate Policy</span>
-              <span class="chap-t">0:22</span>
+              <span class="chap-t">0:44</span>
             </button>
-            <button type="button" class="mv-chap" data-start="32.5" data-end="41.5" aria-selected="false">
-              <span class="dot-k" style="background:#059669"></span>
-              <span>04 (c) Contrastive PPO</span>
-              <span class="chap-t">0:33</span>
-            </button>
-            <button type="button" class="mv-chap" data-start="41.5" data-end="48.5" aria-selected="false">
+            <button type="button" class="mv-chap" data-start="60.6" data-end="78.0" aria-selected="false">
               <span class="dot-k" style="background:#2563eb"></span>
+              <span>04 (c) Contrastive PPO</span>
+              <span class="chap-t">1:01</span>
+            </button>
+            <button type="button" class="mv-chap" data-start="78.0" data-end="91.0" aria-selected="false">
+              <span class="dot-k" style="background:#0f172a"></span>
               <span>05 Results</span>
-              <span class="chap-t">0:42</span>
+              <span class="chap-t">1:18</span>
             </button>
           </div>
         </div>
@@ -2158,11 +2226,14 @@
     reducedMotion.addEventListener("change", syncHeroVideos);
     window.addEventListener("resize", syncHeroVideos);
 
-    /* ============ Method Walkthrough Video Controller ============ */
+    /* ============ Method Walkthrough Video Controller (Cover + Narrated Audio) ============ */
     (function initMethodWalkthrough() {
       const vid = document.getElementById("methodExplainerVideo");
       const stage = document.getElementById("mvStage");
+      const coverOverlay = document.getElementById("mvCoverOverlay");
+      const coverPlayBtn = document.getElementById("mvCoverPlayBtn");
       const playBtn = document.getElementById("mvPlayBtn");
+      const muteBtn = document.getElementById("mvMuteBtn");
       const speedBtn = document.getElementById("mvSpeedBtn");
       const fullBtn = document.getElementById("mvFullBtn");
       const scrub = document.getElementById("mvScrub");
@@ -2170,10 +2241,11 @@
       const chaps = Array.from(document.querySelectorAll("#mvChapters .mv-chap"));
       if (!vid) return;
 
-      const speeds = [1.0, 1.25, 1.5, 0.75];
+      const speeds = [1.0, 1.25, 1.5, 0.85];
       let speedIdx = 0;
-      let userPaused = false;
+      let hasStarted = false;
       let seeking = false;
+      vid.muted = false;
 
       function fmtT(s) {
         const sec = Math.max(0, Math.floor(s || 0));
@@ -2181,7 +2253,7 @@
       }
 
       function syncUI() {
-        const dur = Number.isFinite(vid.duration) && vid.duration > 0 ? vid.duration : 48;
+        const dur = Number.isFinite(vid.duration) && vid.duration > 0 ? vid.duration : 90.5;
         const cur = vid.currentTime || 0;
         if (!seeking) {
           scrub.max = String(dur);
@@ -2190,6 +2262,14 @@
         timeEl.textContent = `${fmtT(cur)} / ${fmtT(dur)}`;
         playBtn.textContent = vid.paused ? "Play" : "Pause";
         playBtn.setAttribute("aria-pressed", String(!vid.paused));
+        if (muteBtn) {
+          muteBtn.textContent = vid.muted ? "Muted" : "Sound On";
+          muteBtn.classList.toggle("is-sound-on", !vid.muted);
+          muteBtn.setAttribute("aria-pressed", String(!vid.muted));
+        }
+        if (coverOverlay) {
+          coverOverlay.classList.toggle("is-hidden", hasStarted && !vid.paused);
+        }
         chaps.forEach((btn) => {
           const s = parseFloat(btn.dataset.start);
           const e = parseFloat(btn.dataset.end);
@@ -2199,19 +2279,36 @@
         });
       }
 
-      function togglePlay() {
-        if (vid.paused) {
-          userPaused = false;
+      function startPlayback() {
+        hasStarted = true;
+        vid.play().catch(() => {
+          vid.muted = true;
           vid.play().catch(() => {});
-        } else {
-          userPaused = true;
-          vid.pause();
-        }
+        });
         syncUI();
       }
 
+      function togglePlay() {
+        if (vid.paused) startPlayback();
+        else { vid.pause(); syncUI(); }
+      }
+
+      if (coverPlayBtn) {
+        coverPlayBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          vid.muted = false;
+          startPlayback();
+        });
+      }
       playBtn.addEventListener("click", togglePlay);
       stage.addEventListener("click", togglePlay);
+
+      if (muteBtn) {
+        muteBtn.addEventListener("click", () => {
+          vid.muted = !vid.muted;
+          syncUI();
+        });
+      }
 
       speedBtn.addEventListener("click", () => {
         speedIdx = (speedIdx + 1) % speeds.length;
@@ -2226,6 +2323,7 @@
 
       scrub.addEventListener("input", () => {
         seeking = true;
+        hasStarted = true;
         vid.currentTime = parseFloat(scrub.value);
         syncUI();
       });
@@ -2233,10 +2331,9 @@
 
       chaps.forEach((btn) => {
         btn.addEventListener("click", () => {
-          userPaused = false;
+          vid.muted = false;
           vid.currentTime = parseFloat(btn.dataset.start) + 0.05;
-          vid.play().catch(() => {});
-          syncUI();
+          startPlayback();
         });
       });
 
@@ -2244,15 +2341,12 @@
       vid.addEventListener("loadedmetadata", syncUI);
       vid.addEventListener("play", syncUI);
       vid.addEventListener("pause", syncUI);
+      vid.addEventListener("ended", () => { hasStarted = false; vid.currentTime = 0; syncUI(); });
 
+      // Pause automatically if scrolled well out of view while playing
       const mvObs = new IntersectionObserver((entries) => {
-        const visible = entries[0].isIntersecting;
-        if (visible && !userPaused && !reducedMotion.matches) {
-          vid.play().catch(() => {});
-        } else if (!visible && !vid.paused) {
-          vid.pause();
-        }
-      }, { threshold: 0.25 });
+        if (!entries[0].isIntersecting && !vid.paused) vid.pause();
+      }, { threshold: 0.1 });
       mvObs.observe(stage);
       syncUI();
     })();
