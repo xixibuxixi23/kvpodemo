@@ -320,44 +320,6 @@
       box-shadow: 0 14px 34px rgba(37, 99, 235, 0.46), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
 
-    .scrollcue {
-      position: absolute;
-      bottom: 22px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 500;
-      color: rgba(148, 163, 184, 0.76);
-      transition: color 160ms ease;
-    }
-    .scrollcue:hover { color: #fff; }
-    .scrollcue .mouse {
-      width: 15px;
-      height: 22px;
-      border-radius: 999px;
-      border: 1.5px solid rgba(148, 163, 184, 0.55);
-      position: relative;
-    }
-    .scrollcue .mouse::after {
-      content: "";
-      position: absolute;
-      top: 4px;
-      left: 50%;
-      width: 3px;
-      height: 5px;
-      margin-left: -1.5px;
-      border-radius: 999px;
-      background: #93c5fd;
-      animation: cueDot 1.8s ease-in-out infinite;
-    }
-    @keyframes cueDot {
-      0%, 100% { transform: translateY(0); opacity: 0.95; }
-      60% { transform: translateY(6px); opacity: 0.35; }
-    }
-
     /* ============ Editorial Section Rhythm ============ */
     .block {
       padding: 88px 24px;
@@ -786,45 +748,15 @@
     .abstract-meta {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-      padding-bottom: 15px;
-      margin-bottom: 18px;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
       border-bottom: 1px solid var(--line);
     }
-    .abstract-meta-title {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 10px;
-    }
     .abstract-meta strong {
-      font-size: 15.5px;
+      font-size: 15px;
       font-weight: 700;
       letter-spacing: -0.015em;
       color: var(--ink);
-    }
-    .abstract-meta span {
-      font-size: 13px;
-      color: var(--ink-faint);
-    }
-    .abstract-tags {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .abstract-tags i {
-      font-style: normal;
-      font-family: var(--mono);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: var(--tint);
-      border: 1px solid var(--line);
-      color: var(--ink-muted);
     }
     .abstract-text {
       margin: 0;
@@ -884,19 +816,17 @@
       border-color: #93c5fd;
       color: #1d4ed8;
     }
-    .figure-hint { display: none; }
     .module-choices {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 10px;
+      display: flex; align-items: center;
+      flex-wrap: wrap; gap: 8px;
       padding: 12px 22px;
       border-top: 1px solid var(--line);
       background: #f8fafc;
     }
     .module-choices-group { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-    .module-choices-tip { font-size: 12px; color: var(--ink-faint); }
     .mchoice {
       position: relative; overflow: hidden;
-      display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px;
+      display: inline-flex; align-items: center; padding: 7px 14px;
       border-radius: 999px; border: 1px solid var(--line); background: #fff;
       color: var(--ink-2); font-size: 12.5px; font-weight: 560;
       transition: all 150ms ease;
@@ -920,7 +850,6 @@
       from { transform: scaleX(0); }
       to { transform: scaleX(1); }
     }
-    .mchoice .dot-k { width: 7px; height: 7px; border-radius: 50%; flex: 0 0 auto; }
     .arch-inspector { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding: 18px 22px; border-top: 1px solid var(--line); background: #fff; }
     .arch-inspector > div:first-child { flex: 1 1 540px; }
     .arch-inspector h4 { margin: 0 0 5px; font-size: 14px; font-weight: 650; }
@@ -954,14 +883,9 @@
       .figure-scroll { padding: 8px; }
       .pipeline-stage-bar, .arch-inspector { padding: 14px 16px; }
       .module-choices { padding: 12px 16px; }
-      .module-choices-tip { display: none; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .flow-halo, .flow-ink, .flow-head { animation: none !important; }
-      .flow-head { display: none; }
     }
 
-    /* ============ Method Walkthrough Video Card (StreamVSR + Robin-World style) ============ */
+    /* ============ Method Walkthrough Video Card ============ */
     .method-video-card {
       margin-top: 28px;
       border-radius: 18px;
@@ -990,8 +914,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(15, 23, 42, 0.08);
-      transition: opacity 240ms ease, visibility 240ms ease;
+      background: rgba(15, 23, 42, 0.02);
+      transition: opacity 220ms ease, visibility 220ms ease;
     }
     .mv-cover-overlay.is-hidden {
       opacity: 0;
@@ -999,44 +923,31 @@
       pointer-events: none;
     }
     .mv-cover-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 26px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      background: rgba(15, 23, 42, 0.88);
-      color: #fff;
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      box-shadow: 0 16px 42px rgba(15, 23, 42, 0.26);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
-    }
-    .mv-cover-btn:hover {
-      transform: translateY(-2px) scale(1.02);
-      background: #2563eb;
-      box-shadow: 0 20px 48px rgba(37, 99, 235, 0.34);
-    }
-    .mv-cover-play-icon {
-      width: 28px;
-      height: 28px;
+      width: 68px;
+      height: 68px;
+      padding: 0;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.16);
+      border: 1.5px solid rgba(255, 255, 255, 0.34);
+      background: rgba(15, 23, 42, 0.78);
+      color: #fff;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-      padding-left: 2px;
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.24);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
     }
-    .mv-cover-meta {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: rgba(226, 232, 240, 0.82);
-      padding-left: 10px;
-      border-left: 1px solid rgba(255, 255, 255, 0.2);
+    .mv-cover-btn svg {
+      width: 24px;
+      height: 24px;
+      margin-left: 3px;
+    }
+    .mv-cover-btn:hover {
+      transform: scale(1.06);
+      background: #2563eb;
+      border-color: rgba(255, 255, 255, 0.55);
+      box-shadow: 0 18px 44px rgba(37, 99, 235, 0.36);
     }
     #mvMuteBtn.is-sound-on {
       background: #eff6ff;
@@ -1063,7 +974,6 @@
     .mv-chap {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
       padding: 7px 14px;
       border-radius: 999px;
       border: 1px solid var(--line);
@@ -1081,9 +991,6 @@
       font-weight: 650;
       box-shadow: 0 1px 4px rgba(37, 99, 235, 0.12);
     }
-    .mv-chap .dot-k { width: 7px; height: 7px; border-radius: 50%; flex: 0 0 auto; }
-    .mv-chap .chap-t { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); }
-    .mv-chap.on .chap-t { color: #3b82f6; }
     @media (max-width: 1040px) {
       .method-video-controls, .method-video-chapters { padding: 12px 16px; }
     }
@@ -1452,7 +1359,7 @@
     }
 
     .gfoot {
-      padding: 10px 14px 12px;
+      padding: 10px 14px;
       border-top: 1px solid var(--dark-line);
       background: rgba(6, 10, 20, 0.34);
     }
@@ -1460,32 +1367,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 12px;
     }
-    .gmeta {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      min-width: 0;
+    .gfoot.open .gfoot-row {
+      align-items: flex-start;
     }
-    .gtag {
-      flex: 0 0 auto;
-      padding: 2px 7px;
-      border-radius: 5px;
-      font-family: var(--mono);
-      font-size: 10.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      background: rgba(59, 130, 246, 0.2);
-      color: #93c5fd;
-    }
-    .gtag.memflow { background: rgba(99, 102, 241, 0.22); color: #c7d2fe; }
-    .gtag.short { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
     .gprev {
-      margin: 6px 0 0;
+      flex: 1;
+      min-width: 0;
+      margin: 0;
       font-size: 12.5px;
       line-height: 1.5;
-      color: rgba(203, 213, 225, 0.7);
+      color: rgba(203, 213, 225, 0.72);
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
@@ -1495,10 +1388,12 @@
       color: var(--accent-bright);
       font-family: var(--mono);
       font-size: 11px;
+      margin-right: 4px;
     }
     .gfull {
       display: none;
-      margin-top: 8px;
+      flex: 1;
+      min-width: 0;
       max-height: 180px;
       overflow: auto;
       font-size: 12.5px;
@@ -1693,11 +1588,6 @@
       </div>
 
     </div>
-
-    <a class="scrollcue" href="#overview">
-      <span class="mouse" aria-hidden="true"></span>
-      <span>Scroll to explore</span>
-    </a>
   </header>
 
   <main>
@@ -1733,15 +1623,7 @@
 
         <div class="card abstract-split reveal">
           <div class="abstract-meta">
-            <div class="abstract-meta-title">
-              <strong>Abstract</strong>
-              <span>Paper summary</span>
-            </div>
-            <div class="abstract-tags">
-              <i>Streaming AR Video</i>
-              <i>Causal History Routing</i>
-              <i>ODE-Native GRPO</i>
-            </div>
+            <strong>Abstract</strong>
           </div>
           <p class="abstract-text">
             Aligning streaming autoregressive (AR) video generators with human preferences is challenging. Existing reinforcement learning methods predominantly rely on noise-based exploration and SDE-based surrogate policies that are mismatched to the deterministic ODE dynamics of distilled AR models, and tend to perturb low-level appearance rather than the high-level semantic storyline progression critical for long-horizon coherence. To address these limitations, we present <b>KVPO</b>, an ODE-native online Group Relative Policy Optimization (GRPO) framework for aligning streaming video generators. For diversity exploration, KVPO introduces a <b>causal-semantic exploration paradigm</b> that relocates the source of variation from stochastic noise to the historical KV cache. By stochastically routing historical KV entries, it constructs semantically diverse generation branches that remain strictly on the data manifold. For policy modeling, KVPO introduces a velocity-field surrogate policy based on <b>Trajectory Velocity Energy (TVE)</b>, which quantifies branch likelihood in flow-matching velocity space and yields a reward-weighted contrastive objective fully consistent with the native ODE formulation. Experiments on multiple distilled AR video generators demonstrate consistent gains in visual quality, motion quality, and text-video alignment across both single-prompt short-video and multi-prompt long-video settings.
@@ -1756,13 +1638,13 @@
         <div class="sec-head">
           <div class="eyebrow">Model Architecture</div>
           <h2 class="title">One native loop from KV exploration to policy alignment</h2>
-          <p class="lead">Watch the animated method walkthrough or inspect each stage interactively below to see how causal memory connects exploration, replay, and optimization.</p>
+          <p class="lead">Causal memory connects on-manifold semantic exploration, single-pass velocity replay, and contrastive policy optimization.</p>
         </div>
 
         <!-- Animated Method Walkthrough Video -->
         <div class="method-video-card reveal" id="methodVideoCard">
           <div class="pipeline-stage-bar">
-            <span class="stage-label">KVPO Method Walkthrough · Narrated 1080p Overview</span>
+            <span class="stage-label">Method Walkthrough</span>
             <div class="chips">
               <button class="mini-btn" type="button" id="mvPlayBtn" aria-pressed="false">Play</button>
               <button class="mini-btn is-sound-on" type="button" id="mvMuteBtn" aria-pressed="true" title="Toggle voiceover audio">Sound On</button>
@@ -1774,10 +1656,10 @@
           <div class="method-video-stage" id="mvStage" title="Click to play or pause">
             <video id="methodExplainerVideo" src="framework/kvpo_method.mp4" poster="framework/kvpo_method_poster.jpg" playsinline preload="metadata"></video>
             <div class="mv-cover-overlay" id="mvCoverOverlay">
-              <button type="button" class="mv-cover-btn" id="mvCoverPlayBtn" aria-label="Play narrated method walkthrough">
-                <span class="mv-cover-play-icon" aria-hidden="true">▶</span>
-                <span>Watch Narrated Walkthrough</span>
-                <span class="mv-cover-meta">1:30 · Audio</span>
+              <button type="button" class="mv-cover-btn" id="mvCoverPlayBtn" aria-label="Play method walkthrough">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M8 6.8v10.4c0 .8.87 1.3 1.56.88l8.5-5.2a1.03 1.03 0 0 0 0-1.76l-8.5-5.2A1.03 1.03 0 0 0 8 6.8z" fill="currentColor"/>
+                </svg>
               </button>
             </div>
           </div>
@@ -1788,37 +1670,17 @@
           </div>
 
           <div class="method-video-chapters" id="mvChapters" role="tablist" aria-label="Method walkthrough chapters">
-            <button type="button" class="mv-chap on" data-start="0" data-end="23.0" aria-selected="true">
-              <span class="dot-k" style="background:#0f172a"></span>
-              <span>01 Cover &amp; Motivation</span>
-              <span class="chap-t">0:00</span>
-            </button>
-            <button type="button" class="mv-chap" data-start="23.0" data-end="43.6" aria-selected="false">
-              <span class="dot-k" style="background:#2563eb"></span>
-              <span>02 (a) Causal History Routing</span>
-              <span class="chap-t">0:23</span>
-            </button>
-            <button type="button" class="mv-chap" data-start="43.6" data-end="60.6" aria-selected="false">
-              <span class="dot-k" style="background:#475569"></span>
-              <span>03 (b) TVE Surrogate Policy</span>
-              <span class="chap-t">0:44</span>
-            </button>
-            <button type="button" class="mv-chap" data-start="60.6" data-end="78.0" aria-selected="false">
-              <span class="dot-k" style="background:#2563eb"></span>
-              <span>04 (c) Contrastive PPO</span>
-              <span class="chap-t">1:01</span>
-            </button>
-            <button type="button" class="mv-chap" data-start="78.0" data-end="91.0" aria-selected="false">
-              <span class="dot-k" style="background:#0f172a"></span>
-              <span>05 Results</span>
-              <span class="chap-t">1:18</span>
-            </button>
+            <button type="button" class="mv-chap on" data-start="0" data-end="23.0" aria-selected="true">Motivation</button>
+            <button type="button" class="mv-chap" data-start="23.0" data-end="43.6" aria-selected="false">(a) Causal History Routing</button>
+            <button type="button" class="mv-chap" data-start="43.6" data-end="60.6" aria-selected="false">(b) TVE Surrogate Policy</button>
+            <button type="button" class="mv-chap" data-start="60.6" data-end="78.0" aria-selected="false">(c) Contrastive PPO</button>
+            <button type="button" class="mv-chap" data-start="78.0" data-end="91.0" aria-selected="false">Results</button>
           </div>
         </div>
 
         <div class="pipeline-explorer reveal" id="pipeExplorer">
           <div class="pipeline-stage-bar">
-            <span class="stage-label">KVPO Training Pipeline · Interactive Architecture</span>
+            <span class="stage-label">Training Pipeline</span>
             <div class="chips">
               <button class="mini-btn" type="button" id="tourToggleBtn" aria-pressed="false">Auto tour</button>
               <button class="mini-btn" type="button" id="openFigZoom">Expand figure</button>
@@ -1855,30 +1717,16 @@
                 </svg>
               </div>
             </div>
-            <figcaption class="figure-hint">Scroll sideways to explore the full diagram, or choose “Expand figure”.</figcaption>
           </figure>
 
           <!-- Unified Stage Selector Bar -->
           <div class="module-choices" id="archChoices">
             <div class="module-choices-group">
-              <button type="button" class="mchoice on" id="archAllBtn" data-route="all" aria-pressed="true">
-                <span class="dot-k" style="background:#0f172a"></span>
-                <span>Full pipeline</span>
-              </button>
-              <button type="button" class="mchoice" aria-pressed="false" data-route="a">
-                <span class="dot-k" style="background:#2563eb"></span>
-                <span>(a) Exploration</span>
-              </button>
-              <button type="button" class="mchoice" aria-pressed="false" data-route="b">
-                <span class="dot-k" style="background:#7c3aed"></span>
-                <span>(b) Replay</span>
-              </button>
-              <button type="button" class="mchoice" aria-pressed="false" data-route="c">
-                <span class="dot-k" style="background:#059669"></span>
-                <span>(c) Optimization</span>
-              </button>
+              <button type="button" class="mchoice on" id="archAllBtn" data-route="all" aria-pressed="true">Full pipeline</button>
+              <button type="button" class="mchoice" aria-pressed="false" data-route="a">(a) Exploration</button>
+              <button type="button" class="mchoice" aria-pressed="false" data-route="b">(b) Replay</button>
+              <button type="button" class="mchoice" aria-pressed="false" data-route="c">(c) Optimization</button>
             </div>
-            <span class="module-choices-tip">Click any module on the diagram to inspect</span>
           </div>
 
           <div class="arch-inspector" aria-live="polite" aria-atomic="true">
@@ -1892,7 +1740,7 @@
       </div>
     </section>
 
-    <!-- ============ Quantitative Evaluation & Ablations (StreamVSR + Robin-World style) ============ -->
+    <!-- ============ Quantitative Evaluation & Ablations ============ -->
     <section class="block" id="results" data-nav="light">
       <div class="wrap">
         <div class="sec-head">
@@ -1904,14 +1752,13 @@
         </div>
 
         <div class="quant-grid">
-          <!-- Animated Chart Card 1: Long-Video Gains -->
+          <!-- Chart Card 1: Long-Video Gains -->
           <div class="card qcard reveal" id="gainChartCard">
             <div class="qc-head">
               <h3>Multi-Prompt Long-Video Alignment</h3>
               <div class="chips" id="chartModelSwitch">
                 <button class="chip on" type="button" data-cmodel="longlive">LongLive</button>
                 <button class="chip" type="button" data-cmodel="memflow">MemFlow</button>
-                <button class="mini-btn" type="button" id="replayGainChart">Replay</button>
               </div>
             </div>
 
@@ -1927,14 +1774,12 @@
             </div>
 
             <div class="bars" id="gainBars"></div>
-            <p class="metric-note"> KVPO widens its margin over noise-based RL (Astrolabe) on multi-prompt long-horizon narratives.</p>
           </div>
 
-          <!-- Animated Chart Card 2: Core Ablations -->
+          <!-- Chart Card 2: Core Ablations -->
           <div class="card qcard reveal" id="ablChartCard">
             <div class="qc-head">
               <h3>Why TVE &amp; Selective KV Routing Matter</h3>
-              <button class="mini-btn" type="button" id="replayAblChart">Replay</button>
             </div>
 
             <div class="kpi-row">
@@ -1977,14 +1822,13 @@
                 </div>
               </div>
             </div>
-            <p class="metric-note">Ablated on LongLive under multi-prompt long-video generation (VQ ↑ shown; MQ and TA follow the same trend).</p>
           </div>
         </div>
 
         <!-- Full Interactive Benchmark Table -->
         <div class="card bench-wrap reveal">
           <div class="bench-head">
-            <h3>Comprehensive Benchmark &amp; Ablation Tables</h3>
+            <h3>Benchmark &amp; Ablation Tables</h3>
             <div class="chips" id="benchTabs" role="tablist" aria-label="Benchmark tables">
               <button class="chip on" type="button" data-btab="long">Multi-Prompt Long Video</button>
               <button class="chip" type="button" data-btab="short">Single-Prompt Short Video</button>
@@ -2004,19 +1848,16 @@
           <div class="eyebrow">Video Gallery</div>
           <h2 class="title">Paired comparisons across three AR settings</h2>
           <p class="lead">
-            Clean side-by-side rollouts under identical prompts. Click any card to inspect full-size synchronized playback and prompts.
+            Side-by-side baseline and KVPO rollouts under identical prompts.
           </p>
         </div>
 
         <div class="gal-toolbar">
-          <div class="chiprow">
-            <span class="lbl">Model</span>
-            <div class="chips" id="galFilter">
-              <button class="chip on" type="button" data-filter="all">All</button>
-              <button class="chip" type="button" data-filter="longlive">LongLive</button>
-              <button class="chip" type="button" data-filter="memflow">MemFlow</button>
-              <button class="chip" type="button" data-filter="short">Short</button>
-            </div>
+          <div class="chips" id="galFilter">
+            <button class="chip on" type="button" data-filter="all">All</button>
+            <button class="chip" type="button" data-filter="longlive">LongLive</button>
+            <button class="chip" type="button" data-filter="memflow">MemFlow</button>
+            <button class="chip" type="button" data-filter="short">Short</button>
           </div>
           <div class="chips">
             <button class="chip on" type="button" data-layout="grid">2-Col</button>
@@ -2043,7 +1884,7 @@
   <div class="modal" id="figModal" role="dialog" aria-modal="true" aria-label="Full resolution framework diagram">
     <div class="box light">
       <div class="modal-top">
-        <strong>KVPO Training Pipeline (Full Resolution)</strong>
+        <strong>Training Pipeline</strong>
         <div class="figure-modal-actions">
           <button class="mini-btn" type="button" id="figureZoomToggle" aria-pressed="false">Zoom in</button>
           <a href="framework/framework.pdf" target="_blank" rel="noopener">Original PDF ↗</a>
@@ -2058,10 +1899,7 @@
   <div class="modal" id="vidModal" role="dialog" aria-modal="true" aria-label="Interactive video comparison">
     <div class="box">
       <div class="modal-top">
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span class="gtag" id="modTag">LongLive</span>
-          <strong id="modTitle">Comparison</strong>
-        </div>
+        <strong id="modTitle">LongLive vs. KVPO</strong>
         <div style="display:flex;align-items:center;gap:8px">
           <div class="chips" id="modModeChips">
             <button class="chip on" type="button" data-mod-mode="sbs">Side-by-Side</button>
@@ -2074,17 +1912,16 @@
       <div class="cmp is-sbs" id="modCmp" data-cmp>
         <video id="modLeft" muted autoplay loop playsinline preload="auto"></video>
         <div class="top"><video id="modRight" muted autoplay loop playsinline preload="auto"></video></div>
-        <span class="lab l" id="modLabL">Baseline</span>
-        <span class="lab r">KVPO (Ours)</span>
+        <span class="lab l" id="modLabL">LongLive</span>
+        <span class="lab r">KVPO</span>
         <div class="bar"></div>
         <div class="knob" aria-hidden="true">⇆</div>
-        <div class="hint">drag to compare</div>
       </div>
 
       <div class="row2">
         <div class="chips">
-          <button class="mini-btn" id="modPlayBtn" type="button">❚❚ Pause</button>
-          <button class="mini-btn" id="modRestartBtn" type="button">↺ Restart</button>
+          <button class="mini-btn" id="modPlayBtn" type="button">Pause</button>
+          <button class="mini-btn" id="modRestartBtn" type="button">Restart</button>
         </div>
         <div class="scrub-wrap">
           <input class="range" id="modScrub" type="range" min="0" max="1000" value="0" aria-label="Modal synchronized video timeline">
@@ -2354,19 +2191,19 @@
     /* ============ Original Figure Interaction Controller ============ */
     const modRects = {
       "m-in":      { x: 2, y: 22, w: 139, h: 132, rx: 4, color: "#2563eb", title: "Shared Initial Noise & Text Prompt", desc: "All G=8 candidate branches share the exact same Gaussian initial latent x_T ~ N(0, I) and prompt C, disentangling semantic policy variation from random noise magnitude.", eq: "x_T ~ N(0, I)  (Shared)" },
-      "m-ar1":     { x: 13, y: 155, w: 117, h: 100, rx: 4, color: "#7c3aed", title: "Streaming AR Video Generator v_θ", desc: "Few-step distilled autoregressive DiT generator integrating the deterministic probability-flow ODE block-by-block in 4 solver steps.", eq: "dx_t/dt = v_θ(x_t, t, K_<b)" },
+      "m-ar1":     { x: 13, y: 155, w: 117, h: 100, rx: 4, color: "#2563eb", title: "Streaming AR Video Generator v_θ", desc: "Few-step distilled autoregressive DiT generator integrating the deterministic probability-flow ODE block-by-block in 4 solver steps.", eq: "dx_t/dt = v_θ(x_t, t, K_<b)" },
       "m-pre":     { x: 7, y: 284, w: 127, h: 192, rx: 4, color: "#2563eb", title: "Shared Prefix Rollout (Blocks < b*)", desc: "Blocks preceding the pivot block b* are generated once under the shared default KV cache before causal branching begins.", eq: "v_<b* = Φ(x_T; θ, K_<b*)" },
       "m-kv":      { x: 169, y: 52, w: 585, h: 106, rx: 4, color: "#2563eb", title: "Historical KV Cache Pool & CHR Layout", desc: "Preserves 3 global Sink KV frames and 3 nearest frames K_near while exposing historical frames Ω_L = {4, …, L−3} for stochastic semantic routing.", eq: "K_local = [Routed_6 ; Near_3]" },
       "m-routers": { x: 210, y: 193, w: 508, h: 67, rx: 4, color: "#2563eb", title: "Parallel KV Routers & Unperturbed Anchor", desc: "G=8 routers each sample 6 historical indices from Ω_L to construct distinct on-manifold contexts, alongside an unperturbed Anchor context K_<b.", eq: "r^g_1..6 ~ Uniform(Ω_L)" },
       "m-rollout": { x: 175, y: 328, w: 573, h: 316, rx: 4, color: "#2563eb", title: "Perturbed Rollout Window B = [b*, b*+W)", desc: "CHR is applied over W=5 blocks (first 2 ODE steps per block) to induce diverse storyline branches while caching intermediate states (z^g_b,s, û^g_b,s).", eq: "B = [b*, b* + 5)" },
-      "m-cache":   { x: 805, y: 48, w: 91, h: 208, rx: 4, color: "#7c3aed", title: "Cached Rollout States & Clean Context", desc: "Intermediate latents z^g_b,s cached during rollout are paired with the restored deployment-time unperturbed KV cache K_<b for single-pass replay.", eq: "Input: (z^g_b,s, K_<b)" },
-      "m-ar2":     { x: 918, y: 104, w: 182, h: 158, rx: 4, color: "#7c3aed", title: "Single-Pass ODE Velocity Replay", desc: "Evaluates v_θ(z^g_b,s, t_s, K_<b) in one forward pass per cached step without specialized SDE kernels, matching standard SFT efficiency.", eq: "v_θ(z^g_b,s, t_s, K_<b)" },
-      "m-tve":     { x: 1133, y: 93, w: 182, h: 164, rx: 4, color: "#7c3aed", title: "Trajectory Velocity Energy (TVE)", desc: "Quantifies branch compatibility in flow-matching velocity space via aggregated squared residual between replayed velocity v_θ and rollout target û^g.", eq: "E_θ(X^g) = Σ ||v_θ − û^g||²_F" },
-      "m-gibbs":   { x: 1324, y: 88, w: 272, h: 175, rx: 4, color: "#7c3aed", title: "Gibbs-Form Surrogate Policy π_θ(g)", desc: "Converts negative TVE into a normalized, differentiable probability distribution over branches that depends purely on relative velocity energy.", eq: "π_θ(g) = softmax(−E_θ(X^g)/τ)" },
-      "m-rew":     { x: 899, y: 332, w: 176, h: 310, rx: 4, color: "#059669", title: "Multi-Dimensional Reward Model", desc: "Combines HPSv3 Visual Quality (VQ) with VideoAlign Motion Quality (MQ) and Text-Video Alignment (TA) across segments to prevent reward hacking.", eq: "R = R_VQ + R_MQ + R_TA" },
-      "m-adv":     { x: 1093, y: 333, w: 211, h: 311, rx: 4, color: "#059669", title: "Group-Relative Advantage Computation", desc: "Normalizes branch rewards within each G=8 rollout group; iterations where no branch beats anchor reward r^0 are zeroed out for stability.", eq: "A^g = (r^g − r̄) / (σ_r + ε)" },
-      "m-ppo":     { x: 1339, y: 313, w: 257, h: 101, rx: 4, color: "#059669", title: "Asymmetric Clipped PPO + KL Objective", desc: "Optimizes policy ratio ρ^g = π_θ(g)/π_old(g) with asymmetric clips (0.1, 0.2) and discrete KL regularization (β=5) toward π_ref.", eq: "L_total = L_PPO + β D_KL" },
-      "m-upd":     { x: 1327, y: 414, w: 269, h: 231, rx: 4, color: "#059669", title: "ODE-Native Contrastive Velocity Update", desc: "Gradient reduces velocity replay residual on superior branches (A^g > μ_A) while pushing away from inferior branches strictly on the ODE manifold.", eq: "θ ← θ − η ∇_θ L_total" }
+      "m-cache":   { x: 805, y: 48, w: 91, h: 208, rx: 4, color: "#2563eb", title: "Cached Rollout States & Clean Context", desc: "Intermediate latents z^g_b,s cached during rollout are paired with the restored deployment-time unperturbed KV cache K_<b for single-pass replay.", eq: "Input: (z^g_b,s, K_<b)" },
+      "m-ar2":     { x: 918, y: 104, w: 182, h: 158, rx: 4, color: "#2563eb", title: "Single-Pass ODE Velocity Replay", desc: "Evaluates v_θ(z^g_b,s, t_s, K_<b) in one forward pass per cached step without specialized SDE kernels, matching standard SFT efficiency.", eq: "v_θ(z^g_b,s, t_s, K_<b)" },
+      "m-tve":     { x: 1133, y: 93, w: 182, h: 164, rx: 4, color: "#2563eb", title: "Trajectory Velocity Energy (TVE)", desc: "Quantifies branch compatibility in flow-matching velocity space via aggregated squared residual between replayed velocity v_θ and rollout target û^g.", eq: "E_θ(X^g) = Σ ||v_θ − û^g||²_F" },
+      "m-gibbs":   { x: 1324, y: 88, w: 272, h: 175, rx: 4, color: "#2563eb", title: "Gibbs-Form Surrogate Policy π_θ(g)", desc: "Converts negative TVE into a normalized, differentiable probability distribution over branches that depends purely on relative velocity energy.", eq: "π_θ(g) = softmax(−E_θ(X^g)/τ)" },
+      "m-rew":     { x: 899, y: 332, w: 176, h: 310, rx: 4, color: "#2563eb", title: "Multi-Dimensional Reward Model", desc: "Combines HPSv3 Visual Quality (VQ) with VideoAlign Motion Quality (MQ) and Text-Video Alignment (TA) across segments to prevent reward hacking.", eq: "R = R_VQ + R_MQ + R_TA" },
+      "m-adv":     { x: 1093, y: 333, w: 211, h: 311, rx: 4, color: "#2563eb", title: "Group-Relative Advantage Computation", desc: "Normalizes branch rewards within each G=8 rollout group; iterations where no branch beats anchor reward r^0 are zeroed out for stability.", eq: "A^g = (r^g − r̄) / (σ_r + ε)" },
+      "m-ppo":     { x: 1339, y: 313, w: 257, h: 101, rx: 4, color: "#2563eb", title: "Asymmetric Clipped PPO + KL Objective", desc: "Optimizes policy ratio ρ^g = π_θ(g)/π_old(g) with asymmetric clips (0.1, 0.2) and discrete KL regularization (β=5) toward π_ref.", eq: "L_total = L_PPO + β D_KL" },
+      "m-upd":     { x: 1327, y: 414, w: 269, h: 231, rx: 4, color: "#2563eb", title: "ODE-Native Contrastive Velocity Update", desc: "Gradient reduces velocity replay residual on superior branches (A^g > μ_A) while pushing away from inferior branches strictly on the ODE manifold.", eq: "θ ← θ − η ∇_θ L_total" }
     };
 
     const routeDefs = {
@@ -2385,14 +2222,14 @@
       },
       b: {
         mods: ["m-routers", "m-cache", "m-ar2", "m-tve", "m-gibbs"],
-        color: "#7c3aed",
+        color: "#2563eb",
         title: "(b) Velocity-Field Surrogate Policy Modeling — Replay",
         desc: "Cached intermediate latents z^g_b,s are replayed under clean context K_<b to measure Trajectory Velocity Energy (TVE) and form Gibbs branch probabilities π_θ(g).",
         eq: "E_θ(X^g) = Σ ||v_θ − û^g||²_F"
       },
       c: {
         mods: ["m-rollout", "m-gibbs", "m-rew", "m-adv", "m-ppo", "m-upd"],
-        color: "#059669",
+        color: "#2563eb",
         title: "(c) Policy Optimization — Asymmetric Clipped PPO + KL Regularization",
         desc: "Branches are scored on Visual Quality, Motion Quality, and Text Alignment. Group-normalized advantages A^g and Gibbs ratios ρ^g update θ via contrastive flow matching.",
         eq: "L_PPO + β D_KL(π_θ || π_ref)"
@@ -2422,8 +2259,8 @@
       }
       const panels = {
         a: { x: 2, y: 2, w: 756, h: 646, rx: 10, color: '#2563eb' },
-        b: { x: 766, y: 2, w: 832, h: 268, rx: 10, color: '#7c3aed' },
-        c: { x: 766, y: 276, w: 832, h: 372, rx: 10, color: '#059669' }
+        b: { x: 766, y: 2, w: 832, h: 268, rx: 10, color: '#2563eb' },
+        c: { x: 766, y: 276, w: 832, h: 372, rx: 10, color: '#2563eb' }
       };
       const boxes = panels[activeRoute] ? [panels[activeRoute]] : modKeys.map(k => modRects[k]);
       archCutouts.innerHTML = boxes.map((b) => {
@@ -2581,7 +2418,7 @@
           },
           {
             name: "Text Alignment (TA ↑)",
-            delta: "+26.3%",
+            delta: "+0.05",
             bars: [
               { cls: "base", w: "60%", txt: "-0.19" },
               { cls: "mid",  w: "68%", txt: "-0.18" },
@@ -2623,7 +2460,7 @@
           },
           {
             name: "Text Alignment (TA ↑)",
-            delta: "+15.0%",
+            delta: "+0.03",
             bars: [
               { cls: "base", w: "68%", txt: "-0.20" },
               { cls: "mid",  w: "56%", txt: "-0.23" },
@@ -2683,8 +2520,6 @@
         renderGainChart(b.dataset.cmodel);
       });
     });
-    document.getElementById("replayGainChart").addEventListener("click", () => animateBarsIn(gainBarsEl));
-    document.getElementById("replayAblChart").addEventListener("click", () => animateBarsIn(document.getElementById("ablBars")));
 
     const chartObs = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
@@ -2703,7 +2538,7 @@
         <table class="tbl">
           <thead>
             <tr>
-              <th>Method (Multi-Prompt Long Video)</th>
+              <th>Method</th>
               <th>VQ ↑</th>
               <th>MQ ↑</th>
               <th>TA ↑</th>
@@ -2718,9 +2553,9 @@
             <tr><td>LongLive + Astrolabe</td><td>7.26</td><td>1.44</td><td>-0.18</td><td>78.46</td><td>68.36</td><td>88.30</td><td>32.18</td></tr>
             <tr class="ours-row">
               <td>LongLive + KVPO (Ours)</td>
-              <td class="best">8.14 <span class="up-tag">+28.4%</span></td>
-              <td class="best">1.50 <span class="up-tag">+6.4%</span></td>
-              <td class="best">-0.14 <span class="up-tag">+26.3%</span></td>
+              <td class="best">8.14</td>
+              <td class="best">1.50</td>
+              <td class="best">-0.14</td>
               <td class="best">79.31</td>
               <td class="best">69.02</td>
               <td class="best">88.62</td>
@@ -2730,9 +2565,9 @@
             <tr><td>MemFlow + Astrolabe</td><td>6.52</td><td>1.35</td><td>-0.23</td><td>78.02</td><td>67.94</td><td>87.35</td><td>31.86</td></tr>
             <tr class="ours-row">
               <td>MemFlow + KVPO (Ours)</td>
-              <td class="best">6.96 <span class="up-tag">+10.5%</span></td>
-              <td class="best">1.44 <span class="up-tag">+3.6%</span></td>
-              <td class="best">-0.17 <span class="up-tag">+15.0%</span></td>
+              <td class="best">6.96</td>
+              <td class="best">1.44</td>
+              <td class="best">-0.17</td>
               <td class="best">78.36</td>
               <td class="best">68.74</td>
               <td class="best">87.52</td>
@@ -2744,7 +2579,7 @@
         <table class="tbl">
           <thead>
             <tr>
-              <th>Method (Single-Prompt Short Video)</th>
+              <th>Method</th>
               <th>VQ ↑</th>
               <th>MQ ↑</th>
               <th>TA ↑</th>
@@ -2759,9 +2594,9 @@
             <tr><td>LongLive + Astrolabe</td><td>9.98</td><td>1.87</td><td>0.03</td><td>81.41</td><td>70.61</td><td>89.14</td><td class="best">32.31</td></tr>
             <tr class="ours-row">
               <td>LongLive + KVPO (Ours)</td>
-              <td class="best">10.21 <span class="up-tag">+15.2%</span></td>
-              <td class="best">1.89 <span class="up-tag">+5.0%</span></td>
-              <td class="best">0.06 <span class="up-tag">+200%</span></td>
+              <td class="best">10.21</td>
+              <td class="best">1.89</td>
+              <td class="best">0.06</td>
               <td>81.44</td>
               <td class="best">71.45</td>
               <td class="best">89.56</td>
@@ -2771,9 +2606,9 @@
             <tr><td>MemFlow + Astrolabe</td><td>9.47</td><td>1.85</td><td class="best">0.03</td><td>80.13</td><td>71.42</td><td>88.87</td><td>32.04</td></tr>
             <tr class="ours-row">
               <td>MemFlow + KVPO (Ours)</td>
-              <td class="best">9.71 <span class="up-tag">+9.1%</span></td>
-              <td class="best">1.87 <span class="up-tag">+2.7%</span></td>
-              <td class="best">0.03 <span class="up-tag">+50.0%</span></td>
+              <td class="best">9.71</td>
+              <td class="best">1.87</td>
+              <td class="best">0.03</td>
               <td class="best">80.91</td>
               <td class="best">71.65</td>
               <td class="best">89.08</td>
@@ -2785,7 +2620,7 @@
         <table class="tbl">
           <thead>
             <tr>
-              <th>Ablation Factor (LongLive Long-Video)</th>
+              <th>Ablation Factor</th>
               <th style="text-align:left">Variant</th>
               <th>VQ ↑</th>
               <th>MQ ↑</th>
@@ -2813,7 +2648,7 @@
         <table class="tbl">
           <thead>
             <tr>
-              <th>KL Penalty Weight β (LongLive Long-Video)</th>
+              <th>KL Weight β</th>
               <th>VQ ↑</th>
               <th>MQ ↑</th>
               <th>TA ↑</th>
@@ -2948,17 +2783,17 @@
         right.playbackRate = rate;
         left.play()?.catch(() => {});
         right.play()?.catch(() => {});
-        playBtn.textContent = "❚❚ Pause";
+        playBtn.textContent = "Pause";
       }
       function pause() {
         wantPlay = false;
         left.pause();
         right.pause();
-        playBtn.textContent = "▶ Play";
+        playBtn.textContent = "Play";
       }
 
-      left.addEventListener("play", () => { playBtn.textContent = "❚❚ Pause"; });
-      left.addEventListener("pause", () => { if (!wantPlay) playBtn.textContent = "▶ Play"; });
+      left.addEventListener("play", () => { playBtn.textContent = "Pause"; });
+      left.addEventListener("pause", () => { if (!wantPlay) playBtn.textContent = "Play"; });
 
       playBtn.addEventListener("click", () => (left.paused ? play() : pause()));
       restartBtn.addEventListener("click", () => {
@@ -3003,9 +2838,10 @@
       return {
         load(item) {
           const segs = parseSegments(getPrompt(item));
-          segEl.innerHTML = segs.map((s, i) =>
-            `<div class="seg-card ${i === 0 ? "on" : ""}"><b>[${esc(s.tag)}]</b>${esc(s.body)}</div>`
-          ).join("");
+          segEl.innerHTML = segs.map((s, i) => {
+            const label = segs.length > 1 ? `<b>${esc(s.tag.replace(/^seg/i, "Seg "))}</b>` : "";
+            return `<div class="seg-card ${i === 0 ? "on" : ""}">${label}${esc(s.body)}</div>`;
+          }).join("");
           left.src = item.old;
           right.src = item.current;
           left.muted = true;
@@ -3097,14 +2933,17 @@
       const list = galFilter === "all" ? demos : demos.filter((d) => d.group === galFilter);
       galGrid.innerHTML = list.map((item) => {
         const segs = parseSegments(getPrompt(item));
-        const tagCls = item.group === "memflow" ? "memflow" : (item.group === "short" ? "short" : "");
-        const toggleLabel = segs.length > 1 ? `Prompt (${segs.length} segs)` : "Prompt";
-        const preview = `<b>[${esc(segs[0].tag)}]</b> ${esc(segs[0].body)}`;
-        const full = segs.map((s) => `<p><b>[${esc(s.tag)}]</b> ${esc(s.body)}</p>`).join("");
+        const toggleLabel = segs.length > 1 ? `${segs.length} segs` : "More";
+        const firstTag = segs.length > 1 ? `<b>${esc(segs[0].tag.replace(/^seg/i, "Seg "))}</b>` : "";
+        const preview = `${firstTag}${esc(segs[0].body)}`;
+        const full = segs.map((s) => {
+          const t = segs.length > 1 ? `<b>${esc(s.tag.replace(/^seg/i, "Seg "))}</b>` : "";
+          return `<p>${t}${esc(s.body)}</p>`;
+        }).join("");
 
         return `
           <article class="gcard" data-key="${esc(item.key)}">
-            <div class="gstage" role="button" tabindex="0" aria-label="Open interactive slider comparison for ${esc(item.baseline)} versus KVPO">
+            <div class="gstage" role="button" tabindex="0" aria-label="Compare ${esc(item.baseline)} versus KVPO">
               <div class="gpair">
                 <div class="gcell">
                   <span class="gpill">${esc(item.baseline)}</span>
@@ -3115,17 +2954,14 @@
                   <video data-src="${item.current}" muted autoplay loop playsinline preload="metadata"></video>
                 </div>
               </div>
-              <span class="ghover-cta">Click to Compare ⇆</span>
+              <span class="ghover-cta">Compare</span>
             </div>
             <div class="gfoot">
               <div class="gfoot-row">
-                <div class="gmeta">
-                  <span class="gtag ${tagCls}">${esc(item.baseline)}</span>
-                </div>
+                <p class="gprev">${preview}</p>
+                <div class="gfull">${full}</div>
                 <button class="gtoggle" type="button" data-gtoggle data-closed="${esc(toggleLabel)}">${esc(toggleLabel)}</button>
               </div>
-              <p class="gprev">${preview}</p>
-              <div class="gfull">${full}</div>
             </div>
           </article>`;
       }).join("");
@@ -3241,11 +3077,8 @@
     document.getElementById("openFigZoom").addEventListener("click", openFigModal);
 
     function openVidModal(item) {
-      const modTag = document.getElementById("modTag");
-      modTag.textContent = item.baseline;
-      modTag.className = `gtag ${item.group === "memflow" ? "memflow" : (item.group === "short" ? "short" : "")}`;
-      document.getElementById("modTitle").textContent = "Comparison";
-      document.getElementById("modLabL").textContent = `Baseline · ${item.baseline}`;
+      document.getElementById("modTitle").textContent = `${item.baseline} vs. KVPO`;
+      document.getElementById("modLabL").textContent = item.baseline;
       modCmp.style.setProperty("--split", "50%");
       modPlayer.setSpeed(galSpeed);
       vidModal.classList.add("open");
