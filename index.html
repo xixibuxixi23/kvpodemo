@@ -778,32 +778,60 @@
 
     .abstract-split {
       margin-top: 22px;
-      padding: 28px 32px;
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 28px;
-      align-items: start;
+      padding: 24px 30px 28px;
+      display: flex;
+      flex-direction: column;
       box-shadow: var(--shadow-sm);
     }
+    .abstract-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding-bottom: 15px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .abstract-meta-title {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 10px;
+    }
     .abstract-meta strong {
-      display: block;
-      font-size: 14px;
+      font-size: 15.5px;
       font-weight: 700;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
       color: var(--ink);
     }
     .abstract-meta span {
-      display: block;
-      margin-top: 4px;
       font-size: 13px;
       color: var(--ink-faint);
+    }
+    .abstract-tags {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .abstract-tags i {
+      font-style: normal;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--tint);
+      border: 1px solid var(--line);
+      color: var(--ink-muted);
     }
     .abstract-text {
       margin: 0;
       color: var(--ink-2);
-      font-size: 15px;
-      line-height: 1.8;
-      text-align: justify;
+      font-size: 15.2px;
+      line-height: 1.82;
+      text-align: left;
     }
     .abstract-text b { color: var(--ink); font-weight: 650; }
 
@@ -823,54 +851,97 @@
       border-bottom: 1px solid var(--line); background: #fff;
     }
     .stage-label { font-size: 12px; font-weight: 650; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); }
-    .pipeline-figure { margin: 0; padding: 24px 20px 12px; background: #fff; }
-    .figure-scroll { overflow-x: auto; overscroll-behavior-x: contain; }
-    .paper-board { position: relative; width: 100%; min-width: 960px; }
+    .pipeline-figure { margin: 0; padding: 18px 20px; background: #fff; }
+    .figure-scroll {
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid #e6ecf5;
+      background: #ffffff;
+      padding: 14px 16px;
+      box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.03);
+    }
+    .paper-board { position: relative; width: 100%; min-width: 0; }
     .paper-artwork { width: 100%; height: auto; aspect-ratio: 1600 / 660; user-select: none; }
     .paper-overlay { position: absolute; inset: 0; width: 100%; height: 100%; }
     .mod-node { fill: transparent; stroke: transparent; stroke-width: 1.2; cursor: pointer; transition: fill 160ms, stroke 160ms; }
-    .mod-node:hover { fill: rgba(99, 102, 241, 0.035); stroke: #a5b4cf; }
+    .mod-node:hover { fill: rgba(37, 99, 235, 0.045); stroke: #93b4e8; }
     .mod-node:focus-visible { outline: none; stroke: #4f6eb0; stroke-width: 2; }
-    .pipeline-scrim { fill: white; opacity: 0; pointer-events: none; transition: opacity 200ms; }
-    .paper-board.is-focused .pipeline-scrim { opacity: 0.55; }
-    .mod-focus-ring { fill: none; stroke-width: 1.2; pointer-events: none; }
-    .flow-pulse { fill: none; stroke-linecap: round; pointer-events: none; opacity: 1; transition: opacity 180ms; }
-    .flow-pulse.is-dim { opacity: 0.08; }
-    .flow-halo, .flow-ink, .flow-head {
-      stroke-dasharray: 0.16 0.84;
-      animation: paperFlow var(--flow-duration, 2.8s) linear infinite;
-      animation-delay: var(--flow-delay, 0s);
+    .pipeline-scrim { fill: white; opacity: 0; pointer-events: none; transition: opacity 260ms ease; }
+    .paper-board.is-focused .pipeline-scrim { opacity: 0.62; }
+    .mod-focus-ring {
+      fill: none;
+      stroke-width: 2.6;
+      pointer-events: none;
+      filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.24));
+      animation: spotlightBreath 2.6s ease-in-out infinite;
     }
-    .flow-halo { stroke-width: 9; opacity: 0.2; }
-    .flow-ink { stroke-width: 4; }
-    .flow-head {
-      stroke: #fff; stroke-width: 3; stroke-dasharray: 0.008 0.992;
-      --flow-start: 0.848; --flow-end: -0.152;
+    @keyframes spotlightBreath {
+      0%, 100% { stroke-opacity: 0.92; }
+      50% { stroke-opacity: 0.45; }
     }
-    .flow-a { stroke: #3976db; }
-    .flow-a2 { stroke: #e39845; }
-    .flow-a3 { stroke: #5d9c47; }
-    .flow-b { stroke: #9660cc; }
-    .flow-c { stroke: #168b72; }
-    .pipeline-explorer.is-paused :is(.flow-halo, .flow-ink, .flow-head) { animation-play-state: paused; }
-    @keyframes paperFlow {
-      from { stroke-dashoffset: var(--flow-start, 1); }
-      to { stroke-dashoffset: var(--flow-end, 0); }
+    #tourToggleBtn.is-touring {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #1d4ed8;
     }
-    .figure-hint { display: none; margin: 8px 2px 0; font-size: 12px; color: var(--ink-muted); }
-    .module-choices { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 22px 18px; }
+    .figure-hint { display: none; }
+    .module-choices {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px;
+      padding: 12px 22px;
+      border-top: 1px solid var(--line);
+      background: #f8fafc;
+    }
+    .module-choices-group { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .module-choices-tip { font-size: 12px; color: var(--ink-faint); }
     .mchoice {
-      display: inline-flex; align-items: center; gap: 9px; padding: 7px 13px;
-      border-radius: 999px; border: 1px solid var(--line); background: white;
-      color: var(--ink-2); font-size: 12px; font-weight: 550;
+      position: relative; overflow: hidden;
+      display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px;
+      border-radius: 999px; border: 1px solid var(--line); background: #fff;
+      color: var(--ink-2); font-size: 12.5px; font-weight: 560;
+      transition: all 150ms ease;
     }
-    .mchoice:hover, .mchoice.on { background: #f2f5fb; border-color: #aebfda; color: #294e86; }
-    .mchoice .dot-k { width: 6px; height: 6px; border-radius: 50%; }
-    .arch-inspector { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding: 18px 22px; border-top: 1px solid var(--line); background: #f8fafc; }
+    .mchoice:hover { border-color: #aebfda; color: #1d4ed8; background: #f2f6ff; }
+    .mchoice.on {
+      background: #eff6ff; border-color: #93c5fd; color: #1d4ed8;
+      font-weight: 650; box-shadow: 0 1px 4px rgba(37, 99, 235, 0.12);
+    }
+    .mchoice.is-tour-active::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: 0;
+      height: 2.5px; width: 100%;
+      background: currentColor;
+      opacity: 0.45;
+      transform-origin: left;
+      animation: tourStepBar 3.8s linear forwards;
+    }
+    @keyframes tourStepBar {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+    .mchoice .dot-k { width: 7px; height: 7px; border-radius: 50%; flex: 0 0 auto; }
+    .arch-inspector { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding: 18px 22px; border-top: 1px solid var(--line); background: #fff; }
     .arch-inspector > div:first-child { flex: 1 1 540px; }
     .arch-inspector h4 { margin: 0 0 5px; font-size: 14px; font-weight: 650; }
     .arch-inspector p { margin: 0; max-width: 920px; font-size: 13px; line-height: 1.7; color: var(--ink-muted); }
-    .insp-formula { max-width: 100%; overflow-wrap: anywhere; font-family: var(--mono); font-size: 12px; color: #526581; }
+    .insp-formula {
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      font-family: "STIXGeneral", "Times New Roman", Georgia, serif;
+      font-size: 16px;
+      letter-spacing: 0.01em;
+      color: #1e293b;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 14px;
+    }
+    .insp-formula sub, .insp-formula sup,
+    .arch-inspector p sub, .arch-inspector p sup {
+      font-size: 0.72em;
+      line-height: 0;
+    }
     #figModal .box { width: min(100%, 1800px); }
     .figure-modal-actions { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
     .figure-modal-actions a { color: #42649e; font-size: 13px; }
@@ -879,14 +950,82 @@
     #figModal .mini-btn { background: #f5f7fb; border-color: var(--line); color: var(--ink); }
     #figModal .modal-top { flex-wrap: wrap; }
     @media (max-width: 1040px) {
-      .figure-hint { display: block; }
-      .pipeline-figure { padding: 16px 12px 8px; }
+      .pipeline-figure { padding: 12px; }
+      .figure-scroll { padding: 8px; }
       .pipeline-stage-bar, .arch-inspector { padding: 14px 16px; }
-      .module-choices { padding: 10px 16px 16px; }
+      .module-choices { padding: 12px 16px; }
+      .module-choices-tip { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
       .flow-halo, .flow-ink, .flow-head { animation: none !important; }
       .flow-head { display: none; }
+    }
+
+    /* ============ Method Walkthrough Video Card (StreamVSR + Robin-World style) ============ */
+    .method-video-card {
+      margin-top: 28px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 12px 38px rgba(30, 41, 59, 0.06);
+      overflow: hidden;
+    }
+    .method-video-stage {
+      position: relative;
+      background: #f6f8fc;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .method-video-stage video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .method-video-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 22px;
+      border-top: 1px solid var(--line);
+      background: #fff;
+    }
+    .method-video-controls .range { flex: 1; }
+    .method-video-chapters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px 22px 16px;
+      border-top: 1px solid var(--line);
+      background: #f8fafc;
+    }
+    .mv-chap {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink-2);
+      font-size: 12.5px;
+      font-weight: 560;
+      transition: all 150ms ease;
+    }
+    .mv-chap:hover { border-color: #aebfda; color: #1d4ed8; background: #f2f6ff; }
+    .mv-chap.on {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #1d4ed8;
+      font-weight: 650;
+      box-shadow: 0 1px 4px rgba(37, 99, 235, 0.12);
+    }
+    .mv-chap .dot-k { width: 7px; height: 7px; border-radius: 50%; flex: 0 0 auto; }
+    .mv-chap .chap-t { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); }
+    .mv-chap.on .chap-t { color: #3b82f6; }
+    @media (max-width: 1040px) {
+      .method-video-controls, .method-video-chapters { padding: 12px 16px; }
     }
 
     /* ============ Quantitative Charts & Interactive Benchmarks (StreamVSR + Robin-World style) ============ */
@@ -905,21 +1044,30 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
+      gap: 8px;
+      flex-wrap: nowrap;
+      min-height: 36px;
     }
     .qc-head h3 {
       margin: 0;
-      font-size: 18px;
+      font-size: 16.5px;
       font-weight: 650;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
+      white-space: nowrap;
+    }
+    .qc-head .chips { flex-wrap: nowrap; gap: 5px; }
+    .qc-head .chip, .qc-head .mini-btn { padding: 5px 10px; font-size: 12px; }
+    @media (max-width: 1120px) {
+      .qc-head { flex-wrap: wrap; }
+      .qc-head h3 { white-space: normal; }
     }
     .kpi-row {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 14px;
       margin: 16px 0 14px;
       padding-bottom: 14px;
+      min-height: 68px;
       border-bottom: 1px solid var(--line);
     }
     .kpi-num {
@@ -957,10 +1105,15 @@
       display: inline-block;
     }
     .bars {
-      display: grid;
-      gap: 13px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
       margin-top: 4px;
     }
+    #ablBars .bar-pair { gap: 7px; }
+    #ablBars .bar-track { height: 29px; }
     .barrow {
       display: grid;
       grid-template-columns: 168px 1fr;
@@ -1031,9 +1184,12 @@
       color: #fff;
     }
     .metric-note {
-      margin: auto 0 0;
+      margin: 18px 0 0;
       padding-top: 14px;
+      border-top: 1px solid var(--line);
+      min-height: 52px;
       font-size: 12.5px;
+      line-height: 1.5;
       color: var(--ink-faint);
     }
 
@@ -1517,8 +1673,15 @@
 
         <div class="card abstract-split reveal">
           <div class="abstract-meta">
-            <strong>Abstract</strong>
-            <span>Paper summary</span>
+            <div class="abstract-meta-title">
+              <strong>Abstract</strong>
+              <span>Paper summary</span>
+            </div>
+            <div class="abstract-tags">
+              <i>Streaming AR Video</i>
+              <i>Causal History Routing</i>
+              <i>ODE-Native GRPO</i>
+            </div>
           </div>
           <p class="abstract-text">
             Aligning streaming autoregressive (AR) video generators with human preferences is challenging. Existing reinforcement learning methods predominantly rely on noise-based exploration and SDE-based surrogate policies that are mismatched to the deterministic ODE dynamics of distilled AR models, and tend to perturb low-level appearance rather than the high-level semantic storyline progression critical for long-horizon coherence. To address these limitations, we present <b>KVPO</b>, an ODE-native online Group Relative Policy Optimization (GRPO) framework for aligning streaming video generators. For diversity exploration, KVPO introduces a <b>causal-semantic exploration paradigm</b> that relocates the source of variation from stochastic noise to the historical KV cache. By stochastically routing historical KV entries, it constructs semantically diverse generation branches that remain strictly on the data manifold. For policy modeling, KVPO introduces a velocity-field surrogate policy based on <b>Trajectory Velocity Energy (TVE)</b>, which quantifies branch likelihood in flow-matching velocity space and yields a reward-weighted contrastive objective fully consistent with the native ODE formulation. Experiments on multiple distilled AR video generators demonstrate consistent gains in visual quality, motion quality, and text-video alignment across both single-prompt short-video and multi-prompt long-video settings.
@@ -1533,21 +1696,69 @@
         <div class="sec-head">
           <div class="eyebrow">Model Architecture</div>
           <h2 class="title">One native loop from KV exploration to policy alignment</h2>
-          <p class="lead">Follow the three stages of KVPO. Select a stage or a module to explore how causal memory connects exploration, replay, and optimization.</p>
+          <p class="lead">Watch the animated method walkthrough or inspect each stage interactively below to see how causal memory connects exploration, replay, and optimization.</p>
+        </div>
+
+        <!-- Animated Method Walkthrough Video -->
+        <div class="method-video-card reveal" id="methodVideoCard">
+          <div class="pipeline-stage-bar">
+            <span class="stage-label">KVPO Method Walkthrough · 1080p Animated Overview</span>
+            <div class="chips">
+              <button class="mini-btn" type="button" id="mvPlayBtn" aria-pressed="true">Pause</button>
+              <button class="mini-btn" type="button" id="mvSpeedBtn" title="Toggle playback speed">1.0×</button>
+              <button class="mini-btn" type="button" id="mvFullBtn">Fullscreen</button>
+            </div>
+          </div>
+
+          <div class="method-video-stage" id="mvStage" title="Click to play or pause">
+            <video id="methodExplainerVideo" src="framework/kvpo_method.mp4" poster="framework/kvpo_method_poster.jpg" muted loop playsinline preload="metadata"></video>
+          </div>
+
+          <div class="method-video-controls">
+            <input class="range" id="mvScrub" type="range" min="0" max="48" step="0.05" value="0" aria-label="Seek method walkthrough video">
+            <span class="time-txt" id="mvTime">0:00 / 0:48</span>
+          </div>
+
+          <div class="method-video-chapters" id="mvChapters" role="tablist" aria-label="Method walkthrough chapters">
+            <button type="button" class="mv-chap on" data-start="0" data-end="9.5" aria-selected="true">
+              <span class="dot-k" style="background:#4f46e5"></span>
+              <span>01 Motivation</span>
+              <span class="chap-t">0:00</span>
+            </button>
+            <button type="button" class="mv-chap" data-start="9.5" data-end="21.5" aria-selected="false">
+              <span class="dot-k" style="background:#2563eb"></span>
+              <span>02 (a) Causal History Routing</span>
+              <span class="chap-t">0:10</span>
+            </button>
+            <button type="button" class="mv-chap" data-start="21.5" data-end="32.5" aria-selected="false">
+              <span class="dot-k" style="background:#7c3aed"></span>
+              <span>03 (b) TVE Surrogate Policy</span>
+              <span class="chap-t">0:22</span>
+            </button>
+            <button type="button" class="mv-chap" data-start="32.5" data-end="41.5" aria-selected="false">
+              <span class="dot-k" style="background:#059669"></span>
+              <span>04 (c) Contrastive PPO</span>
+              <span class="chap-t">0:33</span>
+            </button>
+            <button type="button" class="mv-chap" data-start="41.5" data-end="48.5" aria-selected="false">
+              <span class="dot-k" style="background:#2563eb"></span>
+              <span>05 Results</span>
+              <span class="chap-t">0:42</span>
+            </button>
+          </div>
         </div>
 
         <div class="pipeline-explorer reveal" id="pipeExplorer">
           <div class="pipeline-stage-bar">
-            <span class="stage-label">KVPO Training Pipeline</span>
+            <span class="stage-label">KVPO Training Pipeline · Interactive Architecture</span>
             <div class="chips">
-              <button class="chip on" type="button" id="archAllBtn" data-route="all" aria-pressed="true">Full pipeline</button>
-              <button class="mini-btn" type="button" id="pulseToggleBtn" aria-pressed="true">Pause flow</button>
+              <button class="mini-btn" type="button" id="tourToggleBtn" aria-pressed="false">Auto tour</button>
               <button class="mini-btn" type="button" id="openFigZoom">Expand figure</button>
             </div>
           </div>
 
           <figure class="pipeline-figure">
-            <div class="figure-scroll" tabindex="0" role="region" aria-label="Training pipeline. Scroll horizontally on small screens.">
+            <div class="figure-scroll" tabindex="0" role="region" aria-label="Interactive KVPO training pipeline diagram.">
               <div class="paper-board" id="archBoard">
                 <img class="paper-artwork" src="framework/framework.svg" width="1600" height="660" alt="KVPO training pipeline: causal-semantic exploration, velocity-field surrogate replay, and policy optimization." decoding="async">
                 <svg class="paper-overlay" viewBox="0 0 1600 660" role="group" aria-label="Explore pipeline modules">
@@ -1557,16 +1768,6 @@
                       <g id="archCutouts"></g>
                     </mask>
                   </defs>
-                  <g id="archFlows" aria-hidden="true">
-                  <g class="flow-pulse flow-a" data-routes="a" style="animation-delay:0s"><path class="flow-ink" d="M128 220 H187 V159" pathLength="1"/></g>
-                  <g class="flow-pulse flow-a" data-routes="a" style="animation-delay:-1.4s"><path class="flow-ink" d="M271 158 L261 193 M239 260 V329" pathLength="1"/></g>
-                  <g class="flow-pulse flow-a2" data-routes="a" style="animation-delay:-2.8s"><path class="flow-ink" d="M345 158 L373 193 M353 260 V286 Q366 295 353 303 V419" pathLength="1"/></g>
-                  <g class="flow-pulse flow-a3" data-routes="a" style="animation-delay:-3.6s"><path class="flow-ink" d="M551 158 L545 193 M530 260 V287 Q542 295 530 303 V554" pathLength="1"/></g>
-                  <g class="flow-pulse flow-b" data-routes="b" style="animation-delay:-0.6s"><path class="flow-ink" d="M320 330 V295 H734 V168 H802" pathLength="1"/></g>
-                  <g class="flow-pulse flow-b" data-routes="b" style="animation-delay:-2s"><path class="flow-ink" d="M716 250 H918 M1101 192 H1130 M1316 192 H1340" pathLength="1"/></g>
-                  <g class="flow-pulse flow-c" data-routes="c" style="animation-delay:-1s"><path class="flow-ink" d="M750 382 H804 M878 382 H897 M1075 383 H1092 M1145 383 H1166 M1215 383 H1235 M1308 380 H1335" pathLength="1"/></g>
-                  <g class="flow-pulse flow-c" data-routes="c" style="animation-delay:-3.1s"><path class="flow-ink" d="M1470 266 V303 M1378 411 V432" pathLength="1"/></g>
-                  </g>
                   <rect class="pipeline-scrim" width="1600" height="660" mask="url(#archSpotlightMask)"/>
                   <g id="archFocusRings" aria-hidden="true"></g>
                   <rect class="mod-node" data-mod="m-in" data-routes="a" x="2" y="22" width="139" height="132" rx="4" role="button" tabindex="0" aria-label="Shared noise and text prompt" aria-pressed="false"/>
@@ -1589,20 +1790,27 @@
             <figcaption class="figure-hint">Scroll sideways to explore the full diagram, or choose “Expand figure”.</figcaption>
           </figure>
 
-          <!-- Capability / Stage Selector Buttons (Robin-World style) -->
+          <!-- Unified Stage Selector Bar -->
           <div class="module-choices" id="archChoices">
-            <button type="button" class="mchoice" aria-pressed="false" data-route="a">
-              <span>(a) Exploration</span>
-              <span class="dot-k" style="background:#2563eb"></span>
-            </button>
-            <button type="button" class="mchoice" aria-pressed="false" data-route="b">
-              <span>(b) Replay</span>
-              <span class="dot-k" style="background:#7c3aed"></span>
-            </button>
-            <button type="button" class="mchoice" aria-pressed="false" data-route="c">
-              <span>(c) Optimization</span>
-              <span class="dot-k" style="background:#059669"></span>
-            </button>
+            <div class="module-choices-group">
+              <button type="button" class="mchoice on" id="archAllBtn" data-route="all" aria-pressed="true">
+                <span class="dot-k" style="background:#0f172a"></span>
+                <span>Full pipeline</span>
+              </button>
+              <button type="button" class="mchoice" aria-pressed="false" data-route="a">
+                <span class="dot-k" style="background:#2563eb"></span>
+                <span>(a) Exploration</span>
+              </button>
+              <button type="button" class="mchoice" aria-pressed="false" data-route="b">
+                <span class="dot-k" style="background:#7c3aed"></span>
+                <span>(b) Replay</span>
+              </button>
+              <button type="button" class="mchoice" aria-pressed="false" data-route="c">
+                <span class="dot-k" style="background:#059669"></span>
+                <span>(c) Optimization</span>
+              </button>
+            </div>
+            <span class="module-choices-tip">Click any module on the diagram to inspect</span>
           </div>
 
           <div class="arch-inspector" aria-live="polite" aria-atomic="true">
@@ -1663,7 +1871,7 @@
 
             <div class="kpi-row">
               <span class="kpi-num">+35.2%</span>
-              <span class="kpi-cap">Higher Visual Quality (8.14 vs. 6.02) with Trajectory Velocity <br>Energy over Euclidean latent-distance (ℓ₂) surrogates</span>
+              <span class="kpi-cap">Higher Visual Quality (8.14 vs. 6.02) using TVE over Euclidean latent-distance (ℓ₂) surrogates</span>
             </div>
 
             <div class="chart-legend">
@@ -1950,6 +2158,105 @@
     reducedMotion.addEventListener("change", syncHeroVideos);
     window.addEventListener("resize", syncHeroVideos);
 
+    /* ============ Method Walkthrough Video Controller ============ */
+    (function initMethodWalkthrough() {
+      const vid = document.getElementById("methodExplainerVideo");
+      const stage = document.getElementById("mvStage");
+      const playBtn = document.getElementById("mvPlayBtn");
+      const speedBtn = document.getElementById("mvSpeedBtn");
+      const fullBtn = document.getElementById("mvFullBtn");
+      const scrub = document.getElementById("mvScrub");
+      const timeEl = document.getElementById("mvTime");
+      const chaps = Array.from(document.querySelectorAll("#mvChapters .mv-chap"));
+      if (!vid) return;
+
+      const speeds = [1.0, 1.25, 1.5, 0.75];
+      let speedIdx = 0;
+      let userPaused = false;
+      let seeking = false;
+
+      function fmtT(s) {
+        const sec = Math.max(0, Math.floor(s || 0));
+        return `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`;
+      }
+
+      function syncUI() {
+        const dur = Number.isFinite(vid.duration) && vid.duration > 0 ? vid.duration : 48;
+        const cur = vid.currentTime || 0;
+        if (!seeking) {
+          scrub.max = String(dur);
+          scrub.value = String(cur);
+        }
+        timeEl.textContent = `${fmtT(cur)} / ${fmtT(dur)}`;
+        playBtn.textContent = vid.paused ? "Play" : "Pause";
+        playBtn.setAttribute("aria-pressed", String(!vid.paused));
+        chaps.forEach((btn) => {
+          const s = parseFloat(btn.dataset.start);
+          const e = parseFloat(btn.dataset.end);
+          const on = cur >= s && cur < e;
+          btn.classList.toggle("on", on);
+          btn.setAttribute("aria-selected", String(on));
+        });
+      }
+
+      function togglePlay() {
+        if (vid.paused) {
+          userPaused = false;
+          vid.play().catch(() => {});
+        } else {
+          userPaused = true;
+          vid.pause();
+        }
+        syncUI();
+      }
+
+      playBtn.addEventListener("click", togglePlay);
+      stage.addEventListener("click", togglePlay);
+
+      speedBtn.addEventListener("click", () => {
+        speedIdx = (speedIdx + 1) % speeds.length;
+        vid.playbackRate = speeds[speedIdx];
+        speedBtn.textContent = `${speeds[speedIdx].toFixed(2).replace(/0$/, "")}×`;
+      });
+
+      fullBtn.addEventListener("click", () => {
+        if (vid.requestFullscreen) vid.requestFullscreen();
+        else if (vid.webkitEnterFullscreen) vid.webkitEnterFullscreen();
+      });
+
+      scrub.addEventListener("input", () => {
+        seeking = true;
+        vid.currentTime = parseFloat(scrub.value);
+        syncUI();
+      });
+      scrub.addEventListener("change", () => { seeking = false; });
+
+      chaps.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          userPaused = false;
+          vid.currentTime = parseFloat(btn.dataset.start) + 0.05;
+          vid.play().catch(() => {});
+          syncUI();
+        });
+      });
+
+      vid.addEventListener("timeupdate", syncUI);
+      vid.addEventListener("loadedmetadata", syncUI);
+      vid.addEventListener("play", syncUI);
+      vid.addEventListener("pause", syncUI);
+
+      const mvObs = new IntersectionObserver((entries) => {
+        const visible = entries[0].isIntersecting;
+        if (visible && !userPaused && !reducedMotion.matches) {
+          vid.play().catch(() => {});
+        } else if (!visible && !vid.paused) {
+          vid.pause();
+        }
+      }, { threshold: 0.25 });
+      mvObs.observe(stage);
+      syncUI();
+    })();
+
     /* ============ Original Figure Interaction Controller ============ */
     const modRects = {
       "m-in":      { x: 2, y: 22, w: 139, h: 132, rx: 4, color: "#2563eb", title: "Shared Initial Noise & Text Prompt", desc: "All G=8 candidate branches share the exact same Gaussian initial latent x_T ~ N(0, I) and prompt C, disentangling semantic policy variation from random noise magnitude.", eq: "x_T ~ N(0, I)  (Shared)" },
@@ -2002,38 +2309,15 @@
     const archBoard = document.getElementById("archBoard");
     const archCutouts = document.getElementById("archCutouts");
     const archFocusRings = document.getElementById("archFocusRings");
-    const archAllBtn = document.getElementById("archAllBtn");
     const inspTitle = document.getElementById("inspTitle");
     const inspDesc = document.getElementById("inspDesc");
     const inspFormula = document.getElementById("inspFormula");
-    const pulseToggleBtn = document.getElementById("pulseToggleBtn");
+    const tourToggleBtn = document.getElementById("tourToggleBtn");
+    const stageButtons = Array.from(document.querySelectorAll("#archChoices .mchoice"));
     let activeRoute = "all";
-
-    // Normalize each continuous connector separately. A long gap on a combined
-    // path otherwise hides the pulse on its shorter, disconnected segments.
-    document.querySelectorAll("#archFlows .flow-pulse").forEach((group, routeIndex) => {
-      const source = group.querySelector(".flow-ink");
-      const segments = source.getAttribute("d").match(/M[^M]*/g) || [];
-      source.remove();
-      segments.forEach((d, segmentIndex) => {
-        const connector = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        group.append(connector);
-        const ink = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        ink.setAttribute("d", d.trim());
-        ink.setAttribute("pathLength", "1");
-        ink.setAttribute("class", "flow-ink");
-        connector.append(ink);
-        const duration = Math.max(1.2, Math.min(3.4, ink.getTotalLength() / 110));
-        connector.style.setProperty("--flow-duration", `${duration.toFixed(2)}s`);
-        connector.style.setProperty("--flow-delay", `${(-routeIndex * 0.37 - segmentIndex * 0.23).toFixed(2)}s`);
-        const halo = ink.cloneNode();
-        halo.setAttribute("class", "flow-halo");
-        connector.prepend(halo);
-        const head = ink.cloneNode();
-        head.setAttribute("class", "flow-head");
-        connector.append(head);
-      });
-    });
+    let tourTimer = null;
+    const tourSequence = ["a", "b", "c", "all"];
+    let tourStep = 0;
 
     function renderSpotlight(modKeys, ringColor) {
       if (!modKeys || !modKeys.length) {
@@ -2043,50 +2327,88 @@
         return;
       }
       const panels = {
-        a: { x: 1, y: 1, w: 758, h: 646, rx: 5, color: '#7c9dcb' },
-        b: { x: 766, y: 1, w: 833, h: 270, rx: 5, color: '#a18bbd' },
-        c: { x: 766, y: 275, w: 833, h: 372, rx: 5, color: '#8aaf93' }
+        a: { x: 2, y: 2, w: 756, h: 646, rx: 10, color: '#2563eb' },
+        b: { x: 766, y: 2, w: 832, h: 268, rx: 10, color: '#7c3aed' },
+        c: { x: 766, y: 276, w: 832, h: 372, rx: 10, color: '#059669' }
       };
       const boxes = panels[activeRoute] ? [panels[activeRoute]] : modKeys.map(k => modRects[k]);
-      const pad = 0;
       archCutouts.innerHTML = boxes.map((b) => {
-        return `<rect x="${b.x - pad}" y="${b.y - pad}" width="${b.w + pad * 2}" height="${b.h + pad * 2}" rx="${b.rx + 2}" fill="black"/>`;
+        return `<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="${b.rx + 2}" fill="black"/>`;
       }).join("");
       archFocusRings.innerHTML = boxes.map((b) => {
         const c = b.color || ringColor;
-        return `<rect class="mod-focus-ring" x="${b.x - pad}" y="${b.y - pad}" width="${b.w + pad * 2}" height="${b.h + pad * 2}" rx="${b.rx + 2}" stroke="${c}"/>`;
+        return `<rect class="mod-focus-ring" x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="${b.rx + 2}" stroke="${c}"/>`;
       }).join("");
       archBoard.classList.add("is-focused");
     }
 
-    function setRoute(route) {
-      activeRoute = routeDefs[route] ? route : "all";
-      const info = routeDefs[route] || routeDefs.all;
-      archAllBtn.classList.toggle("on", route === "all");
-      archAllBtn.setAttribute("aria-pressed", String(route === "all"));
-      document.querySelectorAll(".mod-node").forEach(n => n.setAttribute("aria-pressed", "false"));
-      document.querySelectorAll("#archChoices .mchoice").forEach((b) =>
-        { b.classList.toggle("on", b.dataset.route === route); b.setAttribute("aria-pressed", String(b.dataset.route === route)); }
-      );
-      document.querySelectorAll("#archFlows .flow-pulse").forEach((w) => {
-        const routes = (w.dataset.routes || "").split(",");
-        w.classList.toggle("is-dim", route !== "all" && !routes.includes(route));
-      });
-      inspTitle.textContent = info.title;
-      inspDesc.textContent = info.desc;
-      inspFormula.textContent = info.eq;
-      renderSpotlight(info.mods, info.color);
-      const scroll = archBoard.parentElement;
-      if (scroll.scrollWidth > scroll.clientWidth) {
-        scroll.scrollTo({ left: (route === "b" || route === "c") ? archBoard.clientWidth * 0.475 : 0, behavior: reducedMotion.matches ? "instant" : "smooth" });
-      }
+    function formatMathHTML(str) {
+      let s = String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+      s = s.replace(/_\{([^}]+)\}/g, "<sub>$1</sub>");
+      s = s.replace(/\^\{([^}]+)\}/g, "<sup>$1</sup>");
+      s = s.replace(/_(&lt;[a-zA-Z0-9*]+|[a-zA-Z0-9θπτμσεβ*]+)/g, "<sub>$1</sub>");
+      s = s.replace(/\^([a-zA-Z0-9θπτ*0-9]+)/g, "<sup>$1</sup>");
+      return s;
     }
 
-    archAllBtn.addEventListener("click", () => setRoute("all"));
-    document.querySelectorAll("#archChoices .mchoice").forEach((b) => {
+    function clearTourProgress() {
+      stageButtons.forEach((b) => b.classList.remove("is-tour-active"));
+    }
+
+    function stopTour() {
+      if (tourTimer) {
+        clearInterval(tourTimer);
+        tourTimer = null;
+      }
+      clearTourProgress();
+      tourToggleBtn.classList.remove("is-touring");
+      tourToggleBtn.textContent = "Auto tour";
+      tourToggleBtn.setAttribute("aria-pressed", "false");
+    }
+
+    function setRoute(route, fromTour) {
+      if (!fromTour && tourTimer) stopTour();
+      activeRoute = routeDefs[route] ? route : "all";
+      const info = routeDefs[activeRoute] || routeDefs.all;
+      document.querySelectorAll(".mod-node").forEach(n => n.setAttribute("aria-pressed", "false"));
+      stageButtons.forEach((b) => {
+        const isOn = b.dataset.route === activeRoute;
+        b.classList.toggle("on", isOn);
+        b.setAttribute("aria-pressed", String(isOn));
+        b.classList.remove("is-tour-active");
+        if (fromTour && isOn) {
+          void b.offsetWidth;
+          b.classList.add("is-tour-active");
+        }
+      });
+      inspTitle.innerHTML = formatMathHTML(info.title);
+      inspDesc.innerHTML = formatMathHTML(info.desc);
+      inspFormula.innerHTML = formatMathHTML(info.eq);
+      renderSpotlight(info.mods, info.color);
+    }
+
+    function startTour() {
+      if (reducedMotion.matches) return;
+      stopTour();
+      tourStep = 0;
+      tourToggleBtn.classList.add("is-touring");
+      tourToggleBtn.textContent = "Stop tour";
+      tourToggleBtn.setAttribute("aria-pressed", "true");
+      setRoute(tourSequence[tourStep], true);
+      tourTimer = setInterval(() => {
+        tourStep = (tourStep + 1) % tourSequence.length;
+        setRoute(tourSequence[tourStep], true);
+      }, 3800);
+    }
+
+    stageButtons.forEach((b) => {
       b.addEventListener("click", () => {
         const r = b.dataset.route;
-        setRoute(activeRoute === r ? "all" : r);
+        if (r === "all") setRoute("all", false);
+        else setRoute(activeRoute === r ? "all" : r, false);
       });
     });
 
@@ -2096,43 +2418,48 @@
       });
       node.addEventListener("click", (e) => {
         e.stopPropagation();
+        if (tourTimer) stopTour();
         const key = node.dataset.mod;
         const m = modRects[key];
         if (!m) return;
         activeRoute = key;
-        archAllBtn.classList.remove("on");
-        archAllBtn.setAttribute("aria-pressed", "false");
         document.querySelectorAll(".mod-node").forEach(n => n.setAttribute("aria-pressed", String(n === node)));
-        document.querySelectorAll("#archChoices .mchoice").forEach((b) => { b.classList.remove("on"); b.setAttribute("aria-pressed", "false"); });
-        const nodeRoutes = (node.dataset.routes || "").split(",");
-        document.querySelectorAll("#archFlows .flow-pulse").forEach((w) => {
-          const wr = (w.dataset.routes || "").split(",");
-          w.classList.toggle("is-dim", !wr.some((x) => nodeRoutes.includes(x)));
-        });
-        inspTitle.textContent = m.title;
-        inspDesc.textContent = m.desc;
-        inspFormula.textContent = m.eq;
+        stageButtons.forEach((b) => { b.classList.remove("on"); b.setAttribute("aria-pressed", "false"); });
+        inspTitle.innerHTML = formatMathHTML(m.title);
+        inspDesc.innerHTML = formatMathHTML(m.desc);
+        inspFormula.innerHTML = formatMathHTML(m.eq);
         renderSpotlight([key], m.color);
       });
     });
 
-    archBoard.addEventListener("click", () => { if (activeRoute !== "all") setRoute("all"); });
+    setRoute("all", false);
 
-    pulseToggleBtn.addEventListener("click", () => {
-      const paused = pipeExplorer.classList.toggle("is-paused");
-      pulseToggleBtn.textContent = paused ? "Play flow" : "Pause flow";
-      pulseToggleBtn.setAttribute("aria-pressed", String(!paused));
+    archBoard.addEventListener("click", () => { if (activeRoute !== "all") setRoute("all", false); });
+
+    tourToggleBtn.addEventListener("click", () => {
+      if (tourTimer) stopTour();
+      else startTour();
     });
 
+    const tourObs = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting && tourTimer) stopTour();
+    }, { threshold: 0.1 });
+    tourObs.observe(pipeExplorer);
+    document.addEventListener("visibilitychange", () => { if (document.hidden && tourTimer) stopTour(); });
+
     function syncMotionPreference() {
-      pipeExplorer.classList.toggle("is-paused", reducedMotion.matches);
-      pulseToggleBtn.textContent = reducedMotion.matches ? "Motion reduced" : "Pause flow";
-      pulseToggleBtn.disabled = reducedMotion.matches;
-      pulseToggleBtn.setAttribute("aria-pressed", String(!reducedMotion.matches));
+      if (reducedMotion.matches) {
+        stopTour();
+        tourToggleBtn.disabled = true;
+        tourToggleBtn.textContent = "Motion reduced";
+      } else {
+        tourToggleBtn.disabled = false;
+        if (!tourTimer) tourToggleBtn.textContent = "Auto tour";
+      }
     }
     syncMotionPreference();
     reducedMotion.addEventListener("change", syncMotionPreference);
-    archBoard.addEventListener("keydown", (e) => { if (e.key === "Escape") setRoute("all"); });
+    archBoard.addEventListener("keydown", (e) => { if (e.key === "Escape") setRoute("all", false); });
 
     /* ============ Quantitative Charts & Benchmark Tables (Verified Paper Data) ============ */
     const longVideoChartData = {
