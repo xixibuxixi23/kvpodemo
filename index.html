@@ -923,31 +923,46 @@
       pointer-events: none;
     }
     .mv-cover-btn {
-      width: 68px;
-      height: 68px;
+      position: relative;
+      width: 80px;
+      height: 80px;
       padding: 0;
       border-radius: 50%;
-      border: 1.5px solid rgba(255, 255, 255, 0.34);
-      background: rgba(15, 23, 42, 0.78);
+      border: 1.5px solid rgba(37, 99, 235, 0.28);
+      background: rgba(255, 255, 255, 0.78);
       color: #fff;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.24);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+      box-shadow: 0 18px 44px rgba(15, 23, 42, 0.18), 0 0 0 6px rgba(37, 99, 235, 0.07);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms ease, border-color 200ms ease;
+    }
+    .mv-cover-btn::before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #3b82f6 0%, #2563eb 54%, #1d4ed8 100%);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.38), inset 0 1.5px 1px rgba(255, 255, 255, 0.42);
+      transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms ease;
     }
     .mv-cover-btn svg {
-      width: 24px;
-      height: 24px;
+      position: relative;
+      z-index: 1;
+      width: 23px;
+      height: 23px;
       margin-left: 3px;
+      filter: drop-shadow(0 2px 4px rgba(15, 23, 42, 0.22));
     }
     .mv-cover-btn:hover {
-      transform: scale(1.06);
-      background: #2563eb;
-      border-color: rgba(255, 255, 255, 0.55);
-      box-shadow: 0 18px 44px rgba(37, 99, 235, 0.36);
+      transform: scale(1.07);
+      border-color: rgba(37, 99, 235, 0.55);
+      box-shadow: 0 22px 52px rgba(37, 99, 235, 0.28), 0 0 0 9px rgba(37, 99, 235, 0.11);
+    }
+    .mv-cover-btn:hover::before {
+      box-shadow: 0 10px 26px rgba(37, 99, 235, 0.52), inset 0 1.5px 1px rgba(255, 255, 255, 0.55);
     }
     #mvMuteBtn.is-sound-on {
       background: #eff6ff;
@@ -1654,7 +1669,7 @@
           </div>
 
           <div class="method-video-stage" id="mvStage" title="Click to play or pause">
-            <video id="methodExplainerVideo" src="framework/kvpo_method.mp4?v=2" poster="framework/kvpo_method_poster.jpg?v=2" playsinline preload="metadata"></video>
+            <video id="methodExplainerVideo" src="framework/kvpo_method.mp4?v=3" poster="framework/kvpo_method_poster.jpg?v=3" playsinline preload="metadata"></video>
             <div class="mv-cover-overlay" id="mvCoverOverlay">
               <button type="button" class="mv-cover-btn" id="mvCoverPlayBtn" aria-label="Play method walkthrough">
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
