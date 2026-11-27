@@ -241,32 +241,6 @@
       align-items: center;
       text-align: center;
     }
-    .hero-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(8, 13, 26, 0.62);
-      color: rgba(226, 232, 240, 0.92);
-      font-family: var(--mono);
-      font-size: 11.5px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      margin-bottom: 20px;
-    }
-    .hero-kicker .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--sky);
-      box-shadow: 0 0 10px var(--sky);
-    }
-
     .hero-lockup {
       display: inline-flex;
       align-items: center;
@@ -303,19 +277,6 @@
       color: rgba(241, 245, 249, 0.92);
       text-wrap: balance;
     }
-    .hero-byline {
-      margin: 12px 0 0;
-      display: inline-flex;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      font-size: 13.5px;
-      font-weight: 500;
-      color: rgba(148, 163, 184, 0.82);
-    }
-    .hero-byline .sep { opacity: 0.45; }
-
     .hero-buttons {
       display: flex;
       justify-content: center;
@@ -357,40 +318,6 @@
       background: linear-gradient(135deg, #3b82f6, #6366f1);
       border-color: rgba(191, 219, 254, 0.65);
       box-shadow: 0 14px 34px rgba(37, 99, 235, 0.46), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    }
-
-    .hero-tldr {
-      margin: 26px 0 0;
-      padding-top: 16px;
-      max-width: 640px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      font-size: 13.5px;
-      line-height: 1.62;
-      color: rgba(148, 163, 184, 0.86);
-      text-wrap: pretty;
-    }
-    .hero-tldr b {
-      font-family: var(--mono);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      color: #93c5fd;
-      background: rgba(59, 130, 246, 0.15);
-      border: 1px solid rgba(96, 165, 250, 0.26);
-      border-radius: 5px;
-      padding: 2px 6px;
-      margin-right: 6px;
-      vertical-align: 1px;
-    }
-    .hero-tldr strong {
-      color: rgba(241, 245, 249, 0.94);
-      font-weight: 600;
-    }
-    .hero-sample-note {
-      margin: 12px 0 0;
-      color: rgba(203, 213, 225, 0.68);
-      font-size: 11px;
-      letter-spacing: 0.02em;
     }
 
     .scrollcue {
@@ -1338,11 +1265,6 @@
     }
     .gtag.memflow { background: rgba(99, 102, 241, 0.22); color: #c7d2fe; }
     .gtag.short { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
-    .gid {
-      font-family: var(--mono);
-      font-size: 11.5px;
-      color: rgba(148, 163, 184, 0.72);
-    }
     .gprev {
       margin: 6px 0 0;
       font-size: 12.5px;
@@ -1512,11 +1434,6 @@
     <div class="mosaic" id="mosaic" aria-hidden="true"></div>
 
     <div class="hero-inner">
-      <div class="hero-kicker">
-        <span class="dot" aria-hidden="true"></span>
-        <span>ODE-Native GRPO · Autoregressive Video Alignment</span>
-      </div>
-
       <div class="hero-lockup" aria-hidden="true">
         <svg class="hero-mark" viewBox="0 0 48 48" fill="none">
           <rect width="48" height="48" rx="13" fill="url(#heroMarkBg)"/>
@@ -1540,16 +1457,10 @@
 
       <h1 class="hero-title">ODE-Native GRPO for Autoregressive Video Alignment via KV Semantic Exploration</h1>
 
-      <p class="hero-byline">
-        <span>Anonymous Authors</span>
-        <span class="sep" aria-hidden="true">·</span>
-        <span>Supplementary Project Page</span>
-      </p>
-
       <div class="hero-buttons">
-        <a class="btn primary" href="#gallery">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
-          Video Gallery
+        <a class="btn primary" href="#overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+          Overview &amp; Abstract
         </a>
         <a class="btn" href="#method">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2.8"/><circle cx="18" cy="6" r="2.8"/><circle cx="12" cy="18" r="2.8"/><path d="M8.2 8L11 15.2M15.8 8L13 15.2"/></svg>
@@ -1559,16 +1470,12 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 3 5-6"/></svg>
           Benchmarks
         </a>
-        <a class="btn" href="#overview">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
-          Overview &amp; Abstract
+        <a class="btn" href="#gallery">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
+          Video Gallery
         </a>
       </div>
 
-      <p class="hero-tldr">
-        <b>TL;DR</b> Branching inside <strong>historical KV memory</strong> with <strong>Trajectory Velocity Energy</strong> aligns distilled autoregressive video generators strictly within their native ODE dynamics.
-      </p>
-      <p class="hero-sample-note">Background samples: LongLive released base generations · not KVPO outputs</p>
     </div>
 
     <a class="scrollcue" href="#overview">
@@ -1851,7 +1758,7 @@
 
   <footer>
     <div class="foot-inner">
-      <span>KVPO · Supplementary Project Page</span>
+      <span>KVPO</span>
       <a href="#top" style="color:#e2e8f0;font-weight:500">Back to top ↑</a>
     </div>
   </footer>
@@ -1877,7 +1784,7 @@
       <div class="modal-top">
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
           <span class="gtag" id="modTag">LongLive</span>
-          <strong id="modTitle">Case 012345</strong>
+          <strong id="modTitle">Comparison</strong>
         </div>
         <div style="display:flex;align-items:center;gap:8px">
           <div class="chips" id="modModeChips">
@@ -2776,7 +2683,7 @@
 
         return `
           <article class="gcard" data-key="${esc(item.key)}">
-            <div class="gstage" role="button" tabindex="0" aria-label="Open interactive slider comparison for ${esc(item.baseline)} ${esc(item.id)}">
+            <div class="gstage" role="button" tabindex="0" aria-label="Open interactive slider comparison for ${esc(item.baseline)} versus KVPO">
               <div class="gpair">
                 <div class="gcell">
                   <span class="gpill">${esc(item.baseline)}</span>
@@ -2793,7 +2700,6 @@
               <div class="gfoot-row">
                 <div class="gmeta">
                   <span class="gtag ${tagCls}">${esc(item.baseline)}</span>
-                  <span class="gid">#${esc(item.id)}</span>
                 </div>
                 <button class="gtoggle" type="button" data-gtoggle data-closed="${esc(toggleLabel)}">${esc(toggleLabel)}</button>
               </div>
@@ -2917,7 +2823,7 @@
       const modTag = document.getElementById("modTag");
       modTag.textContent = item.baseline;
       modTag.className = `gtag ${item.group === "memflow" ? "memflow" : (item.group === "short" ? "short" : "")}`;
-      document.getElementById("modTitle").textContent = `Case ${item.id}`;
+      document.getElementById("modTitle").textContent = "Comparison";
       document.getElementById("modLabL").textContent = `Baseline · ${item.baseline}`;
       modCmp.style.setProperty("--split", "50%");
       modPlayer.setSpeed(galSpeed);
