@@ -342,7 +342,11 @@
       width: min(100%, var(--wrap));
       margin: 0 auto;
     }
-    .sec-head { max-width: 800px; }
+    .sec-head {
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+    }
     .eyebrow {
       font-family: var(--mono);
       font-size: 12px;
@@ -354,7 +358,8 @@
     }
     .block.dark .eyebrow { color: var(--accent-bright); }
     .title {
-      margin: 0;
+      margin: 0 auto;
+      max-width: 780px;
       font-size: clamp(28px, 3.1vw, 40px);
       font-weight: 700;
       line-height: 1.15;
@@ -362,10 +367,12 @@
       text-wrap: balance;
     }
     .lead {
-      margin: 14px 0 0;
+      margin: 14px auto 0;
+      max-width: 700px;
       font-size: 16.5px;
       line-height: 1.7;
       color: var(--ink-muted);
+      text-wrap: pretty;
     }
     .block.dark .lead { color: rgba(203, 213, 225, 0.74); }
 
@@ -950,10 +957,80 @@
       border-color: rgba(255, 255, 255, 0.65);
       box-shadow: 0 18px 48px rgba(0, 0, 0, 0.52), inset 0 1px 0 rgba(255, 255, 255, 0.42);
     }
+    .mv-ctrl-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .mv-ctrl {
+      height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink-2);
+      font-size: 12.5px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+    }
+    .mv-ctrl svg {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 auto;
+    }
+    .mv-ctrl:hover {
+      background: #f8fafc;
+      border-color: var(--line-strong);
+      color: var(--ink);
+    }
+    #mvPlayBtn { min-width: 78px; }
+    #mvMuteBtn { min-width: 88px; }
+    #mvSpeedBtn {
+      min-width: 56px;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
     #mvMuteBtn.is-sound-on {
       background: #eff6ff;
       border-color: #93c5fd;
       color: #1d4ed8;
+    }
+    .mv-sound-hint {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      z-index: 5;
+      height: 34px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: rgba(6, 10, 20, 0.62);
+      color: #f8fafc;
+      font-size: 12.5px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: opacity 200ms ease, visibility 200ms ease, background 150ms ease, transform 150ms ease;
+    }
+    .mv-sound-hint svg { width: 14px; height: 14px; }
+    .mv-sound-hint:hover {
+      background: rgba(37, 99, 235, 0.88);
+      border-color: rgba(147, 197, 253, 0.55);
+      transform: translateY(-1px);
+    }
+    .mv-sound-hint.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
     }
     .method-video-controls {
       display: flex;
@@ -1646,16 +1723,19 @@
         <div class="method-video-card reveal" id="methodVideoCard">
           <div class="pipeline-stage-bar">
             <span class="stage-label">Method Walkthrough</span>
-            <div class="chips">
-              <button class="mini-btn" type="button" id="mvPlayBtn" aria-pressed="false">Play</button>
-              <button class="mini-btn is-sound-on" type="button" id="mvMuteBtn" aria-pressed="true" title="Toggle voiceover audio">Sound On</button>
-              <button class="mini-btn" type="button" id="mvSpeedBtn" title="Toggle playback speed">1.0×</button>
-              <button class="mini-btn" type="button" id="mvFullBtn">Fullscreen</button>
+            <div class="mv-ctrl-group">
+              <button class="mv-ctrl" type="button" id="mvPlayBtn" aria-pressed="false"></button>
+              <button class="mv-ctrl" type="button" id="mvMuteBtn" aria-pressed="false" title="Toggle voiceover audio"></button>
+              <button class="mv-ctrl" type="button" id="mvSpeedBtn" title="Toggle playback speed">1.0×</button>
+              <button class="mv-ctrl" type="button" id="mvFullBtn" title="Fullscreen">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                <span>Fullscreen</span>
+              </button>
             </div>
           </div>
 
-          <div class="method-video-stage" id="mvStage" title="Click to play or pause">
-            <video id="methodExplainerVideo" src="framework/kvpo_method.mp4?v=4" poster="framework/kvpo_method_poster.jpg?v=4" playsinline preload="metadata"></video>
+          <div class="method-video-stage" id="mvStage" title="Click to toggle sound or pause">
+            <video id="methodExplainerVideo" src="framework/kvpo_method.mp4?v=4" poster="framework/kvpo_method_poster.jpg?v=4" autoplay muted loop playsinline preload="auto"></video>
             <div class="mv-cover-overlay" id="mvCoverOverlay">
               <button type="button" class="mv-cover-btn" id="mvCoverPlayBtn" aria-label="Play method walkthrough">
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -1663,6 +1743,10 @@
                 </svg>
               </button>
             </div>
+            <button type="button" class="mv-sound-hint is-hidden" id="mvSoundHint" aria-label="Enable voiceover audio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+              <span>Unmute audio</span>
+            </button>
           </div>
 
           <div class="method-video-controls">
@@ -2064,12 +2148,13 @@
     reducedMotion.addEventListener("change", syncHeroVideos);
     window.addEventListener("resize", syncHeroVideos);
 
-    /* ============ Method Walkthrough Video Controller (Cover + Narrated Audio) ============ */
+    /* ============ Method Walkthrough Video Controller (Autoplay + Voiceover) ============ */
     (function initMethodWalkthrough() {
       const vid = document.getElementById("methodExplainerVideo");
       const stage = document.getElementById("mvStage");
       const coverOverlay = document.getElementById("mvCoverOverlay");
       const coverPlayBtn = document.getElementById("mvCoverPlayBtn");
+      const soundHint = document.getElementById("mvSoundHint");
       const playBtn = document.getElementById("mvPlayBtn");
       const muteBtn = document.getElementById("mvMuteBtn");
       const speedBtn = document.getElementById("mvSpeedBtn");
@@ -2079,15 +2164,31 @@
       const chaps = Array.from(document.querySelectorAll("#mvChapters .mv-chap"));
       if (!vid) return;
 
-      const speeds = [1.0, 1.25, 1.5, 0.85];
+      const ICO_PLAY = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5.5v13l11-6.5-11-6.5z"/></svg>`;
+      const ICO_PAUSE = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>`;
+      const ICO_VOL_ON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+      const ICO_VOL_OFF = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>`;
+
+      const speeds = [1.0, 1.25, 1.5];
       let speedIdx = 0;
-      let hasStarted = false;
+      let userPaused = false;
       let seeking = false;
-      vid.muted = false;
+      let mvInView = false;
+
+      vid.muted = true;
+      vid.defaultMuted = true;
+      vid.loop = true;
+      vid.playsInline = true;
 
       function fmtT(s) {
         const sec = Math.max(0, Math.floor(s || 0));
         return `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`;
+      }
+
+      function applySpeed() {
+        const rate = speeds[speedIdx];
+        vid.playbackRate = rate;
+        speedBtn.textContent = `${rate % 1 === 0 ? rate.toFixed(1) : rate}×`;
       }
 
       function syncUI() {
@@ -2098,15 +2199,21 @@
           scrub.value = String(cur);
         }
         timeEl.textContent = `${fmtT(cur)} / ${fmtT(dur)}`;
-        playBtn.textContent = vid.paused ? "Play" : "Pause";
-        playBtn.setAttribute("aria-pressed", String(!vid.paused));
+        const playing = !vid.paused && !vid.ended;
+        playBtn.innerHTML = playing ? `${ICO_PAUSE}<span>Pause</span>` : `${ICO_PLAY}<span>Play</span>`;
+        playBtn.setAttribute("aria-pressed", String(playing));
+
+        const soundOn = !vid.muted;
         if (muteBtn) {
-          muteBtn.textContent = vid.muted ? "Muted" : "Sound On";
-          muteBtn.classList.toggle("is-sound-on", !vid.muted);
-          muteBtn.setAttribute("aria-pressed", String(!vid.muted));
+          muteBtn.innerHTML = soundOn ? `${ICO_VOL_ON}<span>Sound</span>` : `${ICO_VOL_OFF}<span>Muted</span>`;
+          muteBtn.classList.toggle("is-sound-on", soundOn);
+          muteBtn.setAttribute("aria-pressed", String(soundOn));
         }
         if (coverOverlay) {
-          coverOverlay.classList.toggle("is-hidden", hasStarted && !vid.paused);
+          coverOverlay.classList.toggle("is-hidden", playing);
+        }
+        if (soundHint) {
+          soundHint.classList.toggle("is-hidden", !playing || soundOn);
         }
         chaps.forEach((btn) => {
           const s = parseFloat(btn.dataset.start);
@@ -2117,51 +2224,95 @@
         });
       }
 
-      function startPlayback() {
-        hasStarted = true;
-        vid.play().catch(() => {
-          vid.muted = true;
-          vid.play().catch(() => {});
-        });
-        syncUI();
+      function playVideo(wantSound) {
+        if (wantSound === true) vid.muted = false;
+        else if (wantSound === false) vid.muted = true;
+        applySpeed();
+        const p = vid.play();
+        if (p && typeof p.then === "function") {
+          p.then(() => {
+            applySpeed();
+            syncUI();
+          }).catch(() => {
+            vid.muted = true;
+            vid.play().then(() => {
+              applySpeed();
+              syncUI();
+            }).catch(syncUI);
+          });
+        } else {
+          syncUI();
+        }
       }
 
       function togglePlay() {
-        if (vid.paused) startPlayback();
-        else { vid.pause(); syncUI(); }
+        if (vid.paused) {
+          userPaused = false;
+          playVideo();
+        } else {
+          userPaused = true;
+          vid.pause();
+          syncUI();
+        }
       }
 
       if (coverPlayBtn) {
         coverPlayBtn.addEventListener("click", (e) => {
           e.stopPropagation();
+          userPaused = false;
+          playVideo(true);
+        });
+      }
+      if (soundHint) {
+        soundHint.addEventListener("click", (e) => {
+          e.stopPropagation();
           vid.muted = false;
-          startPlayback();
+          if (vid.paused) { userPaused = false; playVideo(true); }
+          else syncUI();
         });
       }
-      playBtn.addEventListener("click", togglePlay);
-      stage.addEventListener("click", togglePlay);
-
-      if (muteBtn) {
-        muteBtn.addEventListener("click", () => {
-          vid.muted = !vid.muted;
+      playBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        togglePlay();
+      });
+      stage.addEventListener("click", () => {
+        if (!vid.paused && vid.muted) {
+          vid.muted = false;
           syncUI();
-        });
-      }
-
-      speedBtn.addEventListener("click", () => {
-        speedIdx = (speedIdx + 1) % speeds.length;
-        vid.playbackRate = speeds[speedIdx];
-        speedBtn.textContent = `${speeds[speedIdx].toFixed(2).replace(/0$/, "")}×`;
+        } else {
+          togglePlay();
+        }
       });
 
-      fullBtn.addEventListener("click", () => {
-        if (vid.requestFullscreen) vid.requestFullscreen();
+      if (muteBtn) {
+        muteBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          vid.muted = !vid.muted;
+          if (!vid.muted && vid.paused) {
+            userPaused = false;
+            playVideo(true);
+          } else {
+            syncUI();
+          }
+        });
+      }
+
+      speedBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        speedIdx = (speedIdx + 1) % speeds.length;
+        applySpeed();
+      });
+
+      fullBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (vid.requestFullscreen) vid.requestFullscreen().catch(() => {});
+        else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
         else if (vid.webkitEnterFullscreen) vid.webkitEnterFullscreen();
+        else if (stage.requestFullscreen) stage.requestFullscreen().catch(() => {});
       });
 
       scrub.addEventListener("input", () => {
         seeking = true;
-        hasStarted = true;
         vid.currentTime = parseFloat(scrub.value);
         syncUI();
       });
@@ -2169,23 +2320,33 @@
 
       chaps.forEach((btn) => {
         btn.addEventListener("click", () => {
-          vid.muted = false;
+          userPaused = false;
           vid.currentTime = parseFloat(btn.dataset.start) + 0.05;
-          startPlayback();
+          playVideo(true);
         });
       });
 
       vid.addEventListener("timeupdate", syncUI);
-      vid.addEventListener("loadedmetadata", syncUI);
-      vid.addEventListener("play", syncUI);
+      vid.addEventListener("loadedmetadata", () => { applySpeed(); syncUI(); });
+      vid.addEventListener("canplay", () => {
+        applySpeed();
+        if (mvInView && !userPaused && vid.paused && !reducedMotion.matches) playVideo();
+      });
+      vid.addEventListener("play", () => { applySpeed(); syncUI(); });
       vid.addEventListener("pause", syncUI);
-      vid.addEventListener("ended", () => { hasStarted = false; vid.currentTime = 0; syncUI(); });
+      vid.addEventListener("volumechange", syncUI);
 
-      // Pause automatically if scrolled well out of view while playing
+      // Autoplay when entering view; pause when well out of view to save CPU
       const mvObs = new IntersectionObserver((entries) => {
-        if (!entries[0].isIntersecting && !vid.paused) vid.pause();
-      }, { threshold: 0.1 });
+        mvInView = entries[0].isIntersecting;
+        if (mvInView && !userPaused && !reducedMotion.matches) {
+          playVideo();
+        } else if (!mvInView && !vid.paused) {
+          vid.pause();
+        }
+      }, { threshold: 0.15 });
       mvObs.observe(stage);
+      applySpeed();
       syncUI();
     })();
 
@@ -2877,7 +3038,7 @@
     let galSpeed = 1;
     let galObs;
     const activeCards = new Set();
-    const MAX_ACTIVE_CARDS = 6; // Max 12 decoders active simultaneously
+    const MAX_ACTIVE_CARDS = 12;
 
     function unloadCardVids(card) {
       if (!activeCards.has(card)) return;
@@ -2891,15 +3052,28 @@
       });
     }
 
+    function tryPlayCard(card) {
+      if (reducedMotion.matches) return;
+      card.querySelectorAll("video[data-src]").forEach((v) => {
+        v.muted = true;
+        v.defaultMuted = true;
+        v.playbackRate = galSpeed;
+        if (v.dataset.loaded && v.paused) v.play().catch(() => {});
+      });
+    }
+
     function loadCardVids(card) {
       if (!activeCards.has(card)) {
-        if (activeCards.size >= MAX_ACTIVE_CARDS) {
+        while (activeCards.size >= MAX_ACTIVE_CARDS) {
+          let evicted = false;
           for (const oldCard of activeCards) {
             if (oldCard.dataset.inview !== "1") {
               unloadCardVids(oldCard);
+              evicted = true;
               break;
             }
           }
+          if (!evicted) break;
         }
         activeCards.add(card);
       }
@@ -2910,18 +3084,25 @@
         v.playsInline = true;
         if (!v.dataset.wired) {
           v.dataset.wired = "1";
-          const markReady = () => v.closest(".gcell")?.classList.add("is-ready");
-          v.addEventListener("loadeddata", markReady);
-          v.addEventListener("canplay", () => {
-            markReady();
+          const onReady = () => {
+            v.closest(".gcell")?.classList.add("is-ready");
             v.playbackRate = galSpeed;
-            if (card.dataset.inview === "1" && !reducedMotion.matches) {
+            if (card.dataset.inview === "1" && !reducedMotion.matches && v.paused) {
               v.play().catch(() => {});
             }
-          });
+          };
+          v.addEventListener("loadeddata", onReady);
+          v.addEventListener("canplay", onReady);
         }
-        if (v.dataset.loaded) return;
+        if (v.dataset.loaded) {
+          if (card.dataset.inview === "1" && !reducedMotion.matches && v.paused) {
+            v.playbackRate = galSpeed;
+            v.play().catch(() => {});
+          }
+          return;
+        }
         v.dataset.loaded = "1";
+        v.preload = "auto";
         v.src = v.dataset.src;
         v.playbackRate = galSpeed;
         v.load();
@@ -2948,11 +3129,11 @@
               <div class="gpair">
                 <div class="gcell">
                   <span class="gpill">${esc(item.baseline)}</span>
-                  <video data-src="${item.old}" muted autoplay loop playsinline preload="metadata"></video>
+                  <video data-src="${item.old}" muted autoplay loop playsinline preload="auto"></video>
                 </div>
                 <div class="gcell">
                   <span class="gpill ours">KVPO</span>
-                  <video data-src="${item.current}" muted autoplay loop playsinline preload="metadata"></video>
+                  <video data-src="${item.current}" muted autoplay loop playsinline preload="auto"></video>
                 </div>
               </div>
               <span class="ghover-cta">Compare</span>
@@ -2971,20 +3152,16 @@
       galObs = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
           const card = e.target;
-          const [vl, vr] = card.querySelectorAll("video");
           if (e.isIntersecting) {
             card.dataset.inview = "1";
             loadCardVids(card);
-            if (!reducedMotion.matches) {
-              vl?.play().catch(() => {});
-              vr?.play().catch(() => {});
-            }
+            tryPlayCard(card);
           } else {
             card.dataset.inview = "0";
             unloadCardVids(card);
           }
         });
-      }, { rootMargin: "320px 0px", threshold: 0.01 });
+      }, { rootMargin: "420px 0px", threshold: 0.01 });
 
       galGrid.querySelectorAll(".gcard").forEach((card, idx) => {
         const stage = card.querySelector(".gstage");
@@ -3005,7 +3182,7 @@
           tBtn.textContent = open ? "Hide" : tBtn.dataset.closed;
         });
 
-        if (idx < 2) {
+        if (idx < 4) {
           card.dataset.inview = "1";
           loadCardVids(card);
         }
@@ -3025,6 +3202,7 @@
       b.addEventListener("click", () => {
         document.querySelectorAll("[data-layout]").forEach((x) => x.classList.toggle("on", x === b));
         galGrid.classList.toggle("is-single", b.dataset.layout === "single");
+        activeCards.forEach((c) => { if (c.dataset.inview === "1") tryPlayCard(c); });
       });
     });
 
@@ -3034,6 +3212,10 @@
         document.querySelectorAll("[data-speed]").forEach((x) => x.classList.toggle("on", x === b));
         galGrid.querySelectorAll("video").forEach((v) => { v.playbackRate = galSpeed; });
       });
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) activeCards.forEach((c) => { if (c.dataset.inview === "1") tryPlayCard(c); });
     });
 
     /* ============ Modals ============ */
